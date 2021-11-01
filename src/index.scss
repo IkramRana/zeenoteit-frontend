@@ -1,0 +1,191 @@
+@font-face {
+  font-family: "Rockness";
+  src: local("Rockness"), url(assets/fonts/Rockness.otf) format("truetype");
+}
+
+@font-face {
+  font-family: "Avenir";
+  src: local("Avenir"), url(assets/fonts/Avenir.otf) format("truetype");
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.MuiGrid-spacing-xs-2,
+.MuiGrid-spacing-xs-4 {
+  width: 100% !important;
+  margin: 0px !important;
+}
+
+.MuiFormHelperText-root {
+  margin-bottom: 0px !important;
+}
+
+@media (min-width: 1280px) {
+  .MuiContainer-maxWidthLg {
+    max-width: 1200px !important;
+  }
+}
+
+@media (min-width: 600px) {
+  .MuiTab-root {
+    min-width: 150px !important;
+  }
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+.bg {
+  background-image: url(assets/images/BG.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+
+.form-wrapper {
+  background-color: transparent;
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -35%);
+  padding: 25px;
+  text-align: center;
+  width: 40%;
+
+  form {
+    background-color: rgba($color: #fff, $alpha: 0.2);
+    margin-top: 40px;
+    padding: 20px;
+    border-radius: 27px;
+
+    h2 {
+      font-size: 36px;
+      font-family: "Rockness";
+      color: #fff;
+      margin: 15px 0px;
+    }
+
+    .input-field {
+      margin: 20px 10px;
+      padding: 5px;
+      border: 1px solid rgba($color: #fff, $alpha: 0.6);
+      border-radius: 100px;
+
+      .icon {
+        display: inline-block;
+        border-radius: 50%;
+        background-color: #fff;
+        padding: 5px 8px;
+        text-align: center;
+
+        img {
+          width: 14px;
+          height: 14px;
+        }
+      }
+
+      input {
+        border: none;
+        margin: 0px 5px;
+        background: transparent;
+        color: #fff;
+        font-size: 16px;
+        outline: none;
+        line-height: 1.5;
+        width: calc(100% - 45px);
+
+        &::placeholder {
+          color: rgba($color: #fff, $alpha: 0.7);
+        }
+      }
+    }
+
+    .verification-input {
+      font-size: 24px;
+      line-height: 1.5;
+      text-align: center;
+      background-color: transparent;
+      color: #fff;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid rgba($color: #fff, $alpha: 0.6);
+      display: inline-block;
+      margin: 5px 8px;
+      width: 35px;
+    }
+
+    p {
+      font-size: 14px;
+      font-family: "Avenir";
+      color: rgba($color: #fff, $alpha: 0.8);
+      margin-bottom: 10px;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    font-family: "Avenir";
+    color: rgba($color: #fff, $alpha: 0.7);
+
+    a {
+      color: rgba($color: #fff, $alpha: 0.7);
+      font-size: 14px;
+      font-family: "Avenir";
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      .MuiSvgIcon-root {
+        vertical-align: bottom;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+.button {
+  font-size: 14px;
+  font-family: "Avenir";
+  color: #fff !important;
+  background: transparent linear-gradient(90deg, #7ac8c3 0%, #003361 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 11px 16px #7ac8c31a;
+  border-radius: 100px;
+  display: block;
+  margin: 0px 10px !important;
+  border: none;
+  outline: none;
+  width: -webkit-fill-available;
+  padding: 8px;
+  cursor: pointer;
+  letter-spacing: 2px;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
