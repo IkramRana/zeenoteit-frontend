@@ -6,12 +6,21 @@ import { disabledInspect } from '../../utils/index';
 
 import { Grid, Link, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
+import { firebase, auth } from '../../config/firebase';
+import { Service } from "../../config/service";
 
 var inputField = 1;
+var value;
 
 function Verification() {
 
   const history = useHistory();
+
+  const [email, setEmail] = React.useState("");
+  const [number, setNumber] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [country, setCountry] = React.useState("");
+  const [final, setfinal] = React.useState('');
 
   // *For Phone Verification
   const [form, setForm] = useState({
@@ -23,11 +32,21 @@ function Verification() {
     input6: ''
   })
 
+  const getRegistrationValue = () => {
+    console.log(JSON.parse(localStorage.getItem('regD')));
+    value = JSON.parse(localStorage.getItem('regD'));
+    setEmail(value.email);
+    setNumber(value.phone);
+    setPassword(value.password);
+    setCountry('6180d384a9dc033a266608b3');
+    sendOTP();
+  }
+
   const formHandler = (prop) => (event) => {
     if (event.target.value.length <= 1) {
       setForm({ ...form, [prop]: event.target.value });
-      if (event.target.value >= 1) {
-        if (inputField < 4) {
+      if (event.target.value.length >= 1) {
+        if (inputField < 6) {
           event.target.nextSibling.focus();
           inputField += 1;
         } else {
@@ -46,16 +65,69 @@ function Verification() {
     }
   }
 
-  // *For Phone Verification
-  const verify = async () => {
-    try {
-      history.push('/login');
-      resetForm();
-    } catch (error) {
-      resetForm();
-      console.log('Login -> error', error);
+  // Sent OTP
+  const sendOTP = () => {
+    const number = value.phone;
+    if (number === "" || number.length < 10) return;
+
+    //let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+      'size': 'invisible',
+      'callback': (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+      }
+    });
+    const verify = window.recaptchaVerifier;
+    auth.signInWithPhoneNumber(number, verify).then((result) => {
+        setfinal(result);
+    }).catch((err) => {
+      alert(err);
+      window.location.reload()
+    });
+
+  }
+
+  // Validate OTP
+  const ValidateOtp = async () => {
+    var otp;
+    if(inputField === 6){
+      otp = form.input1+form.input2+form.input3+form.input4+form.input5+form.input6;
+    } else {
+      return;
     }
-  };
+    console.log('file: verification.js => line 101 => final.confirm => otp', otp);
+    if (otp === null || final === null)
+        return;
+    final.confirm(otp).then((result) => {
+        // success
+        registerUser()
+    }).catch((err) => {
+        alert(err.message);
+    })
+  }
+
+  const registerUser = async () => {
+    try {
+      let obj = {
+        email: email,
+        password: password,
+        country_id: country,
+        phone_number: number,
+        isNumberVerified: true,
+      }
+      const { status } = await Service.register(obj);
+      if (status) {       
+        localStorage.removeItem('regD')
+        alert('Registration Successful')   
+        history.push('/login');
+        resetForm();
+      } else {
+        alert('Something Went Wrong')   
+      }
+    } catch (error) {
+      console.log('file: verification.js => line 112 => registerUser => error', error);
+    }
+  }
 
   // *For Reset Form
   const resetForm = () => {
@@ -70,6 +142,7 @@ function Verification() {
   }
 
   useEffect(() => {
+    getRegistrationValue();
     disabledInspect();
     window.scrollTo({ top: 0 });
   }, [])
@@ -99,7 +172,7 @@ function Verification() {
                   <Typography component="p">
                     Please check your phone to get verification code.
                   </Typography>
-                  <button type="button" className="button" onClick={() => { verify() }}>VERIFY</button>
+                  <button type="button" className="button" onClick={() => { ValidateOtp() }}>VERIFY</button>
                 </Grid>
               </Grid>
             </form>
@@ -107,11 +180,13 @@ function Verification() {
 
           <Grid item md={12}>
             <Typography component="p">
-              <Link href="/verification"><Refresh /> Resend Code</Link>
+              <span onClick={sendOTP}><Refresh /> Resend Code</span>
+              <button style={{display:"none"}} id="sign-in-button"></button>
             </Typography>
           </Grid>
 
         </Grid>
+        <div id="recaptcha-container"></div>
       </div>
     </div>
   );

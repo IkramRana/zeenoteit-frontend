@@ -27,7 +27,6 @@ function Register() {
    const getCountries = async () => {
     try {
       const { data } = await Service.getCountries();
-      console.log('file: login.js => line 25 => getFonts => data', data);
     } catch (error) {
       console.log('Login -> error', error);
     }
@@ -36,14 +35,26 @@ function Register() {
   // *For Registration
   const signUp = async () => {
     try {
-      if (form.email === '') {
+      if (form.email === '' || form.password === '' || form.cPassword === '' || form.phone) {
         return;
       } else {
-        if (form.email.match(emailRegex)) {
-          history.push('/verification');
-          resetForm();
-        } else {
+        if(form.password !== form.cPassword){
+          alert('Password & Confirm Password must match!')
           return;
+        } else {
+          if (form.email.match(emailRegex)) {
+            let data = {
+              email: form.email,
+              password: form.password,
+              cPassword: form.cPassword,
+              phone: form.phone,
+            };
+            localStorage.setItem('regD',JSON.stringify(data));
+            history.push('/verification');
+            resetForm();
+          } else {
+            return;
+          }
         }
       }
     } catch (error) {
@@ -106,7 +117,7 @@ function Register() {
                     </select>
                     <input type="tel" name="phone" onChange={formHandler('phone')} placeholder="Phone No." autoComplete="off" required />
                   </div>
-                  <button type="button" className="button" onClick={() => { signUp() }}>SIGNUP</button>
+                  <button type="submit" className="button" onClick={() => { signUp() }}>SIGNUP</button>
                 </Grid>
               </Grid>
             </form>
