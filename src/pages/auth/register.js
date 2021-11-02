@@ -28,7 +28,7 @@ function Register() {
   ];
 
   // *For Registration
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     email: '',
     password: '',
     cPassword: '',
@@ -108,9 +108,6 @@ function Register() {
                     <input type="password" name="cPassword" onChange={formHandler('cPassword')} placeholder="Re-Password" autoComplete="off" required />
                   </div>
                   <div className="input-field">
-                    {/* <select name="country">
-                      <option dataImg={`url(${Images.pak})`} value="+92"></option>
-                    </select> */}
                     <TextField
                       select
                       value={form.countryCode}

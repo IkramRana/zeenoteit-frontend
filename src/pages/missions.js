@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import Images from "../assets/images";
 import { disabledInspect } from '../utils/index';
 
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Divider, Grid, Link, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 
 // *Import Components
 import Navigation from '../layouts/navigation'
+import Header from '../layouts/header'
 
 function Missions() {
 
@@ -20,11 +21,25 @@ function Missions() {
     <div id="Missions">
       <Grid container spacing={0}>
 
-        <Grid item md={2}>
+        {/* ========== Left Side ========== */}
+        <Grid className="left-side" item md={2}>
           <Navigation />
         </Grid>
 
-        <Grid item md={10}>
+        {/* ========== Right Side ========== */}
+        <Grid container spacing={0} className="right-side" item md={10}>
+
+          {/* ========== Header ========== */}
+          <Grid item md={12}>
+            <Header />
+          </Grid>
+
+          <Divider />
+
+          {/* ========== Missions ========== */}
+          <Grid item md={12}>
+
+          </Grid>
 
         </Grid>
 
