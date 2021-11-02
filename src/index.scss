@@ -32,6 +32,20 @@ code {
   }
 }
 
+@media (min-width: 960px) {
+  .left-side {
+    flex-grow: 0 !important;
+    max-width: 12.666667% !important;
+    flex-basis: 12.666667% !important;
+  }
+
+  .right-side {
+    flex-grow: 0 !important;
+    max-width: 87.333333% !important;
+    flex-basis: 87.333333% !important;
+  }
+}
+
 @media (min-width: 600px) {
   .MuiTab-root {
     min-width: 150px !important;
@@ -52,26 +66,65 @@ input::-webkit-inner-spin-button {
   margin: 0 !important;
 }
 
+.left-side {
+  background-color: #fff;
+  padding: 0px 20px;
+}
+
+.right-side {
+  background-color: #ecf4f8;
+  padding: 10px 20px;
+}
+
 // *Navigation
 #Navigation {
   background-color: #fff;
-  padding: 35px 0px;
   width: 100%;
+  height: 100vh;
   text-align: center;
 
   ul {
     list-style: none;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 50px;
 
     li {
-      background-color: #fff;
-      box-shadow: 0px 3px 28px #00000014;
-      border-radius: 30px;
-      color: #7ac8c3;
-      display: block;
-      font-size: 20px;
+      font-size: 14px;
       font-family: "Avenir";
+      color: #7ac8c3;
+      background-color: #fff;
+      width: 120px;
+      height: 100px;
+      display: table;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 30px;
+      margin: 15px 0px;
+      transition: 0.3s ease-in-out;
+
+      &:hover {
+        box-shadow: 0px 3px 28px #00000014;
+        transition: 0.3s ease-in-out;
+      }
+
+      div {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      img {
+        width: 25px;
+        height: 25px;
+        display: block;
+        margin: 5px auto;
+      }
     }
   }
+}
+
+// *Missions
+#Missions {
 }
 
 // *Forms
@@ -137,7 +190,7 @@ input::-webkit-inner-spin-button {
       }
 
       .MuiSelect-selectMenu {
-        height: 25px;
+        height: 30px;
       }
 
       .icon {

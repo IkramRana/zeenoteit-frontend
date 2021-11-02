@@ -37,15 +37,13 @@ function Login() {
             localStorage.setItem('jwt',token)  
             history.push('/missions');
             resetForm();
-          } else {
-            alert('Something Went Wrong')   
           }
         } else {
           return;
         }
       }
     } catch (error) {
-      resetForm();
+      alert(error)
       console.log('Login -> error', error);
     }
   };

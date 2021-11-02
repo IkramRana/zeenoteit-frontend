@@ -17,7 +17,7 @@ function Register() {
   const [phone, setPhone] = useState('');
 
   // *For Registration
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     email: '',
     password: '',
     cPassword: '',
