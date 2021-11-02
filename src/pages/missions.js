@@ -18,33 +18,31 @@ function Missions() {
   }, [])
 
   return (
-    <div id="Missions">
-      <Grid container spacing={0}>
+    <Grid id="Missions" container spacing={0}>
 
-        {/* ========== Left Side ========== */}
-        <Grid className="left-side" item md={2}>
-          <Navigation />
+      {/* ========== Left Side ========== */}
+      <Grid className="left-side" item md={2}>
+        <Navigation />
+      </Grid>
+
+      {/* ========== Right Side ========== */}
+      <Grid className="right-side" container spacing={0} justifyContent="flex-start" alignItems="flex-start" item md={10}>
+
+        {/* ========== Header ========== */}
+        <Grid item md={12}>
+          <Header />
         </Grid>
 
-        {/* ========== Right Side ========== */}
-        <Grid container spacing={0} className="right-side" item md={10}>
+        <Divider />
 
-          {/* ========== Header ========== */}
-          <Grid item md={12}>
-            <Header />
-          </Grid>
-
-          <Divider />
-
-          {/* ========== Missions ========== */}
-          <Grid item md={12}>
-
-          </Grid>
+        {/* ========== Missions ========== */}
+        <Grid item md={12}>
 
         </Grid>
 
       </Grid>
-    </div>
+
+    </Grid>
   );
 }
 
