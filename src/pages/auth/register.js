@@ -4,6 +4,7 @@ import Images from '../../assets/images';
 import { disabledInspect } from '../../utils/index';
 
 import { Grid, Link, Typography } from '@material-ui/core';
+import { Service } from "../../config/service";
 
 function Register() {
 
@@ -19,8 +20,19 @@ function Register() {
     setForm({ ...form, [prop]: event.target.value });
   }
 
+   // *Countries
+   const getCountries = async () => {
+    try {
+      const { data } = await Service.getCountries();
+      console.log('file: login.js => line 25 => getFonts => data', data);
+    } catch (error) {
+      console.log('Login -> error', error);
+    }
+  };
+
   useEffect(() => {
     disabledInspect();
+    getCountries();
     window.scrollTo({ top: 0 });
   }, [])
 
