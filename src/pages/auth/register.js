@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Images from '../../assets/images';
+import { useHistory } from "react-router-dom";
 
-import { disabledInspect } from '../../utils/index';
+import Images from '../../assets/images';
+import { disabledInspect, emailRegex } from '../../utils/index';
 
 import { Grid, Link, Typography } from '@material-ui/core';
 import { Service } from "../../config/service";
 
 function Register() {
+
+  const history = useHistory();
 
   // *For Registration
   const [form, setForm] = useState({
@@ -29,6 +32,35 @@ function Register() {
       console.log('Login -> error', error);
     }
   };
+
+  // *For Registration
+  const signUp = async () => {
+    try {
+      if (form.email === '') {
+        return;
+      } else {
+        if (form.email.match(emailRegex)) {
+          history.push('/verification');
+          resetForm();
+        } else {
+          return;
+        }
+      }
+    } catch (error) {
+      resetForm();
+      console.log('Login -> error', error);
+    }
+  };
+
+  // *For Reset Form
+  const resetForm = () => {
+    setForm({
+      email: '',
+      password: '',
+      cPassword: '',
+      phone: ''
+    });
+  }
 
   useEffect(() => {
     disabledInspect();
@@ -54,27 +86,27 @@ function Register() {
                     <div className="icon">
                       <img src={Images.user} alt="user" />
                     </div>
-                    <input type="email" name="email" onChange={formHandler('email')} placeholder="Email" autocomplete="off" required />
+                    <input type="email" name="email" onChange={formHandler('email')} placeholder="Email" autoComplete="off" required />
                   </div>
                   <div className="input-field">
                     <div className="icon">
                       <img src={Images.lock} alt="lock" />
                     </div>
-                    <input type="password" name="password" onChange={formHandler('password')} placeholder="Password" autocomplete="off" required />
+                    <input type="password" name="password" onChange={formHandler('password')} placeholder="Password" autoComplete="off" required />
                   </div>
                   <div className="input-field">
                     <div className="icon">
                       <img src={Images.lock} alt="lock" />
                     </div>
-                    <input type="password" name="cPassword" onChange={formHandler('cPassword')} placeholder="Re-Password" autocomplete="off" required />
+                    <input type="password" name="cPassword" onChange={formHandler('cPassword')} placeholder="Re-Password" autoComplete="off" required />
                   </div>
                   <div className="input-field">
-                    <div className="icon">
-                      <img src={Images.lock} alt="lock" />
-                    </div>
-                    <input type="tel" name="phone" onChange={formHandler('phone')} placeholder="Phone No." autocomplete="off" required />
+                    <select name="country">
+                      <option style={{ backgroundImage: `url(${Images.pak})`, }} value="+92"></option>
+                    </select>
+                    <input type="tel" name="phone" onChange={formHandler('phone')} placeholder="Phone No." autoComplete="off" required />
                   </div>
-                  <button className="button">SIGNUP</button>
+                  <button type="button" className="button" onClick={() => { signUp() }}>SIGNUP</button>
                 </Grid>
               </Grid>
             </form>

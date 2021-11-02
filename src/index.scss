@@ -121,6 +121,19 @@ input::-webkit-inner-spin-button {
           color: rgba($color: #fff, $alpha: 0.7);
         }
       }
+
+      select {
+        border: none;
+        outline: none;
+
+        option {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          width: 25px;
+          height: 25px;
+        }
+      }
     }
 
     .verification-input {

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Images from '../../assets/images';
+import { useHistory } from "react-router-dom";
 
+import Images from '../../assets/images';
 import { disabledInspect } from '../../utils/index';
 
-import { Grid, Typography, Link } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 function ResetPassword() {
+
+  const history = useHistory();
 
   // *For Reset Password
   const [form, setForm] = useState({
@@ -15,6 +18,25 @@ function ResetPassword() {
 
   const formHandler = (prop) => (event) => {
     setForm({ ...form, [prop]: event.target.value });
+  }
+
+  // *For Reset Password
+  const reset = async () => {
+    try {
+      history.push('/login');
+      resetForm();
+    } catch (error) {
+      resetForm();
+      console.log('Login -> error', error);
+    }
+  };
+
+  // *For Reset Form
+  const resetForm = () => {
+    setForm({
+      password: '',
+      cPassword: ''
+    });
   }
 
   useEffect(() => {
@@ -40,15 +62,15 @@ function ResetPassword() {
                     <div className="icon">
                       <img src={Images.lock} alt="lock" />
                     </div>
-                    <input type="password" name="password" onChange={formHandler('password')} placeholder="Password" autocomplete="off" required />
+                    <input type="password" name="password" onChange={formHandler('password')} placeholder="Password" autoComplete="off" required />
                   </div>
                   <div className="input-field">
                     <div className="icon">
                       <img src={Images.lock} alt="lock" />
                     </div>
-                    <input type="password" name="cPassword" onChange={formHandler('cPassword')} placeholder="Re-Password" autocomplete="off" required />
+                    <input type="password" name="cPassword" onChange={formHandler('cPassword')} placeholder="Re-Password" autoComplete="off" required />
                   </div>
-                  <Link href="/login" className="button">Reset</Link>
+                  <button type="button" className="button" onClick={() => { reset() }}>Reset</button>
                 </Grid>
               </Grid>
             </form>

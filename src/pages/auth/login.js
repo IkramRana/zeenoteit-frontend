@@ -1,21 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import Images from '../../assets/images';
+import { useHistory } from "react-router-dom";
 
-import { disabledInspect } from '../../utils/index';
+import Images from '../../assets/images';
+import { disabledInspect, emailRegex } from '../../utils/index';
 
 import { Grid, Link, Typography } from '@material-ui/core';
 import { Service } from "../../config/service";
 
 function Login() {
 
+  const history = useHistory();
+
   // *For Login
   const [form, setForm] = useState({
-    userName: '',
+    email: '',
     password: ''
   })
 
   const formHandler = (prop) => (event) => {
     setForm({ ...form, [prop]: event.target.value });
+  }
+
+  // *For Login
+  const login = async () => {
+    try {
+      if (form.email === '') {
+        return;
+      } else {
+        if (form.email.match(emailRegex)) {
+          history.push('/login');
+          resetForm();
+        } else {
+          return;
+        }
+      }
+    } catch (error) {
+      resetForm();
+      console.log('Login -> error', error);
+    }
+  };
+
+  // *For Reset Form
+  const resetForm = () => {
+    setForm({
+      email: '',
+      password: ''
+    });
   }
 
   useEffect(() => {
@@ -41,15 +71,15 @@ function Login() {
                     <div className="icon">
                       <img src={Images.user} alt="user" />
                     </div>
-                    <input type="text" name="userName" onChange={formHandler('userName')} placeholder="Username" autocomplete="off" required />
+                    <input type="email" name="email" onChange={formHandler('email')} placeholder="Email" autoComplete="off" required />
                   </div>
                   <div className="input-field">
                     <div className="icon">
                       <img src={Images.lock} alt="lock" />
                     </div>
-                    <input type="password" name="password" onChange={formHandler('password')} placeholder="Password" autocomplete="off" required />
+                    <input type="password" name="password" onChange={formHandler('password')} placeholder="Password" autoComplete="off" required />
                   </div>
-                  <button className="button">LOGIN</button>
+                  <button type="button" className="button" onClick={() => { login() }}>LOGIN</button>
                 </Grid>
               </Grid>
             </form>

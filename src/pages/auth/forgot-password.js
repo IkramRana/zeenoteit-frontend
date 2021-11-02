@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import Images from '../../assets/images';
 
+import Images from '../../assets/images';
 import { disabledInspect, emailRegex } from '../../utils/index';
 
 import { Grid, Link, Typography } from '@material-ui/core';
@@ -21,7 +21,7 @@ function ForgotPassword() {
   }
 
   // *For Forgot Password
-  const forgotPassword = async () => {
+  const sendEmail = async () => {
     try {
       if (form.email === '') {
         return;
@@ -69,12 +69,12 @@ function ForgotPassword() {
                     <div className="icon">
                       <img src={Images.user} alt="user" />
                     </div>
-                    <input type="email" name="email" onChange={formHandler('email')} placeholder="Email Address" autocomplete="off" required />
+                    <input type="email" name="email" onChange={formHandler('email')} placeholder="Email Address" autoComplete="off" required />
                   </div>
                   <Typography component="p">
                     Please click on the link sent your email address to reset password.
                   </Typography>
-                  <button className="button" onClick={() => { forgotPassword() }}>Send Email</button>
+                  <button type="button" className="button" onClick={() => { sendEmail() }}>Send Email</button>
                 </Grid>
               </Grid>
             </form>
