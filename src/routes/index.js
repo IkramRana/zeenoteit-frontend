@@ -16,6 +16,7 @@ const AppRoutes = () => {
   return (
 
     <BrowserRouter>
+
       <Route component={Login} path="/" exact />
       <Route component={Login} path="/login" exact />
       <Route component={Register} path="/register" exact />

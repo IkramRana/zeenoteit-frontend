@@ -1,4 +1,4 @@
-import { Apis, ext_post, get, post } from './';
+import { Apis, get, post } from './';
 
 export const Service = {
 }
