@@ -2,8 +2,8 @@ import Axios from '../axios';
 import { errorHandler } from './errorHandler';
 
 export const Apis = {
+    login: 'user/login',
     register: 'user/register',
-    countries: 'country/countries',
 };
 
 export const headers = {

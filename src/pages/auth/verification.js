@@ -19,7 +19,6 @@ function Verification() {
   const [email, setEmail] = React.useState("");
   const [number, setNumber] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [country, setCountry] = React.useState("");
   const [final, setfinal] = React.useState('');
 
   // *For Phone Verification
@@ -38,7 +37,6 @@ function Verification() {
     setEmail(value.email);
     setNumber(value.phone);
     setPassword(value.password);
-    setCountry('6180d384a9dc033a266608b3');
     sendOTP();
   }
 
@@ -111,7 +109,6 @@ function Verification() {
       let obj = {
         email: email,
         password: password,
-        country_id: country,
         phone_number: number,
         isNumberVerified: true,
       }
@@ -153,7 +150,7 @@ function Verification() {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
-            <img src={Images.logo} alt="zeNoteit" width="200" />
+            <img src={Images.logo} alt="zeeNoteit" width="200" />
           </Grid>
 
           <Grid item md={12}>

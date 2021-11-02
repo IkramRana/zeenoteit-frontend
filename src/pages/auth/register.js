@@ -4,42 +4,38 @@ import { useHistory } from "react-router-dom";
 import Images from '../../assets/images';
 import { disabledInspect, emailRegex } from '../../utils/index';
 
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Grid, Link, MenuItem, TextField, Typography } from '@material-ui/core';
 import { Service } from "../../config/service";
+
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 function Register() {
 
   const history = useHistory();
 
+  const [phone, setPhone] = useState('');
+
   // *For Registration
-  const [form, setForm] = useState({
+  const [form, setForm] = React.useState({
     email: '',
     password: '',
     cPassword: '',
-    phone: ''
   })
 
   const formHandler = (prop) => (event) => {
     setForm({ ...form, [prop]: event.target.value });
   }
 
-   // *Countries
-   const getCountries = async () => {
-    try {
-      const { data } = await Service.getCountries();
-    } catch (error) {
-      console.log('Login -> error', error);
-    }
-  };
 
   // *For Registration
-  const signUp = async () => {
+  const signUp = async (event) => {
     try {
-      if (form.email === '' || form.password === '' || form.cPassword === '' || form.phone) {
+      if (form.email === '' || form.password === '' || form.cPassword === '' || phone === '') {
         return;
       } else {
         if(form.password !== form.cPassword){
-          alert('Password & Confirm Password must match!')
+          console.log('Password & Confirm Password must match!')
           return;
         } else {
           if (form.email.match(emailRegex)) {
@@ -47,7 +43,7 @@ function Register() {
               email: form.email,
               password: form.password,
               cPassword: form.cPassword,
-              phone: form.phone,
+              phone: phone
             };
             localStorage.setItem('regD',JSON.stringify(data));
             history.push('/verification');
@@ -69,13 +65,11 @@ function Register() {
       email: '',
       password: '',
       cPassword: '',
-      phone: ''
     });
   }
 
   useEffect(() => {
     disabledInspect();
-    getCountries();
     window.scrollTo({ top: 0 });
   }, [])
 
@@ -89,7 +83,7 @@ function Register() {
           </Grid>
 
           <Grid item md={12}>
-            <form method="post">
+            <form method="Post">
               <Grid container spacing={2} justifyContent="center" alignItems="center">
                 <Grid item md={9}>
                   <Typography variant="h2">Register</Typography>
@@ -112,10 +106,11 @@ function Register() {
                     <input type="password" name="cPassword" onChange={formHandler('cPassword')} placeholder="Re-Password" autoComplete="off" required />
                   </div>
                   <div className="input-field">
-                    <select name="country">
-                      <option style={{ backgroundImage: `url(${Images.pak})`, }} value="+92"></option>
-                    </select>
-                    <input type="tel" name="phone" onChange={formHandler('phone')} placeholder="Phone No." autoComplete="off" required />
+                    <PhoneInput
+                      defaultCountry="PK"
+                      placeholder="Phone No."
+                      value={phone}
+                      onChange={setPhone}/>
                   </div>
                   <button type="submit" className="button" onClick={() => { signUp() }}>SIGNUP</button>
                 </Grid>

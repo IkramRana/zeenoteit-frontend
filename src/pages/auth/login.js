@@ -24,12 +24,22 @@ function Login() {
   // *For Login
   const login = async () => {
     try {
-      if (form.email === '') {
+      if (form.email === '' || form.password === '') {
         return;
       } else {
         if (form.email.match(emailRegex)) {
-          history.push('/login');
-          resetForm();
+          let obj = {
+            email: form.email,
+            password: form.password,
+          }
+          const { status,token } = await Service.login(obj);
+          if (status) {       
+            localStorage.setItem('jwt',token)  
+            history.push('/missions');
+            resetForm();
+          } else {
+            alert('Something Went Wrong')   
+          }
         } else {
           return;
         }

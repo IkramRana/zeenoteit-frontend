@@ -14,8 +14,29 @@ function Navigation() {
   }, [])
 
   return (
-    <div>
+    <div >
+      <Grid id="Navigation" container spacing={0} direction="space-between" justifyContent="center" alignItems="center">
 
+        <Grid container spacing={0} item md={12} justifyContent="center" alignItems="center">
+
+          <Grid item md={12}>
+            <img src={Images.logo} alt="zeNoteit" width="100px" />
+          </Grid>
+
+          <Grid item md={12}>
+            <Typography component="ul">
+              <Typography component="li" >
+                <img src={Images.missionActive} alt="" />
+                <span>My Missions</span>
+              </Typography>
+            </Typography>
+          </Grid>
+
+        </Grid>
+
+        <Grid item md={12}></Grid>
+
+      </Grid>
     </div>
   );
 }
