@@ -26,8 +26,8 @@ function Verification() {
   const formHandler = (prop) => (event) => {
     if (event.target.value.length <= 1) {
       setForm({ ...form, [prop]: event.target.value });
-      if (event.target.value >= 1) {
-        if (inputField < 4) {
+      if (event.target.value.length >= 1) {
+        if (inputField < 6) {
           event.target.nextSibling.focus();
           inputField += 1;
         } else {

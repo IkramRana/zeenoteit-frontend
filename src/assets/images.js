@@ -2,7 +2,9 @@
 const Images = {
 
   logo: require('./images/ze_note_it.svg').default,
-  pak: require('./images/pakistan.png').default,
+  pak: require('./images/Pakistan.png').default,
+  us: require('./images/us.png').default,
+  au: require('./images/au.png').default,
 
   // *Icons
   user: require('./images/User_Icon.svg').default,

@@ -20,11 +20,11 @@ function Missions() {
     <div id="Missions">
       <Grid container spacing={0}>
 
-        <Grid item md={3}>
+        <Grid item md={2}>
           <Navigation />
         </Grid>
 
-        <Grid item md={9}>
+        <Grid item md={10}>
 
         </Grid>
 

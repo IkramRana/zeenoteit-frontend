@@ -4,17 +4,35 @@ import { useHistory } from "react-router-dom";
 import Images from '../../assets/images';
 import { disabledInspect, emailRegex } from '../../utils/index';
 
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Grid, Link, MenuItem, TextField, Typography } from '@material-ui/core';
+
+
 
 function Register() {
 
   const history = useHistory();
 
+  const country = [
+    {
+      value: '+92',
+      label: <img src={Images.pak} width="25px" height="25px" />,
+    },
+    {
+      value: '+101',
+      label: <img src={Images.us} width="25px" height="25px" />,
+    },
+    {
+      value: '+93',
+      label: <img src={Images.au} width="25px" height="25px" />,
+    },
+  ];
+
   // *For Registration
-  const [form, setForm] = useState({
+  const [form, setForm] = React.useState({
     email: '',
     password: '',
     cPassword: '',
+    countryCode: '+92',
     phone: ''
   })
 
@@ -47,6 +65,7 @@ function Register() {
       email: '',
       password: '',
       cPassword: '',
+      countryCode: '+92',
       phone: ''
     });
   }
@@ -89,9 +108,20 @@ function Register() {
                     <input type="password" name="cPassword" onChange={formHandler('cPassword')} placeholder="Re-Password" autoComplete="off" required />
                   </div>
                   <div className="input-field">
-                    <select name="country">
-                      <option style={{ backgroundImage: `url(${Images.pak})`, }} value="+92"></option>
-                    </select>
+                    {/* <select name="country">
+                      <option dataImg={`url(${Images.pak})`} value="+92"></option>
+                    </select> */}
+                    <TextField
+                      select
+                      value={form.countryCode}
+                      onChange={formHandler('countryCode')}
+                    >
+                      {country.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                     <input type="tel" name="phone" onChange={formHandler('phone')} placeholder="Phone No." autoComplete="off" required />
                   </div>
                   <button type="button" className="button" onClick={() => { signUp() }}>SIGNUP</button>
