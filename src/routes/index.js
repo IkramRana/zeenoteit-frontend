@@ -20,7 +20,7 @@ const AppRoutes = () => {
       <Route component={Login} path="/" exact />
       <Route component={Login} path="/login" exact />
       <Route component={Register} path="/register" exact />
-      <Route component={resetPassword} path="/reset-password" exact />
+      <Route component={resetPassword} path="/reset-password/:userId/:token" exact />
       <Route component={verification} path="/verification" exact />
       <Route component={forgotPassword} path="/forgot-password" exact />
 

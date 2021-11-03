@@ -13,6 +13,16 @@ export const Service = {
         if (result.status === 200) return result.data;
         else throw result;
     },
+    getPasswordResetLink: async (obj) => {
+        let result = await post(Apis.getPasswordResetLink, obj);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    resetPassword: async (obj) => {
+        let result = await post(Apis.resetPassword, obj);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
 
 
 }

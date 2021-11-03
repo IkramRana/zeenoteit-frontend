@@ -32,7 +32,6 @@ function Verification() {
   })
 
   const getRegistrationValue = () => {
-    console.log(JSON.parse(localStorage.getItem('regD')));
     value = JSON.parse(localStorage.getItem('regD'));
     setEmail(value.email);
     setNumber(value.phone);
@@ -41,25 +40,33 @@ function Verification() {
   }
 
   const formHandler = (prop) => (event) => {
-    if (event.target.value.length <= 1) {
-      setForm({ ...form, [prop]: event.target.value });
-      if (event.target.value.length >= 1) {
-        if (inputField < 6) {
-          event.target.nextSibling.focus();
-          inputField += 1;
+    try {
+      if (event.target.value.length <= 1) {
+        if (event.target.value.length === 1) {
+          if(inputField === 6){
+            setForm({ ...form, [prop]: event.target.value });
+          }
+          else if (inputField <= 6) {
+            setForm({ ...form, [prop]: event.target.value });
+            event.target.nextSibling.focus();
+            inputField += 1;
+          } else {
+            return;
+          }
         } else {
-          return;
+          if (inputField === 1) {
+            setForm({ ...form, [prop]: event.target.value });
+          } else {
+            setForm({ ...form, [prop]: event.target.value });
+            event.target.previousSibling.focus();
+            inputField -= 1;
+          }
         }
       } else {
-        if (inputField <= 1) {
-          return;
-        } else {
-          event.target.previousSibling.focus();
-          inputField -= 1;
-        }
+        return;
       }
-    } else {
-      return;
+    } catch (error) {
+      //console.log('file: verification.js => line 74 => formHandler => error', error);
     }
   }
 
@@ -159,12 +166,12 @@ function Verification() {
                 <Grid item md={9}>
                   <Typography variant="h2">Phone Number Verification</Typography>
                   <div>
-                    <input type="number" className="verification-input" name="input1" onChange={formHandler('input1')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input2" onChange={formHandler('input2')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input3" onChange={formHandler('input3')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input4" onChange={formHandler('input4')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input5" onChange={formHandler('input5')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input6" onChange={formHandler('input6')} autoComplete="off" required />
+                    <input type="number" className="verification-input" name="input1" value={form.input1} onChange={formHandler('input1')} autoComplete="off" required />
+                    <input type="number" className="verification-input" name="input2" value={form.input2} onChange={formHandler('input2')} autoComplete="off" required />
+                    <input type="number" className="verification-input" name="input3" value={form.input3} onChange={formHandler('input3')} autoComplete="off" required />
+                    <input type="number" className="verification-input" name="input4" value={form.input4} onChange={formHandler('input4')} autoComplete="off" required />
+                    <input type="number" className="verification-input" name="input5" value={form.input5} onChange={formHandler('input5')} autoComplete="off" required />
+                    <input type="number" className="verification-input" name="input6" value={form.input6} onChange={formHandler('input6')} autoComplete="off" required />
                   </div>
                   <Typography component="p">
                     Please check your phone to get verification code.

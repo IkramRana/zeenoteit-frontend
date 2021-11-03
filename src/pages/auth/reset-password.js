@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory,useParams } from "react-router-dom";
 
+import { Service } from "../../config/service";
 import Images from '../../assets/images';
 import { disabledInspect } from '../../utils/index';
 
@@ -9,6 +10,9 @@ import { Grid, Typography } from '@material-ui/core';
 function ResetPassword() {
 
   const history = useHistory();
+
+  // *get param value
+  const { userId, token } = useParams();
 
   // *For Reset Password
   const [form, setForm] = useState({
@@ -23,8 +27,17 @@ function ResetPassword() {
   // *For Reset Password
   const reset = async () => {
     try {
-      history.push('/login');
-      resetForm();
+      let obj = {
+        userId: userId,
+        token: token,
+        password: form.password,
+      }
+      const { status,message } = await Service.resetPassword(obj);
+      if (status) {      
+        alert(message) 
+        history.push('/login');
+        resetForm();
+      }
     } catch (error) {
       resetForm();
       console.log('Login -> error', error);

@@ -6,6 +6,7 @@ import { disabledInspect, emailRegex } from '../../utils/index';
 
 import { Grid, Link, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
+import { Service } from "../../config/service";
 
 function ForgotPassword() {
 
@@ -27,8 +28,15 @@ function ForgotPassword() {
         return;
       } else {
         if (form.email.match(emailRegex)) {
-          history.push('/reset-password');
-          resetForm();
+          let obj = {
+            email: form.email,
+          }
+          const { status,message } = await Service.getPasswordResetLink(obj);
+          if (status) {       
+            alert(message)
+            window.location.reload();
+            resetForm();
+          }
         } else {
           return;
         }
@@ -82,7 +90,7 @@ function ForgotPassword() {
 
           <Grid item md={6}>
             <Typography className="text-left" component="p">
-              <Link href="/forgot-password"><Refresh /> Resend Email</Link>
+              <span onClick={() => { sendEmail() }}><Refresh /> Resend Email</span>
             </Typography>
           </Grid>
 

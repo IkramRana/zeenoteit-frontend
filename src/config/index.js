@@ -4,6 +4,8 @@ import { errorHandler } from './errorHandler';
 export const Apis = {
     login: 'user/login',
     register: 'user/register',
+    getPasswordResetLink: 'password-reset/getPasswordResetLink',
+    resetPassword: 'password-reset/resetPassword',
 };
 
 export const headers = {
