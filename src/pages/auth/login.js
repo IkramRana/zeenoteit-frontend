@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import Images from '../../assets/images';
 import { disabledInspect, emailRegex } from '../../utils/index';
 
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Service } from "../../config/service";
 
 function Login() {
@@ -32,9 +32,9 @@ function Login() {
             email: form.email,
             password: form.password,
           }
-          const { status,token } = await Service.login(obj);
-          if (status) {       
-            localStorage.setItem('jwt',token)  
+          const { status, token } = await Service.login(obj);
+          if (status) {
+            localStorage.setItem('jwt', token)
             history.push('/missions');
             resetForm();
           }
@@ -62,7 +62,7 @@ function Login() {
   }, [])
 
   return (
-    <div className='bg'>
+    <div className='form-bg'>
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
@@ -94,15 +94,11 @@ function Login() {
           </Grid>
 
           <Grid item md={6}>
-            <Typography className="text-left" component="p">
-              <Link href="/forgot-password">Forgot Password</Link>
-            </Typography>
+            <Typography className="text-left cursor-pointer" component="p" onClick={() => history.push('/forgot-password')}>Forgot Password</Typography>
           </Grid>
 
           <Grid item md={6}>
-            <Typography className="text-right" component="p">
-              <Link href="/register">Don't have an account? Signup</Link>
-            </Typography>
+            <Typography className="text-right cursor-pointer" component="p" onClick={() => history.push('/register')}>Don't have an account? Signup</Typography>
           </Grid>
 
         </Grid>

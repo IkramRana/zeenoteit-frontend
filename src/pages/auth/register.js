@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import Images from '../../assets/images';
 import { disabledInspect, emailRegex } from '../../utils/index';
 
-import { Grid, Link, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { Service } from "../../config/service";
 
 import 'react-phone-number-input/style.css'
@@ -34,7 +34,7 @@ function Register() {
       if (form.email === '' || form.password === '' || form.cPassword === '' || phone === '') {
         return;
       } else {
-        if(form.password !== form.cPassword){
+        if (form.password !== form.cPassword) {
           console.log('Password & Confirm Password must match!')
           return;
         } else {
@@ -45,7 +45,7 @@ function Register() {
               cPassword: form.cPassword,
               phone: phone
             };
-            localStorage.setItem('regD',JSON.stringify(data));
+            localStorage.setItem('regD', JSON.stringify(data));
             history.push('/verification');
             resetForm();
           } else {
@@ -74,7 +74,7 @@ function Register() {
   }, [])
 
   return (
-    <div className='bg'>
+    <div className='form-bg'>
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
@@ -110,7 +110,7 @@ function Register() {
                       defaultCountry="PK"
                       placeholder="Phone No."
                       value={phone}
-                      onChange={setPhone}/>
+                      onChange={setPhone} />
                   </div>
                   <button type="submit" className="button" onClick={() => { signUp() }}>SIGNUP</button>
                 </Grid>
@@ -119,9 +119,7 @@ function Register() {
           </Grid>
 
           <Grid item md={12}>
-            <Typography component="p" >
-              <Link href="/login">Already have an account? Login</Link>
-            </Typography>
+            <Typography className="cursor-pointer" component="p" onClick={() => history.push('/login')}>Already have an account? Login</Typography>
           </Grid>
 
         </Grid>

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import Images from "../assets/images";
 import { disabledInspect } from '../utils/index';
 
-import { Grid, Link, Typography } from '@material-ui/core';
-import { Refresh } from '@material-ui/icons';
+import { Grid, Typography } from '@material-ui/core';
 
 function Navigation() {
 
@@ -22,31 +21,31 @@ function Navigation() {
   }, [])
 
   return (
-    <Grid id="Navigation" container spacing={0} justifyContent="space-between" alignItems="center">
+    <Grid className="navigation" container spacing={0} justifyContent="space-between" alignItems="flex-start">
 
       <Grid container spacing={0} item md={12} justifyContent="center" alignItems="center">
 
         <Grid item md={12}>
-          <img src={Images.logo} alt="zeNoteit" width="100px" />
+          <img src={Images.logo} alt="zeNoteit" width="90px" />
         </Grid>
 
         <Grid item md={12}>
           <Typography component="ul">
-            <Typography component="li" >
+            <Typography component="li" onClick={() => history.push('/my-missions')} >
               <div>
                 <img src={Images.missionActive} />
                 <span>My Missions</span>
               </div>
             </Typography>
-            <Typography component="li" >
+            <Typography component="li" onClick={() => history.push('/my-thoughts')}>
               <div>
-                <img src={Images.thoughtInactive} alt="" />
+                <img src={Images.thoughtInactive} />
                 <span>My Thoughts</span>
               </div>
             </Typography>
-            <Typography component="li" >
+            <Typography component="li" onClick={() => history.push('/settings')} >
               <div>
-                <img src={Images.settingActive} alt="" />
+                <img src={Images.settingActive} />
                 <span>Settings</span>
               </div>
             </Typography>

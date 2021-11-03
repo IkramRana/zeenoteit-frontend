@@ -13,10 +13,27 @@ body {
   font-family: "Avenir";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #ecf4f8;
 }
 
 code {
   font-family: "Avenir";
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 10px;
+  background-color: rgba($color: #003361, $alpha: 0.1);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: rgba($color: #003361, $alpha: 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba($color: #003361, $alpha: 0.5);
 }
 
 .MuiGrid-spacing-xs-2,
@@ -34,14 +51,14 @@ code {
 @media (min-width: 960px) {
   .left-side {
     flex-grow: 0 !important;
-    max-width: 12.666667% !important;
-    flex-basis: 12.666667% !important;
+    max-width: 10.666667% !important;
+    flex-basis: 10.666667% !important;
   }
 
   .right-side {
     flex-grow: 0 !important;
-    max-width: 87.333333% !important;
-    flex-basis: 87.333333% !important;
+    max-width: 89.333333% !important;
+    flex-basis: 89.333333% !important;
   }
 }
 
@@ -49,6 +66,12 @@ code {
   .MuiTab-root {
     min-width: 150px !important;
   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
 }
 
 .text-left {
@@ -59,15 +82,17 @@ code {
   text-align: right !important;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0 !important;
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.text-color {
+  color: #7ac8c3 !important;
 }
 
 .left-side {
   background-color: #fff;
-  padding: 0px 20px;
+  padding: 20px;
 }
 
 .right-side {
@@ -75,9 +100,31 @@ input::-webkit-inner-spin-button {
   padding: 10px 20px;
 }
 
+.button {
+  font-size: 14px;
+  font-family: "Avenir";
+  color: #fff !important;
+  background: transparent linear-gradient(90deg, #7ac8c3 0%, #003361 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 11px 16px #7ac8c31a;
+  border-radius: 100px;
+  display: block;
+  margin: 0px 10px !important;
+  border: none;
+  outline: none;
+  width: -webkit-fill-available;
+  padding: 8px;
+  cursor: pointer;
+  letter-spacing: 2px;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
 // *Header
 #Header {
   padding: 20px 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   h2 {
     font-size: 32px;
@@ -85,10 +132,6 @@ input::-webkit-inner-spin-button {
     font-weight: 900;
     color: #003361;
     text-transform: capitalize;
-
-    .text-color {
-      color: #7ac8c3 !important;
-    }
   }
 
   h4 {
@@ -108,24 +151,37 @@ input::-webkit-inner-spin-button {
 
   .add-quote,
   .notification {
-    margin: 0px 8px;
-    padding: 12px 16px;
-    outline: none;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
+    background-color: rgba($color: #7ac8c3, $alpha: 0.1);
+    margin: 0px 6px;
+    width: 55px;
+    height: 55px;
 
-    img {
-      width: 25px;
-      height: 25px;
+    svg {
+      fill: #7ac8c3;
+    }
+
+    &:hover {
+      background-color: #7ac8c3;
+
+      svg {
+        fill: #fff;
+      }
     }
   }
 
-  .add-quote {
-    background-color: rgba($color: #7ac8c3, $alpha: 0.2);
+  .notification {
+    background-color: rgba($color: #003361, $alpha: 0.1);
+
+    svg {
+      fill: #003361;
+    }
 
     &:hover {
-      background-color: rgba($color: #7ac8c3, $alpha: 1);
+      background-color: #003361;
+
+      svg {
+        fill: #fff;
+      }
     }
   }
 
@@ -139,10 +195,10 @@ input::-webkit-inner-spin-button {
 }
 
 // *Navigation
-#Navigation {
+.navigation {
   background-color: #fff;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 40px);
   text-align: center;
 
   ul {
@@ -156,12 +212,12 @@ input::-webkit-inner-spin-button {
       font-family: "Avenir";
       color: #7ac8c3;
       background-color: #fff;
-      width: 120px;
+      width: 100%;
       height: 100px;
       display: table;
       text-align: center;
       cursor: pointer;
-      border-radius: 30px;
+      border-radius: 20px;
       margin: 15px 0px;
       transition: 0.3s ease-in-out;
 
@@ -185,168 +241,334 @@ input::-webkit-inner-spin-button {
   }
 }
 
-// *Missions
-#Missions {
+// *Breadcrumbs
+.MuiBreadcrumbs-root {
+  padding: 15px 0px;
+
+  .MuiBreadcrumbs-li {
+    p {
+      font-size: 16px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #58595b;
+
+      &:hover {
+        text-decoration: none !important;
+      }
+    }
+  }
+}
+
+// *My Mission
+.mission {
+  height: calc(100vh - 184px);
+  overflow-y: auto;
+
+  .wrapper {
+    margin-right: 10px !important;
+    flex-grow: 0 !important;
+    max-width: 19% !important;
+    flex-basis: 19% !important;
+  }
+
+  .task-box {
+    margin-bottom: 15px !important;
+
+    .header {
+      h5 {
+        padding-right: 5px;
+      }
+    }
+  }
+
+  .add-task {
+    svg {
+      vertical-align: text-top;
+    }
+  }
+}
+
+// *My Thought
+.thought {
+  height: calc(100vh - 184px);
+  overflow-y: auto;
+
+  .thought-box {
+    margin-right: 10px !important;
+    margin-bottom: 15px !important;
+    flex-grow: 0 !important;
+    max-width: 24% !important;
+    flex-basis: 24% !important;
+
+    .header {
+      .MuiIconButton-root {
+        background-color: rgba($color: #003361, $alpha: 0.1);
+        width: 33px;
+        height: 33px;
+      }
+    }
+  }
+}
+
+// *Box
+.thought-box,
+.task-box {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid #7ac8c3;
+  border-radius: 20px;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 3px 23px #0000000f;
+    transition: 0.3s ease-in-out;
+  }
+
+  .header {
+    background-color: rgba($color: #7ac8c3, $alpha: 0.1);
+    border-radius: 20px;
+    padding: 12px 8px;
+
+    .MuiIconButton-root {
+      background-color: rgba($color: #003361, $alpha: 0.1);
+      width: 30px;
+      height: 30px;
+    }
+
+    h5 {
+      font-size: 15px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #58595b;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    h6 {
+      font-size: 14px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #7ac8c3;
+    }
+  }
+
+  .content {
+    padding: 18px 8px;
+
+    p {
+      font-size: 14px;
+      font-family: "Avenir";
+      color: #58595b;
+      margin-bottom: 7px;
+    }
+
+    span {
+      font-size: 14px;
+      font-family: "Avenir";
+      font-weight: 700;
+      color: #7ac8c3;
+      cursor: pointer;
+    }
+  }
+}
+
+.add-task,
+.add-thought {
+  padding: 10px 15px;
+  border: 2px dashed rgba($color: #003361, $alpha: 0.4);
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    border: 2px dashed rgba($color: #003361, $alpha: 1);
+    transition: 0.3s;
+
+    svg {
+      fill: #003361;
+    }
+
+    span {
+      color: rgba($color: #003361, $alpha: 1);
+    }
+  }
+
+  svg {
+    vertical-align: bottom;
+    margin-right: 5px;
+    fill: rgba($color: #003361, $alpha: 0.2);
+  }
+
+  span {
+    font-size: 16px;
+    font-family: "Avenir";
+    color: rgba($color: #003361, $alpha: 0.3);
+  }
+}
+
+.title {
+  font-size: 30px;
+  font-family: "Avenir";
+  font-weight: 900;
+  color: rgba($color: #003361, $alpha: 0.4);
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  margin: 10px 0px;
+
+  &::placeholder {
+    color: rgba($color: #003361, $alpha: 0.2);
+  }
+}
+
+.description {
+  font-size: 18px;
+  font-family: "Avenir";
+  color: rgba($color: #003361, $alpha: 0.4);
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  height: calc(100vh - 320px);
+  margin: 10px 0px;
+  resize: none;
+
+  &::placeholder {
+    color: rgba($color: #003361, $alpha: 0.2);
+  }
 }
 
 // *Forms
-
-.bg {
+.form-bg {
   background-image: url(assets/images/BG.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   width: 100%;
   height: 100vh;
-}
 
-.form-wrapper {
-  background-color: transparent;
-  position: absolute;
-  left: 50%;
-  top: 35%;
-  transform: translate(-50%, -35%);
-  padding: 25px;
-  text-align: center;
-  width: 40%;
+  .form-wrapper {
+    background-color: transparent;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -35%);
+    padding: 25px;
+    text-align: center;
+    width: 40%;
 
-  form {
-    background-color: rgba($color: #fff, $alpha: 0.2);
-    margin-top: 40px;
-    padding: 20px;
-    border-radius: 27px;
+    form {
+      background-color: rgba($color: #fff, $alpha: 0.2);
+      margin-top: 40px;
+      padding: 20px;
+      border-radius: 27px;
 
-    h2 {
-      font-size: 36px;
-      font-family: "Rockness";
-      color: #fff;
-      margin: 15px 0px;
-    }
-
-    .input-field {
-      margin: 20px 10px;
-      padding: 5px;
-      border: 1px solid rgba($color: #fff, $alpha: 0.6);
-      border-radius: 100px;
-
-      .MuiListItem-root {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-      }
-
-      .MuiInput-underline:before,
-      .MuiInput-underline:after {
-        display: none !important;
-      }
-
-      .MuiSelect-select:focus {
-        background-color: transparent !important;
-      }
-
-      .MuiSelect-icon {
-        display: none;
-      }
-
-      .MuiSelect-select.MuiSelect-select {
-        padding: 0px !important;
-      }
-
-      .MuiSelect-selectMenu {
-        height: 30px;
-      }
-
-      .icon {
-        display: inline-block;
-        border-radius: 50%;
-        background-color: #fff;
-        padding: 5px 8px;
-        text-align: center;
-
-        img {
-          width: 14px;
-          height: 14px;
-        }
-      }
-
-      input {
-        border: none;
-        margin: 0px 5px;
-        background: transparent;
+      h2 {
+        font-size: 36px;
+        font-family: "Rockness";
         color: #fff;
-        font-size: 16px;
-        outline: none;
-        line-height: 1.5;
-        width: calc(100% - 45px);
+        margin: 15px 0px;
+      }
 
-        &::placeholder {
-          color: rgba($color: #fff, $alpha: 0.7);
+      .input-field {
+        margin: 20px 10px;
+        padding: 5px;
+        border: 1px solid rgba($color: #fff, $alpha: 0.6);
+        border-radius: 100px;
+
+        .MuiListItem-root {
+          padding-left: 10px !important;
+          padding-right: 10px !important;
+        }
+
+        .MuiInput-underline:before,
+        .MuiInput-underline:after {
+          display: none !important;
+        }
+
+        .MuiSelect-select:focus {
+          background-color: transparent !important;
+        }
+
+        .MuiSelect-icon {
+          display: none;
+        }
+
+        .MuiSelect-select.MuiSelect-select {
+          padding: 0px !important;
+        }
+
+        .MuiSelect-selectMenu {
+          height: 30px;
+        }
+
+        .icon {
+          display: inline-block;
+          border-radius: 50%;
+          background-color: #fff;
+          padding: 5px 8px;
+          text-align: center;
+
+          img {
+            width: 14px;
+            height: 14px;
+          }
+        }
+
+        input {
+          border: none;
+          margin: 0px 5px;
+          background: transparent;
+          color: #fff;
+          font-size: 16px;
+          outline: none;
+          line-height: 1.5;
+          width: calc(100% - 45px);
+
+          &::placeholder {
+            color: rgba($color: #fff, $alpha: 0.7);
+          }
         }
       }
-    }
 
-    .verification-input {
-      font-size: 24px;
-      line-height: 1.5;
-      text-align: center;
-      background-color: transparent;
-      color: #fff;
-      outline: none;
-      border: none;
-      border-bottom: 1px solid rgba($color: #fff, $alpha: 0.6);
-      display: inline-block;
-      margin: 0px 8px 20px 8px;
-      width: 30px;
+      .verification-input {
+        font-size: 24px;
+        line-height: 1.5;
+        text-align: center;
+        background-color: transparent;
+        color: #fff;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid rgba($color: #fff, $alpha: 0.6);
+        display: inline-block;
+        margin: 0px 8px 20px 8px;
+        width: 30px;
+      }
+
+      p {
+        font-size: 14px;
+        font-family: "Avenir";
+        color: rgba($color: #fff, $alpha: 0.8);
+        margin-bottom: 10px;
+      }
     }
 
     p {
       font-size: 14px;
       font-family: "Avenir";
-      color: rgba($color: #fff, $alpha: 0.8);
-      margin-bottom: 10px;
-    }
-  }
-
-  p {
-    font-size: 14px;
-    font-family: "Avenir";
-    color: rgba($color: #fff, $alpha: 0.7);
-
-    a {
       color: rgba($color: #fff, $alpha: 0.7);
-      font-size: 14px;
-      font-family: "Avenir";
-
-      &:hover {
-        text-decoration: none;
-      }
 
       .MuiSvgIcon-root {
-        vertical-align: bottom;
+        vertical-align: sub;
         font-size: 18px;
         width: 18px;
         height: 18px;
       }
     }
-  }
-}
-
-.button {
-  font-size: 14px;
-  font-family: "Avenir";
-  color: #fff !important;
-  background: transparent linear-gradient(90deg, #7ac8c3 0%, #003361 100%) 0% 0% no-repeat padding-box;
-  box-shadow: 0px 11px 16px #7ac8c31a;
-  border-radius: 100px;
-  display: block;
-  margin: 0px 10px !important;
-  border: none;
-  outline: none;
-  width: -webkit-fill-available;
-  padding: 8px;
-  cursor: pointer;
-  letter-spacing: 2px;
-
-  &:hover {
-    text-decoration: none !important;
   }
 }
