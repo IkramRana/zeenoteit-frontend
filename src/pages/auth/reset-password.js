@@ -58,7 +58,7 @@ function ResetPassword() {
   }, [])
 
   return (
-    <div className='bg'>
+    <div className='form-bg'>
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 

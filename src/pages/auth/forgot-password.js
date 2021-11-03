@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import Images from '../../assets/images';
 import { disabledInspect, emailRegex } from '../../utils/index';
 
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 import { Service } from "../../config/service";
 
@@ -60,7 +60,7 @@ function ForgotPassword() {
   }, [])
 
   return (
-    <div className='bg'>
+    <div className='form-bg'>
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
@@ -95,9 +95,7 @@ function ForgotPassword() {
           </Grid>
 
           <Grid item md={6}>
-            <Typography className="text-right" component="p">
-              <Link href="/login">Have an account? Login</Link>
-            </Typography>
+            <Typography className="text-right cursor-pointer" component="p" onClick={() => history.push('/login')}>Have an account? Login</Typography>
           </Grid>
 
         </Grid>

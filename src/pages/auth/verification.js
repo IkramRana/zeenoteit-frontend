@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Images from '../../assets/images';
 import { disabledInspect } from '../../utils/index';
 
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 import { firebase, auth } from '../../config/firebase';
 import { Service } from "../../config/service";
@@ -84,7 +84,7 @@ function Verification() {
     });
     const verify = window.recaptchaVerifier;
     auth.signInWithPhoneNumber(number, verify).then((result) => {
-        setfinal(result);
+      setfinal(result);
     }).catch((err) => {
       alert(err);
       window.location.reload()
@@ -95,19 +95,19 @@ function Verification() {
   // Validate OTP
   const ValidateOtp = async () => {
     var otp;
-    if(inputField === 6){
-      otp = form.input1+form.input2+form.input3+form.input4+form.input5+form.input6;
+    if (inputField === 6) {
+      otp = form.input1 + form.input2 + form.input3 + form.input4 + form.input5 + form.input6;
     } else {
       return;
     }
     console.log('file: verification.js => line 101 => final.confirm => otp', otp);
     if (otp === null || final === null)
-        return;
+      return;
     final.confirm(otp).then((result) => {
-        // success
-        registerUser()
+      // success
+      registerUser()
     }).catch((err) => {
-        alert(err.message);
+      alert(err.message);
     })
   }
 
@@ -120,13 +120,13 @@ function Verification() {
         isNumberVerified: true,
       }
       const { status } = await Service.register(obj);
-      if (status) {       
+      if (status) {
         localStorage.removeItem('regD')
-        alert('Registration Successful')   
+        alert('Registration Successful')
         history.push('/login');
         resetForm();
       } else {
-        alert('Something Went Wrong')   
+        alert('Something Went Wrong')
       }
     } catch (error) {
       console.log('file: verification.js => line 112 => registerUser => error', error);
@@ -152,7 +152,7 @@ function Verification() {
   }, [])
 
   return (
-    <div className='bg'>
+    <div className='form-bg'>
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
@@ -185,7 +185,7 @@ function Verification() {
           <Grid item md={12}>
             <Typography component="p">
               <span onClick={sendOTP}><Refresh /> Resend Code</span>
-              <button style={{display:"none"}} id="sign-in-button"></button>
+              <button style={{ display: "none" }} id="sign-in-button"></button>
             </Typography>
           </Grid>
 

@@ -7,9 +7,10 @@ import resetPassword from '../pages/auth/reset-password'
 import verification from '../pages/auth/verification'
 import forgotPassword from '../pages/auth/forgot-password'
 
-import Missions from '../pages/missions';
-import Thoughts from '../pages/thoughts';
-import Settings from '../pages/settings';
+import Missions from '../pages/missions/my-missions';
+import Thoughts from '../pages/thoughts/my-thoughts';
+import WriteThoughts from '../pages/thoughts/write-thoughts';
+import Settings from '../pages/settings/settings';
 
 const AppRoutes = () => {
 
@@ -24,8 +25,9 @@ const AppRoutes = () => {
       <Route component={verification} path="/verification" exact />
       <Route component={forgotPassword} path="/forgot-password" exact />
 
-      <Route component={Missions} path="/missions" exact />
-      <Route component={Thoughts} path="/thoughts" exact />
+      <Route component={Missions} path="/my-missions" exact />
+      <Route component={Thoughts} path="/my-thoughts" exact />
+      <Route component={WriteThoughts} path="/write-thoughts" exact />
       <Route component={Settings} path="/settings" exact />
 
     </BrowserRouter >
