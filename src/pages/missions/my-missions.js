@@ -76,7 +76,7 @@ function MyMissions() {
                   </div>
                 </Grid>
 
-                <Grid className="add-task" item md={12} onClick={() => history.push('/write-thoughts')}>
+                <Grid className="add-task" item md={12}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16.18" height="16.18" viewBox="0 0 20.18 20.18">
                     <path id="add_tasks" d="M27.888,17.8H20.311V10.221a1.256,1.256,0,1,0-2.513,0V17.8H10.221a1.256,1.256,0,0,0,0,2.513H17.8v7.577a1.256,1.256,0,0,0,2.513,0V20.311h7.577a1.256,1.256,0,0,0,0-2.513Z" transform="translate(-8.965 -8.965)" />
                   </svg>

@@ -26,6 +26,7 @@ function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const formHandler = (prop) => (event) => {
+  console.log('file: login.js => line 29 => formHandler => prop', prop);
     setForm({ ...form, [prop]: event.target.value });
   }
 
@@ -143,7 +144,6 @@ function Login() {
                     </div>
                     <input
                       name="email"
-                      onChange={formHandler('email')}
                       placeholder="Email"
                       autoComplete="off"
                       {...register("email", {
@@ -153,6 +153,7 @@ function Login() {
                           message: 'Please enter a valid email address',
                         }
                       })}
+                      onChange={formHandler('email')}
                     />
                   </div>
                   {errors?.email?.message && (
@@ -167,12 +168,12 @@ function Login() {
                     <input
                       type="password"
                       name="password"
-                      onChange={formHandler('password')}
                       placeholder="Password"
                       autoComplete="off"
                       {...register("password", {
                         required: 'Password is required'
                       })}
+                      onChange={formHandler('password')}
                     />
                   </div>
                   {errors?.password?.message && (

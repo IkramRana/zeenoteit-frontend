@@ -125,7 +125,6 @@ function ForgotPassword() {
                     </div>
                     <input
                       name="email"
-                      onChange={formHandler('email')}
                       placeholder="Email Address"
                       autoComplete="off"
                       {...register("email", {
@@ -135,6 +134,7 @@ function ForgotPassword() {
                           message: 'Please enter a valid email address',
                         }
                       })}
+                      onChange={formHandler('email')}
                     />
                   </div>
                   {errors?.email?.message && (

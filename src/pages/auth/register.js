@@ -135,7 +135,6 @@ function Register() {
                     </div>
                     <input
                       name="email"
-                      onChange={formHandler('email')}
                       placeholder="Email"
                       autoComplete="off"
                       {...register("email", {
@@ -145,6 +144,7 @@ function Register() {
                           message: 'Please enter a valid email address',
                         }
                       })}
+                      onChange={formHandler('email')}
                     />
                   </div>
                   {errors?.email?.message && (
@@ -159,7 +159,6 @@ function Register() {
                     <input
                       type="password"
                       name="password"
-                      onChange={formHandler('password')}
                       placeholder="Password"
                       autoComplete="off"
                       {...register("password", {
@@ -169,6 +168,7 @@ function Register() {
                           message: "Password must have at least 8 characters"
                         }
                       })}
+                      onChange={formHandler('password')}
                     />
                   </div>
                   {errors?.password?.message && (
@@ -183,7 +183,6 @@ function Register() {
                     <input
                       type="password"
                       name="cPassword"
-                      onChange={formHandler('cPassword')}
                       placeholder="Re-Password"
                       autoComplete="off"
                       {...register("confirmPassword", {
@@ -191,6 +190,7 @@ function Register() {
                         validate: value =>
                           value === password.current || "Confirm password does not match"
                       })}
+                      onChange={formHandler('cPassword')}
                     />
                   </div>
                   {errors?.confirmPassword?.message && (

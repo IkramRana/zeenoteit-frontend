@@ -135,7 +135,6 @@ function ResetPassword() {
                     <input
                       type="password"
                       name="password"
-                      onChange={formHandler('password')}
                       placeholder="Password"
                       autoComplete="off"
                       {...register("password", {
@@ -145,6 +144,7 @@ function ResetPassword() {
                           message: "Password must have at least 8 characters"
                         }
                       })}
+                      onChange={formHandler('password')}
                     />
                   </div>
                   {errors?.password?.message && (
@@ -159,7 +159,6 @@ function ResetPassword() {
                     <input
                       type="password"
                       name="cPassword"
-                      onChange={formHandler('cPassword')}
                       placeholder="Re-Password"
                       autoComplete="off"
                       {...register("confirmPassword", {
@@ -167,6 +166,7 @@ function ResetPassword() {
                         validate: value =>
                           value === password.current || "Confirm password does not match"
                       })}
+                      onChange={formHandler('cPassword')}
                     />
                   </div>
                   {errors?.confirmPassword?.message && (
