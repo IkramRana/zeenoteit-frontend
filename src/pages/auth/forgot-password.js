@@ -53,6 +53,7 @@ function ForgotPassword() {
         // resetForm();
       }
     } catch (error) {
+      setLoader(false)
       console.log('Forgot Password -> error', error);
     }
   };

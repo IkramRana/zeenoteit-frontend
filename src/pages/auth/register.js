@@ -16,7 +16,7 @@ function Register() {
 
   const history = useHistory();
 
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState(''); // remove them
   // const [phoneError, setPhoneError] = useState(false);
 
   // *For Registration
@@ -41,13 +41,12 @@ function Register() {
   // *For Registration
   const signUp = async (event) => {
     try {
-
       setLoader(true)
       let data = {
         email: form.email,
         password: form.password,
         cPassword: form.cPassword,
-        phone: phone
+        phone: control._formValues.phoneInput
       };
       localStorage.setItem('regD', JSON.stringify(data));
       history.push('/verification');
@@ -76,6 +75,7 @@ function Register() {
 
 
     } catch (error) {
+      setLoader(false)
       console.log('Login -> error', error);
     }
   };
@@ -213,7 +213,7 @@ function Register() {
                       render={({ field: { onChange, value } }) => (
                         <PhoneInput
                           value={value}
-                          onChange={setPhone}
+                          onChange={onChange}
                           defaultCountry="PK"
                           id="phoneInput"
                         />

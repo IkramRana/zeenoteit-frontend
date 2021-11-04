@@ -7,6 +7,7 @@ import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 import { firebase, auth } from '../../config/firebase';
 import { Service } from "../../config/service";
+import { useForm, Controller } from "react-hook-form";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,6 +33,10 @@ function Verification() {
     input5: '',
     input6: ''
   })
+
+  const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
+  
+  const [loader, setLoader] = useState(false)
 
   const getRegistrationValue = () => {
     value = JSON.parse(localStorage.getItem('regD'));
@@ -106,39 +111,44 @@ function Verification() {
 
   // Validate OTP
   const ValidateOtp = async () => {
-    var otp;
-    if (inputField === 6) {
-      otp = form.input1 + form.input2 + form.input3 + form.input4 + form.input5 + form.input6;
-    } else {
-      toast.error('Please Enter Valid OTP', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-      return;
+    try {
+      setLoader(true)
+      var otp;
+      if (inputField === 6) {
+        otp = form.input1 + form.input2 + form.input3 + form.input4 + form.input5 + form.input6;
+      } else {
+        toast.error('Please Enter Valid OTP', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+        return;
+      }
+      console.log('file: verification.js => line 101 => final.confirm => otp', otp);
+      if (otp === null || final === null)
+        return;
+      final.confirm(otp).then((result) => {
+        // success
+        registerUser()
+      }).catch((error) => {
+        //alert(err.message);
+        toast.error(error.message, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+      })
+    } catch (error) {
+      setLoader(false)
     }
-    console.log('file: verification.js => line 101 => final.confirm => otp', otp);
-    if (otp === null || final === null)
-      return;
-    final.confirm(otp).then((result) => {
-      // success
-      registerUser()
-    }).catch((error) => {
-      //alert(err.message);
-      toast.error(error.message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-    })
   }
 
   const registerUser = async () => {
@@ -250,7 +260,7 @@ function Verification() {
           />
 
           <Grid item md={12}>
-            <form method="post">
+            <form onSubmit={handleSubmit(ValidateOtp)}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
                 <Grid item md={9}>
                   <Typography variant="h2">Phone Number Verification</Typography>
@@ -265,7 +275,7 @@ function Verification() {
                   <Typography component="p">
                     Please check your phone to get verification code.
                   </Typography>
-                  <button type="button" className="button" onClick={() => { ValidateOtp() }}>VERIFY</button>
+                  <button type="submit" className={`button ${loader === true ? 'spinner disabled' : ''}`} disabled={loader === true ? true : false} >VERIFY</button>
                 </Grid>
               </Grid>
             </form>

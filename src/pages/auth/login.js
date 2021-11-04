@@ -62,6 +62,7 @@ function Login() {
       // }
     } catch (error) {
       //alert(error)
+      setLoader(false)
       toast.error(error, {
         position: "top-center",
         autoClose: 2000,
