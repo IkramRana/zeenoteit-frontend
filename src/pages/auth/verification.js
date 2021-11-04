@@ -9,6 +9,9 @@ import { Refresh } from '@material-ui/icons';
 import { firebase, auth } from '../../config/firebase';
 import { Service } from "../../config/service";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 var inputField = 1;
 var value;
 
@@ -85,9 +88,19 @@ function Verification() {
     const verify = window.recaptchaVerifier;
     auth.signInWithPhoneNumber(number, verify).then((result) => {
       setfinal(result);
-    }).catch((err) => {
-      alert(err);
-      window.location.reload()
+    }).catch((error) => {
+      //alert(err);
+      //window.location.reload()
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+
     });
 
   }
@@ -106,8 +119,17 @@ function Verification() {
     final.confirm(otp).then((result) => {
       // success
       registerUser()
-    }).catch((err) => {
-      alert(err.message);
+    }).catch((error) => {
+      //alert(err.message);
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     })
   }
 
@@ -122,11 +144,29 @@ function Verification() {
       const { status } = await Service.register(obj);
       if (status) {
         localStorage.removeItem('regD')
-        alert('Registration Successful')
+        //alert('Registration Successful')
+        toast.success('Registration Successful', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
         history.push('/login');
         resetForm();
       } else {
-        alert('Something Went Wrong')
+        //alert('Something Went Wrong')
+        toast.error('Something Went Wrong', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
       }
     } catch (error) {
       console.log('file: verification.js => line 112 => registerUser => error', error);
@@ -159,6 +199,19 @@ function Verification() {
           <Grid item md={12} >
             <img src={Images.logo} alt="zeeNoteit" width="200" />
           </Grid>
+
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            limit={1}
+          />
 
           <Grid item md={12}>
             <form method="post">

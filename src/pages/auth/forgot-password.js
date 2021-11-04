@@ -8,6 +8,9 @@ import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 import { Service } from "../../config/service";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function ForgotPassword() {
 
   const history = useHistory();
@@ -33,9 +36,20 @@ function ForgotPassword() {
           }
           const { status,message } = await Service.getPasswordResetLink(obj);
           if (status) {       
-            alert(message)
-            window.location.reload();
-            resetForm();
+            //alert(message)
+
+            toast.success(message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+            });
+      
+            // window.location.reload();
+            // resetForm();
           }
         } else {
           return;
@@ -67,6 +81,19 @@ function ForgotPassword() {
           <Grid item md={12} >
             <img src={Images.logo} alt="zeNoteit" width="200" />
           </Grid>
+
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            limit={1}
+          />
 
           <Grid item md={12}>
             <form method="POST">

@@ -4,8 +4,12 @@ import { useHistory } from "react-router-dom";
 import Images from '../../assets/images';
 import { disabledInspect, emailRegex } from '../../utils/index';
 
-import { Grid, Typography } from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { colors, darken, Grid, Typography } from '@material-ui/core';
 import { Service } from "../../config/service";
+import { ColorizeRounded } from '@material-ui/icons';
 
 function Login() {
 
@@ -35,7 +39,7 @@ function Login() {
           const { status, token } = await Service.login(obj);
           if (status) {
             localStorage.setItem('jwt', token)
-            history.push('/missions');
+            history.push('/my-missions');
             resetForm();
           }
         } else {
@@ -43,7 +47,16 @@ function Login() {
         }
       }
     } catch (error) {
-      alert(error)
+      //alert(error)
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
       console.log('Login -> error', error);
     }
   };
@@ -64,6 +77,20 @@ function Login() {
   return (
     <div className='form-bg'>
       <div className="form-wrapper">
+
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+          limit={1}
+        />
+
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
