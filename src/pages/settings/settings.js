@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import Images from "../../assets/images";
 import { disabledInspect } from '../../utils/index';
 
 import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
