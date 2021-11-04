@@ -213,7 +213,7 @@ function Register() {
                       render={({ field: { onChange, value } }) => (
                         <PhoneInput
                           value={value}
-                          onChange={onChange}
+                          onChange={setPhone}
                           defaultCountry="PK"
                           id="phoneInput"
                         />
