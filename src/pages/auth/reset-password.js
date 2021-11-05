@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory,useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { Service } from "../../config/service";
 
@@ -18,35 +18,26 @@ function ResetPassword() {
   // *get param value
   const { userId, token } = useParams();
 
-  // *For Reset Password
-  const [form, setForm] = useState({
-    password: '',
-    cPassword: ''
-  })
-
+  // *For Loader
   const [loader, setLoader] = useState(false)
 
+  // *For Form Validation 
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
   const password = useRef({});
   password.current = watch("password", "");
 
-  const formHandler = (prop) => (event) => {
-    setForm({ ...form, [prop]: event.target.value });
-  }
-
   // *For Reset Password
-  const reset = async () => {
+  const reset = async (data) => {
     try {
+      setLoader(true)
       let obj = {
         userId: userId,
         token: token,
-        password: form.password,
+        password: data.password,
       }
-      const { status,message } = await Service.resetPassword(obj);
-      if (status) {      
-        //alert(message) 
-
+      const { status, message } = await Service.resetPassword(obj);
+      if (status) {
         toast.success(message, {
           position: "top-center",
           autoClose: 2000,
@@ -56,15 +47,13 @@ function ResetPassword() {
           draggable: false,
           progress: undefined,
         });
-  
-
         history.push('/login');
       }
     } catch (error) {
-      console.log('Login -> error', error);
+      setLoader(false)
+      console.log('file: reset-password.js => line 64 => reset => error', error)
     }
   };
-
 
   useEffect(() => {
     disabledInspect();
@@ -134,9 +123,7 @@ function ResetPassword() {
                     </div>
                     <input
                       type="password"
-                      name="password"
                       placeholder="Password"
-                      autoComplete="off"
                       {...register("password", {
                         required: 'Password is required',
                         minLength: {
@@ -144,7 +131,6 @@ function ResetPassword() {
                           message: "Password must have at least 8 characters"
                         }
                       })}
-                      onChange={formHandler('password')}
                     />
                   </div>
                   {errors?.password?.message && (
@@ -158,15 +144,12 @@ function ResetPassword() {
                     </div>
                     <input
                       type="password"
-                      name="cPassword"
                       placeholder="Re-Password"
-                      autoComplete="off"
                       {...register("confirmPassword", {
                         required: 'Confirm password is required',
                         validate: value =>
                           value === password.current || "Confirm password does not match"
                       })}
-                      onChange={formHandler('cPassword')}
                     />
                   </div>
                   {errors?.confirmPassword?.message && (

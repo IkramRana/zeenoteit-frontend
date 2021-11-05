@@ -2,66 +2,39 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { disabledInspect, emailRegex } from '../../utils/index';
+import { Service } from "../../config/service";
 
+import { Grid, Typography } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { colors, darken, Grid, Typography } from '@material-ui/core';
-import { Service } from "../../config/service";
-import { ColorizeRounded } from '@material-ui/icons';
 import { useForm } from "react-hook-form";
+
 
 function Login() {
 
   const history = useHistory();
 
-  // *For Login
-  const [form, setForm] = useState({
-    email: '',
-    password: ''
-  })
-
+  // *For Loader
   const [loader, setLoader] = useState(false)
 
+  // *For Form Validation
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const formHandler = (prop) => (event) => {
-  console.log('file: login.js => line 29 => formHandler => prop', prop);
-    setForm({ ...form, [prop]: event.target.value });
-  }
-
   // *For Login
-  const login = async () => {
+  const login = async (data) => {
     try {
       setLoader(true)
       let obj = {
-        email: form.email,
-        password: form.password,
+        email: data.email,
+        password: data.password,
       }
       const { status, token } = await Service.login(obj);
       if (status) {
         localStorage.setItem('jwt', token)
         history.push('/my-missions');
       }
-      // if (form.email === '' || form.password === '') {
-      //   return;
-      // } else {
-      //   if (form.email.match(emailRegex)) {
-      //     let obj = {
-      //       email: form.email,
-      //       password: form.password,
-      //     }
-      //     const { status, token } = await Service.login(obj);
-      //     if (status) {
-      //       localStorage.setItem('jwt', token)
-      //       history.push('/my-missions');
-      //     }
-      //   } else {
-      //     return;
-      //   }
-      // }
     } catch (error) {
-      //alert(error)
+      console.log('file: login.js => line 50 => login => error', error)
       setLoader(false)
       toast.error(error, {
         position: "top-center",
@@ -72,7 +45,6 @@ function Login() {
         draggable: false,
         progress: undefined,
       });
-      console.log('Login -> error', error);
     }
   };
 
@@ -144,9 +116,7 @@ function Login() {
                       </svg>
                     </div>
                     <input
-                      name="email"
                       placeholder="Email"
-                      autoComplete="off"
                       {...register("email", {
                         required: 'Email is required',
                         pattern: {
@@ -154,7 +124,6 @@ function Login() {
                           message: 'Please enter a valid email address',
                         }
                       })}
-                      onChange={formHandler('email')}
                     />
                   </div>
                   {errors?.email?.message && (
@@ -168,13 +137,10 @@ function Login() {
                     </div>
                     <input
                       type="password"
-                      name="password"
                       placeholder="Password"
-                      autoComplete="off"
                       {...register("password", {
                         required: 'Password is required'
                       })}
-                      onChange={formHandler('password')}
                     />
                   </div>
                   {errors?.password?.message && (
@@ -187,11 +153,15 @@ function Login() {
           </Grid>
 
           <Grid item md={6}>
-            <Typography className="text-left cursor-pointer" component="p" onClick={() => history.push('/forgot-password')}>Forgot Password</Typography>
+            <Typography className="text-left" component="p" onClick={() => history.push('/forgot-password')}>
+              <span className="cursor-pointer">Forgot Password</span>
+            </Typography>
           </Grid>
 
           <Grid item md={6}>
-            <Typography className="text-right cursor-pointer" component="p" onClick={() => history.push('/register')}>Don't have an account? Signup</Typography>
+            <Typography className="text-right" component="p" onClick={() => history.push('/register')}>
+              <span className="cursor-pointer">Don't have an account? Signup</span>
+            </Typography>
           </Grid>
 
         </Grid>
