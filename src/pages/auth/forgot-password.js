@@ -30,31 +30,34 @@ function ForgotPassword() {
 
   // *For Forgot Password
   const sendEmail = async () => {
+    setLoader(true)
     try {
-      setLoader(true)
       let obj = {
         email: form.email,
       }
-      const { status,message } = await Service.getPasswordResetLink(obj);
-      if (status) {       
-        //alert(message)
+      const { message } = await Service.getPasswordResetLink(obj);   
 
-        toast.success(message, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
-  
-        // window.location.reload();
-        // resetForm();
-      }
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    } finally {
       setLoader(false)
-      console.log('Forgot Password -> error', error);
     }
   };
 

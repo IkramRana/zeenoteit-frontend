@@ -1,10 +1,13 @@
 import React from "react";
+import AuthProvider from "./hoc/authProvider";
 import AppRoutes from './routes';
 
 function App() {
 
   return (
-    <AppRoutes />
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
   );
 }
 

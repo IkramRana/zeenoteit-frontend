@@ -37,31 +37,38 @@ function ResetPassword() {
 
   // *For Reset Password
   const reset = async () => {
+    setLoader(true)
     try {
       let obj = {
         userId: userId,
         token: token,
         password: form.password,
       }
-      const { status,message } = await Service.resetPassword(obj);
-      if (status) {      
-        //alert(message) 
-
-        toast.success(message, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
+      const { message } = await Service.resetPassword(obj);
   
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      history.push('/login');
 
-        history.push('/login');
-      }
     } catch (error) {
-      console.log('Login -> error', error);
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    } finally {
+      setLoader(false)
     }
   };
 

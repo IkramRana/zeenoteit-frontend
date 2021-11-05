@@ -93,8 +93,6 @@ function Verification() {
     auth.signInWithPhoneNumber(number, verify).then((result) => {
       setfinal(result);
     }).catch((error) => {
-      //alert(err);
-      //window.location.reload()
       toast.error(error, {
         position: "top-center",
         autoClose: 2000,
@@ -104,15 +102,15 @@ function Verification() {
         draggable: false,
         progress: undefined,
       });
-
     });
 
   }
 
   // Validate OTP
   const ValidateOtp = async () => {
+    setLoader(true)
     try {
-      setLoader(true)
+
       var otp;
       if (inputField === 6) {
         otp = form.input1 + form.input2 + form.input3 + form.input4 + form.input5 + form.input6;
@@ -128,14 +126,13 @@ function Verification() {
         });
         return;
       }
-      console.log('file: verification.js => line 101 => final.confirm => otp', otp);
+
       if (otp === null || final === null)
         return;
       final.confirm(otp).then((result) => {
         // success
         registerUser()
       }).catch((error) => {
-        //alert(err.message);
         toast.error(error.message, {
           position: "top-center",
           autoClose: 2000,
@@ -146,12 +143,24 @@ function Verification() {
           progress: undefined,
         });
       })
+
     } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    } finally {
       setLoader(false)
     }
   }
 
   const registerUser = async () => {
+    setLoader(true)
     try {
       let obj = {
         email: email,
@@ -159,35 +168,32 @@ function Verification() {
         phone_number: number,
         isNumberVerified: true,
       }
-      const { status } = await Service.register(obj);
-      if (status) {
-        localStorage.removeItem('regD')
-        //alert('Registration Successful')
-        toast.success('Registration Successful', {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
-        history.push('/login');
-        resetForm();
-      } else {
-        //alert('Something Went Wrong')
-        toast.error('Something Went Wrong', {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
-      }
+      const { message } = await Service.register(obj);
+
+      localStorage.removeItem('regD')
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      history.push('/login');
+      
     } catch (error) {
-      console.log('file: verification.js => line 112 => registerUser => error', error);
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    } finally {
+      setLoader(false)
     }
   }
 

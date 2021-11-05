@@ -10,14 +10,14 @@ import { useForm, Controller } from "react-hook-form";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 var phoneError = false;
 
 function Register() {
 
   const history = useHistory();
-
-  const [phone, setPhone] = useState(''); // remove them
-  // const [phoneError, setPhoneError] = useState(false);
 
   // *For Registration
   const [form, setForm] = useState({
@@ -40,43 +40,36 @@ function Register() {
 
   // *For Registration
   const signUp = async (event) => {
+    setLoader(true)
     try {
-      setLoader(true)
+  
       let data = {
         email: form.email,
         password: form.password,
         cPassword: form.cPassword,
         phone: control._formValues.phoneInput
       };
+
+      let obj = {
+        email: form.email,
+        phone: control._formValues.phoneInput
+      }
+
+      const { status, message } = await Service.checkUserEmailAndPhone(obj);
       localStorage.setItem('regD', JSON.stringify(data));
       history.push('/verification');
-      // if (form.email === '' || form.password === '' || form.cPassword === '' || phone === '') {
-      //   return;
-      // } else {
-      //   if (form.password !== form.cPassword) {
-      //     console.log('Password & Confirm Password must match!')
-      //     return;
-      //   } else {
-      //     if (form.email.match(emailRegex)) {
-      //       let data = {
-      //         email: form.email,
-      //         password: form.password,
-      //         cPassword: form.cPassword,
-      //         phone: phone
-      //       };
-      //       localStorage.setItem('regD', JSON.stringify(data));
-      //       history.push('/verification');
-      //     } else {
-      //       return;
-      //     }
-      //   }
-      // }
-
-
-
     } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    } finally {
       setLoader(false)
-      console.log('Login -> error', error);
     }
   };
 
@@ -88,6 +81,20 @@ function Register() {
   return (
     <div className='form-bg'>
       <div className="form-wrapper">
+
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+          limit={1}
+        />
+
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >

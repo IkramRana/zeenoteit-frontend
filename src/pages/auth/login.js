@@ -10,8 +10,10 @@ import { colors, darken, Grid, Typography } from '@material-ui/core';
 import { Service } from "../../config/service";
 import { ColorizeRounded } from '@material-ui/icons';
 import { useForm } from "react-hook-form";
+import useAuth from 'hooks/useAuth';
 
 function Login() {
+   const auth = useAuth();
 
   const history = useHistory();
 
@@ -26,43 +28,22 @@ function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const formHandler = (prop) => (event) => {
-  console.log('file: login.js => line 29 => formHandler => prop', prop);
     setForm({ ...form, [prop]: event.target.value });
   }
 
   // *For Login
   const login = async () => {
+    setLoader(true)
     try {
-      setLoader(true)
       let obj = {
         email: form.email,
         password: form.password,
       }
-      const { status, token } = await Service.login(obj);
-      if (status) {
-        localStorage.setItem('jwt', token)
-        history.push('/my-missions');
-      }
-      // if (form.email === '' || form.password === '') {
-      //   return;
-      // } else {
-      //   if (form.email.match(emailRegex)) {
-      //     let obj = {
-      //       email: form.email,
-      //       password: form.password,
-      //     }
-      //     const { status, token } = await Service.login(obj);
-      //     if (status) {
-      //       localStorage.setItem('jwt', token)
-      //       history.push('/my-missions');
-      //     }
-      //   } else {
-      //     return;
-      //   }
-      // }
+      const { token } = await Service.login(obj);
+      auth.signin({token})
+      localStorage.setItem('jwt', token)
+      history.push('/my-missions');
     } catch (error) {
-      //alert(error)
-      setLoader(false)
       toast.error(error, {
         position: "top-center",
         autoClose: 2000,
@@ -72,7 +53,8 @@ function Login() {
         draggable: false,
         progress: undefined,
       });
-      console.log('Login -> error', error);
+    } finally {
+      setLoader(false)
     }
   };
 

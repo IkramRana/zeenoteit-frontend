@@ -13,6 +13,11 @@ export const Service = {
         if (result.status === 200) return result.data;
         else throw result;
     },
+    verifyToken: async (token) => {
+        let result = await post(Apis.verifyToken, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
     getPasswordResetLink: async (obj) => {
         let result = await post(Apis.getPasswordResetLink, obj);
         if (result.status === 200) return result.data;
@@ -20,6 +25,11 @@ export const Service = {
     },
     resetPassword: async (obj) => {
         let result = await post(Apis.resetPassword, obj);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    checkUserEmailAndPhone: async (obj) => {
+        let result = await post(Apis.checkUserEmailAndPhone, obj);
         if (result.status === 200) return result.data;
         else throw result;
     },
