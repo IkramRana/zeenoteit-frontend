@@ -15,25 +15,18 @@ function ForgotPassword() {
 
   const history = useHistory();
 
-  // *Use State For Form Obj
-  const [form, setForm] = useState({
-    email: ''
-  })
-
+  // *For Loader
   const [loader, setLoader] = useState(false)
 
+  // *For Form Validation
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const formHandler = (prop) => (event) => {
-    setForm({ ...form, [prop]: event.target.value });
-  }
-
-  // *For Forgot Password
-  const sendEmail = async () => {
+  // *For Forgot Password Send Email
+  const sendEmail = async (data) => {
     setLoader(true)
     try {
       let obj = {
-        email: form.email,
+        email: data.email,
       }
       const { message } = await Service.getPasswordResetLink(obj);   
 
@@ -128,9 +121,7 @@ function ForgotPassword() {
                       </svg>
                     </div>
                     <input
-                      name="email"
                       placeholder="Email Address"
-                      autoComplete="off"
                       {...register("email", {
                         required: 'Email is required',
                         pattern: {
@@ -138,7 +129,6 @@ function ForgotPassword() {
                           message: 'Please enter a valid email address',
                         }
                       })}
-                      onChange={formHandler('email')}
                     />
                   </div>
                   {errors?.email?.message && (
@@ -155,12 +145,16 @@ function ForgotPassword() {
 
           <Grid item md={6}>
             <Typography className="text-left" component="p">
-              <span onClick={() => { sendEmail() }}><Refresh /> Resend Email</span>
+              <span className="cursor-pointer" onClick={() => { sendEmail() }}>
+                <Refresh /> Resend Email
+              </span>
             </Typography>
           </Grid>
 
           <Grid item md={6}>
-            <Typography className="text-right cursor-pointer" component="p" onClick={() => history.push('/login')}>Have an account? Login</Typography>
+            <Typography className="text-right" component="p" onClick={() => history.push('/login')}>
+              <span className="cursor-pointer">Have an account? Login</span>
+            </Typography>
           </Grid>
 
         </Grid>

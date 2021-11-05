@@ -22,7 +22,7 @@ function Verification() {
   const [email, setEmail] = React.useState("");
   const [number, setNumber] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [final, setfinal] = React.useState('');
+  const [final, setFinal] = React.useState('');
 
   // *For Phone Verification
   const [form, setForm] = useState({
@@ -35,7 +35,8 @@ function Verification() {
   })
 
   const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
-  
+
+  // *For Loader
   const [loader, setLoader] = useState(false)
 
   const getRegistrationValue = () => {
@@ -46,11 +47,12 @@ function Verification() {
     sendOTP();
   }
 
+  // *For Set Verification Code
   const formHandler = (prop) => (event) => {
     try {
       if (event.target.value.length <= 1) {
         if (event.target.value.length === 1) {
-          if(inputField === 6){
+          if (inputField === 6) {
             setForm({ ...form, [prop]: event.target.value });
           }
           else if (inputField <= 6) {
@@ -73,11 +75,11 @@ function Verification() {
         return;
       }
     } catch (error) {
-      //console.log('file: verification.js => line 74 => formHandler => error', error);
+      console.log('Login -> error', error);
     }
   }
 
-  // Sent OTP
+  // *Sent OTP
   const sendOTP = () => {
     const number = value.phone;
     if (number === "" || number.length < 10) return;
@@ -91,7 +93,7 @@ function Verification() {
     });
     const verify = window.recaptchaVerifier;
     auth.signInWithPhoneNumber(number, verify).then((result) => {
-      setfinal(result);
+      setFinal(result);
     }).catch((error) => {
       toast.error(error, {
         position: "top-center",
@@ -106,7 +108,7 @@ function Verification() {
 
   }
 
-  // Validate OTP
+  // *Validate OTP
   const ValidateOtp = async () => {
     setLoader(true)
     try {
@@ -126,7 +128,6 @@ function Verification() {
         });
         return;
       }
-
       if (otp === null || final === null)
         return;
       final.confirm(otp).then((result) => {
@@ -221,7 +222,7 @@ function Verification() {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
-          <svg className="logo" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="256.546" height="150.771" viewBox="0 0 256.546 150.771">
+            <svg className="logo" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="256.546" height="150.771" viewBox="0 0 256.546 150.771">
               <defs>
                 <linearGradient id="linear-gradient" x1="0.036" y1="0.808" x2="1.255" y2="0.213" gradientUnits="objectBoundingBox">
                   <stop offset="0" stopColor="#79c8c4" />
@@ -271,12 +272,12 @@ function Verification() {
                 <Grid item md={9}>
                   <Typography variant="h2">Phone Number Verification</Typography>
                   <div>
-                    <input type="number" className="verification-input" name="input1" value={form.input1} onChange={formHandler('input1')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input2" value={form.input2} onChange={formHandler('input2')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input3" value={form.input3} onChange={formHandler('input3')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input4" value={form.input4} onChange={formHandler('input4')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input5" value={form.input5} onChange={formHandler('input5')} autoComplete="off" required />
-                    <input type="number" className="verification-input" name="input6" value={form.input6} onChange={formHandler('input6')} autoComplete="off" required />
+                    <input type="number" className="verification-input" name="input1" value={form.input1} onChange={formHandler('input1')} required />
+                    <input type="number" className="verification-input" name="input2" value={form.input2} onChange={formHandler('input2')} required />
+                    <input type="number" className="verification-input" name="input3" value={form.input3} onChange={formHandler('input3')} required />
+                    <input type="number" className="verification-input" name="input4" value={form.input4} onChange={formHandler('input4')} required />
+                    <input type="number" className="verification-input" name="input5" value={form.input5} onChange={formHandler('input5')} required />
+                    <input type="number" className="verification-input" name="input6" value={form.input6} onChange={formHandler('input6')} required />
                   </div>
                   <Typography component="p">
                     Please check your phone to get verification code.
@@ -289,7 +290,7 @@ function Verification() {
 
           <Grid item md={12}>
             <Typography component="p">
-              <span onClick={sendOTP}><Refresh /> Resend Code</span>
+              <span className="cursor-pointer" onClick={sendOTP}><Refresh /> Resend Code</span>
               <button style={{ display: "none" }} id="sign-in-button"></button>
             </Typography>
           </Grid>

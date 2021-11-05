@@ -13,50 +13,38 @@ import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-var phoneError = false;
-
 function Register() {
 
   const history = useHistory();
 
-  // *For Registration
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-    cPassword: '',
-  })
-
+  // *For Loader
   const [loader, setLoader] = useState(false)
 
+  // *For Form Validation
   const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
 
   const password = useRef({});
   password.current = watch("password", "");
 
-  const formHandler = (prop) => (event) => {
-    setForm({ ...form, [prop]: event.target.value });
-  }
-
-
   // *For Registration
-  const signUp = async (event) => {
+  const signUp = async (data) => {
     setLoader(true)
     try {
   
-      let data = {
-        email: form.email,
-        password: form.password,
-        cPassword: form.cPassword,
+      let obj = {
+        email: data.email,
+        password: data.password,
+        cPassword: data.cPassword,
         phone: control._formValues.phoneInput
       };
 
-      let obj = {
-        email: form.email,
+      let userObj = {
+        email: data.email,
         phone: control._formValues.phoneInput
       }
 
-      const { status, message } = await Service.checkUserEmailAndPhone(obj);
-      localStorage.setItem('regD', JSON.stringify(data));
+      const { status, message } = await Service.checkUserEmailAndPhone(userObj);
+      localStorage.setItem('regD', JSON.stringify(obj));
       history.push('/verification');
     } catch (error) {
       toast.error(error, {
@@ -141,9 +129,7 @@ function Register() {
                       </svg>
                     </div>
                     <input
-                      name="email"
                       placeholder="Email"
-                      autoComplete="off"
                       {...register("email", {
                         required: 'Email is required',
                         pattern: {
@@ -151,7 +137,6 @@ function Register() {
                           message: 'Please enter a valid email address',
                         }
                       })}
-                      onChange={formHandler('email')}
                     />
                   </div>
                   {errors?.email?.message && (
@@ -165,9 +150,7 @@ function Register() {
                     </div>
                     <input
                       type="password"
-                      name="password"
                       placeholder="Password"
-                      autoComplete="off"
                       {...register("password", {
                         required: 'Password is required',
                         minLength: {
@@ -175,7 +158,6 @@ function Register() {
                           message: "Password must have at least 8 characters"
                         }
                       })}
-                      onChange={formHandler('password')}
                     />
                   </div>
                   {errors?.password?.message && (
@@ -189,27 +171,18 @@ function Register() {
                     </div>
                     <input
                       type="password"
-                      name="cPassword"
                       placeholder="Re-Password"
-                      autoComplete="off"
                       {...register("confirmPassword", {
                         required: 'Confirm password is required',
                         validate: value =>
                           value === password.current || "Confirm password does not match"
                       })}
-                      onChange={formHandler('cPassword')}
                     />
                   </div>
                   {errors?.confirmPassword?.message && (
                     <p className="error">{errors?.confirmPassword?.message}</p>
                   )}
                   <div className="input-field">
-                    {/* <PhoneInput
-                      defaultCountry="PK"
-                      placeholder="Phone No."
-                      value={phone}
-                      onChange={setPhone}
-                    /> */}
                     <Controller
                       name="phoneInput"
                       control={control}
@@ -237,7 +210,9 @@ function Register() {
           </Grid>
 
           <Grid item md={12}>
-            <Typography className="cursor-pointer" component="p" onClick={() => history.push('/login')}>Already have an account? Login</Typography>
+            <Typography component="p" onClick={() => history.push('/login')}>
+              <span className="cursor-pointer">Already have an account? Login</span>
+            </Typography>
           </Grid>
 
         </Grid>
