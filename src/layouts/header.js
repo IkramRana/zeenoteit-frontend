@@ -73,7 +73,7 @@ function Header(props) {
           <span>Welcome </span><span className="text-color">To Your New Day!</span>
         </Typography>
         <div className="quote">
-          <Typography component="p">{quote.message}</Typography>
+          <Typography component="p">The winds and the waves are always on the side of the ablest aviators - Edward Gibbon</Typography>
           <div className="sponsored">
             <Typography component="span">Sponsored by</Typography>
             <Typography className="link" component="span">www.dailyquotes.com</Typography>
