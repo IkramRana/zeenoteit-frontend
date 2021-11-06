@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { disabledInspect } from '../../utils/index';
+import { disabledInspect } from 'utils/index';
 
 import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
-import { firebase, auth } from '../../config/firebase';
-import { Service } from "../../config/service";
+import { firebase, auth } from 'config/firebase';
+import { Service } from "config/service";
 import { useForm, Controller } from "react-hook-form";
 
 import { ToastContainer, toast } from 'react-toastify';

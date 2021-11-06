@@ -1,5 +1,5 @@
-import authContext from "../context/authContext";
-import useProvideAuth from "../hooks/useProvideAuth";
+import authContext from "context/authContext";
+import useProvideAuth from "hooks/useProvideAuth";
 
 
 export default function AuthProvider({ children }) {

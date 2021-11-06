@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
 import useAuth from 'hooks/useAuth';
 import Login from 'pages/auth/login';
 import Register from 'pages/auth/register';
@@ -12,6 +11,7 @@ import MyThoughts from 'pages/thoughts/my-thoughts';
 import WriteThoughts from 'pages/thoughts/write-thoughts';
 import Settings from 'pages/settings/settings';
 import PublicRoute from './PublicRoute';
+import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => {
   const auth = useAuth();

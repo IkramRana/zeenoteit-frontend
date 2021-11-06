@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Service } from "../config/service";
+import { Service } from "config/service";
 
 export default function useProvideAuth() {
     const [user, setUser] = useState(null);
@@ -20,7 +20,7 @@ export default function useProvideAuth() {
         try {
             const token = localStorage.getItem('jwt');
             if (!token) return user ? setUser(null) : null;
-            const { status,message } = await Service.verifyToken({token:token});
+            const { status, message } = await Service.verifyToken({ token: token });
             if (status) signin(message);
             else signout();
         } catch (err) {

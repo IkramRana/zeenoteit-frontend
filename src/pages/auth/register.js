@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-import { disabledInspect, emailRegex } from '../../utils/index';
+import { disabledInspect, emailRegex } from 'utils/index';
 
 import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
-import { Service } from "../../config/service";
+import { Service } from "config/service";
 import { useForm, Controller } from "react-hook-form";
 
 import 'react-phone-number-input/style.css'
-import PhoneInput, { isValidPhoneNumber  } from 'react-phone-number-input'
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

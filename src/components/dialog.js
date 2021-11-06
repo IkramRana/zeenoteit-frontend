@@ -25,16 +25,12 @@ export default function AddQuote(props) {
   const dailyQuote = async (data) => {
     setLoader(true)
     try {
-      console.log('file: dialog.js => line 22 => dailyQuote => data', data.quote)
-      console.log('file: dialog.js => line 22 => dailyQuote => data', data.author)
-      console.log('file: dialog.js => line 22 => dailyQuote => data', data.sponsored)
-      // onClose()
-      // let obj = {
-      //   message: data.quote,
-      //   // author: data.author,
-      //   // sponsored: data.sponsored,
-      // }
-      // const { token } = await Service.addQuote(obj);
+      let obj = {
+        quote: data.quote,
+        author: data.author,
+        sponsor: data.sponsored,
+      }
+      onClose(obj)
     } catch (error) {
       toast.error(error, {
         position: "top-center",

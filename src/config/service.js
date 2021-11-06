@@ -1,5 +1,7 @@
 import { Apis, get, post } from './';
 
+var token = localStorage.getItem('jwt')
+
 export const Service = {
 
     // *Auth
@@ -35,13 +37,13 @@ export const Service = {
     },
 
     // *Daily Quotes
-    addQuote: async () => {
-        let result = await post(Apis.addQuotes);
+    addQuote: async (obj) => {
+        let result = await post(Apis.addQuotes, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },
     getQuotes: async () => {
-        let result = await get(Apis.getQuotes);
+        let result = await get(Apis.getQuotes, token);
         if (result.status === 200) return result.data;
         else throw result;
     },

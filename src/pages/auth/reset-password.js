@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 
-import { Service } from "../../config/service";
+import { Service } from "config/service";
 
-import { disabledInspect } from '../../utils/index';
+import { disabledInspect } from 'utils/index';
 
 import { Grid, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";

@@ -240,9 +240,14 @@ input::-webkit-inner-spin-button {
       font-size: 14px;
       font-family: "Avenir";
       color: #58595b;
-      padding: 0px 10px;
+      padding: 0px;
       cursor: inherit;
       transition: 0.3s ease-in-out;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
 
     .sponsored {
@@ -267,6 +272,7 @@ input::-webkit-inner-spin-button {
         font-size: 12px;
         font-family: "Avenir";
         color: #58595b;
+        cursor: pointer;
       }
     }
   }

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { disabledInspect } from '../../utils/index';
+import { disabledInspect } from 'utils/index';
 
 import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
 
 // *Import Components
-import Navigation from '../../layouts/navigation'
-import Header from '../../layouts/header'
+import Navigation from 'layouts/navigation'
+import Header from 'layouts/header'
 
 function WriteThoughts() {
 

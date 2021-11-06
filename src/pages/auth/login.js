@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-import { disabledInspect, emailRegex } from '../../utils/index';
-import { Service } from "../../config/service";
+import { disabledInspect, emailRegex } from 'utils/index';
+import { Service } from "config/service";
 
 import { Grid, Typography } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
@@ -35,6 +35,7 @@ function Login() {
       localStorage.setItem('jwt', token)
       history.push('/my-missions');
     } catch (error) {
+      console.log('heeloe');
       toast.error(error, {
         position: "top-center",
         autoClose: 2000,

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { disabledInspect } from '../../utils/index';
+import { disabledInspect } from 'utils/index';
 
 import { Breadcrumbs, Grid, IconButton, Typography } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 // *Import Components
-import Navigation from '../../layouts/navigation'
-import Header from '../../layouts/header'
+import Navigation from 'layouts/navigation'
+import Header from 'layouts/header'
 
 function MyMissions() {
 

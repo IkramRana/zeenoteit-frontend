@@ -21,10 +21,9 @@ export const headers = {
 
 export const get = async (data, token) => {
     try {
-        const result = await Axios.get(data, { headers: { Authorization: `Bearer${token}` } });
+        const result = await Axios.get(data, { headers: { Authorization: `Bearer ${token}` } });
         return result;
     } catch (e) {
-        console.log('post -> e', e);
         throw errorHandler(e);
     }
 };

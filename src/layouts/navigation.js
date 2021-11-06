@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { disabledInspect } from '../utils/index';
+import { disabledInspect } from 'utils/index';
 
 import { Grid, Typography } from '@material-ui/core';
 import useAuth from "hooks/useAuth";
 
 function Navigation() {
 
-  const {signout} = useAuth();
+  const { signout } = useAuth();
 
   const history = useHistory();
 

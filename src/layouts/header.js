@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { disabledInspect } from '../utils/index';
+import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
 import { Grid, IconButton, Tooltip, Typography, withStyles, } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useForm } from "react-hook-form";
-import useAuth from 'hooks/useAuth';
 
 // *Daily Quote Dialog
 import AddQuote from "components/dialog";
@@ -24,7 +23,7 @@ const QuoteToolTip = withStyles({
 
 function Header(props) {
 
-  const auth = useAuth();
+  const history = useHistory();
 
   const [addQuote, setAddQuote] = useState(false)
 
@@ -34,15 +33,29 @@ function Header(props) {
     setAddQuote(true)
   }
 
-  const dialogCloseHandler = () => {
-    setAddQuote(false)
+  const dialogCloseHandler = async (obj) => {
+    try {
+      const { message } = await Service.addQuote(obj);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      setAddQuote(false)
+    } catch (error) {
+      console.log('file: header.js => line 40 => dialogCloseHandler => error', error)
+    }
   }
 
   // *For Daily Quote
   const getQuote = async () => {
     try {
-      const { message } = await Service.getQuotes();
-      setQuote(message)
+      const { data } = await Service.getQuotes();
+      setQuote(data[0])
     } catch (error) {
       toast.error(error, {
         position: "top-center",
@@ -60,7 +73,7 @@ function Header(props) {
     getQuote();
     disabledInspect();
     window.scrollTo({ top: 0 });
-  }, [])
+  }, [quote])
 
   return (
     <Grid id="Header" container spacing={0} justifyContent="space-between" alignItems="center">
@@ -68,20 +81,20 @@ function Header(props) {
       {/* ========== Add Quote Dialog ========== */}
       <AddQuote open={addQuote} onClose={dialogCloseHandler} />
 
-      <Grid item md={7}>
+      <Grid item md={8}>
         <Typography component="h2">
           <span>Welcome </span><span className="text-color">To Your New Day!</span>
         </Typography>
         <div className="quote">
-          <Typography component="p">The winds and the waves are always on the side of the ablest aviators - Edward Gibbon</Typography>
+          <Typography component="p">{quote.quote} - {quote.author}</Typography>
           <div className="sponsored">
             <Typography component="span">Sponsored by</Typography>
-            <Typography className="link" component="span">www.dailyquotes.com</Typography>
+            <Typography className="link" component="span" onClick={() => history.push(`/${quote.sponsor}`)}>{quote.sponsor}</Typography>
           </div>
         </div>
       </Grid>
 
-      <Grid className="text-right" item md={5}>
+      <Grid className="text-right" item md={4}>
         <Typography component="h4">04 November 2021</Typography>
         <QuoteToolTip className="tooltip" title="Write quote of the day">
           <IconButton className="add-quote" size="medium" onClick={dialogOpenHandler}>
