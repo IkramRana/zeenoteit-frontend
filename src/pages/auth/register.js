@@ -30,7 +30,7 @@ function Register() {
   const signUp = async (data) => {
     setLoader(true)
     try {
-  
+
       let obj = {
         email: data.email,
         password: data.password,
@@ -203,7 +203,7 @@ function Register() {
                   {errors?.phoneInput?.message && (
                     <p className="error">{errors?.phoneInput?.message}</p>
                   )}
-                  <button type="submit" className={`button ${loader === true ? 'spinner disabled' : ''}`} disabled={loader === true ? true : false} >SIGNUP</button>
+                  <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >SIGNUP</button>
                 </Grid>
               </Grid>
             </form>

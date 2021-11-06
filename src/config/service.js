@@ -34,5 +34,16 @@ export const Service = {
         else throw result;
     },
 
+    // *Daily Quotes
+    addQuote: async () => {
+        let result = await post(Apis.addQuotes);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    getQuotes: async () => {
+        let result = await get(Apis.getQuotes);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
 
 }

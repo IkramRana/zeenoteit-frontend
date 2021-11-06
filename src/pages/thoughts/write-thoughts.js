@@ -80,7 +80,7 @@ function WriteThoughts() {
             </Grid>
 
             <Grid item md={3}>
-              <button type="button" className="button" onClick={() => { save() }}>Save</button>
+              <button type="button" className="button-raised" onClick={() => { save() }}>Save</button>
             </Grid>
 
           </Grid>

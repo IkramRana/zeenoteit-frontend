@@ -39,6 +39,13 @@ function Verification() {
   // *For Loader
   const [loader, setLoader] = useState(false)
 
+  // *For Disabled
+  const [disabled, setDisabled] = useState(true)
+
+  // *For Resend Icon Animation
+  const [iconAnimation, setIconAnimation] = useState(true)
+
+  // *Get Registration Value
   const getRegistrationValue = () => {
     value = JSON.parse(localStorage.getItem('regD'));
     setEmail(value.email);
@@ -75,7 +82,7 @@ function Verification() {
         return;
       }
     } catch (error) {
-      console.log('Login -> error', error);
+      console.log('file: verification.js => line 81 => formHandler => error', error)
     }
   }
 
@@ -91,6 +98,9 @@ function Verification() {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
       }
     });
+    setTimeout(() => {
+      setIconAnimation(true)
+    }, 1000);
     const verify = window.recaptchaVerifier;
     auth.signInWithPhoneNumber(number, verify).then((result) => {
       setFinal(result);
@@ -108,11 +118,22 @@ function Verification() {
 
   }
 
+  // *For Resend OTP
+  const resendOTP = () => {
+    if (disabled === true) {
+      return
+    } else {
+      console.log('hello');
+      setIconAnimation(false);
+      sendOTP();
+    }
+  }
+
   // *Validate OTP
   const ValidateOtp = async () => {
     setLoader(true)
     try {
-
+      console.log('wrong OTP 137=>', loader)
       var otp;
       if (inputField === 6) {
         otp = form.input1 + form.input2 + form.input3 + form.input4 + form.input5 + form.input6;
@@ -136,7 +157,7 @@ function Verification() {
       }).catch((error) => {
         toast.error(error.message, {
           position: "top-center",
-          autoClose: 2000,
+          autoClose: 4000,
           hideProgressBar: true,
           closeOnClick: false,
           pauseOnHover: false,
@@ -144,11 +165,10 @@ function Verification() {
           progress: undefined,
         });
       })
-
     } catch (error) {
       toast.error(error, {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 4000,
         hideProgressBar: true,
         closeOnClick: false,
         pauseOnHover: false,
@@ -156,12 +176,13 @@ function Verification() {
         progress: undefined,
       });
     } finally {
-      setLoader(false)
+      setTimeout(() => {
+        setLoader(false)
+      }, 1000);
     }
   }
 
   const registerUser = async () => {
-    setLoader(true)
     try {
       let obj = {
         email: email,
@@ -181,8 +202,9 @@ function Verification() {
         draggable: false,
         progress: undefined,
       });
-      history.push('/login');
-      
+      setTimeout(() => {
+        history.push('/login');
+      }, 1000);
     } catch (error) {
       toast.error(error, {
         position: "top-center",
@@ -193,28 +215,18 @@ function Verification() {
         draggable: false,
         progress: undefined,
       });
-    } finally {
-      setLoader(false)
     }
   }
 
-  // *For Reset Form
-  const resetForm = () => {
-    setForm({
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: '',
-      input5: '',
-      input6: ''
-    });
-  }
+  setTimeout(() => {
+    setDisabled(false)
+  }, 10000);
 
   useEffect(() => {
     getRegistrationValue();
     disabledInspect();
     window.scrollTo({ top: 0 });
-  }, [])
+  }, [loader])
 
   return (
     <div className='form-bg'>
@@ -282,7 +294,7 @@ function Verification() {
                   <Typography component="p">
                     Please check your phone to get verification code.
                   </Typography>
-                  <button type="submit" className={`button ${loader === true ? 'spinner disabled' : ''}`} disabled={loader === true ? true : false} >VERIFY</button>
+                  <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >VERIFY</button>
                 </Grid>
               </Grid>
             </form>
@@ -290,7 +302,9 @@ function Verification() {
 
           <Grid item md={12}>
             <Typography component="p">
-              <span className="cursor-pointer" onClick={sendOTP}><Refresh /> Resend Code</span>
+              <span className={`cursor-pointer ${disabled === true ? 'disabled ' : ''}`} onClick={() => { resendOTP() }}>
+                <Refresh className={iconAnimation === true ? '' : 'resend'} /> Resend Code
+              </span>
               <button style={{ display: "none" }} id="sign-in-button"></button>
             </Typography>
           </Grid>
