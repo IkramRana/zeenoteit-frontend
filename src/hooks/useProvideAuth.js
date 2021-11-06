@@ -20,8 +20,8 @@ export default function useProvideAuth() {
         try {
             const token = localStorage.getItem('jwt');
             if (!token) return user ? setUser(null) : null;
-            const result = await Service.verifyToken(token);
-            if (result) signin(result.data);
+            const { status,message } = await Service.verifyToken({token:token});
+            if (status) signin(message);
             else signout();
         } catch (err) {
             if (user) setUser(null);

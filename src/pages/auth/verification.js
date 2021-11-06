@@ -21,6 +21,7 @@ function Verification() {
 
   const [email, setEmail] = React.useState("");
   const [number, setNumber] = React.useState("");
+  const [countryCode, setCountryCode] = useState('')
   const [password, setPassword] = React.useState("");
   const [final, setFinal] = React.useState('');
 
@@ -43,6 +44,7 @@ function Verification() {
     value = JSON.parse(localStorage.getItem('regD'));
     setEmail(value.email);
     setNumber(value.phone);
+    setCountryCode(value.countryCode);
     setPassword(value.password);
     sendOTP();
   }
@@ -166,6 +168,7 @@ function Verification() {
       let obj = {
         email: email,
         password: password,
+        country_code: countryCode,
         phone_number: number,
         isNumberVerified: true,
       }

@@ -8,7 +8,7 @@ import { Service } from "../../config/service";
 import { useForm, Controller } from "react-hook-form";
 
 import 'react-phone-number-input/style.css'
-import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
+import PhoneInput, { isValidPhoneNumber  } from 'react-phone-number-input'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +20,9 @@ function Register() {
   // *For Loader
   const [loader, setLoader] = useState(false)
 
+
+  const [countryCode, setCountryCode] = useState('PK')
+
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
 
@@ -30,11 +33,12 @@ function Register() {
   const signUp = async (data) => {
     setLoader(true)
     try {
-  
+
       let obj = {
         email: data.email,
         password: data.password,
         cPassword: data.cPassword,
+        countryCode: countryCode,
         phone: control._formValues.phoneInput
       };
 
@@ -194,7 +198,9 @@ function Register() {
                         <PhoneInput
                           value={value}
                           onChange={onChange}
-                          defaultCountry="PK"
+                          defaultCountry={countryCode}
+                          country={countryCode}
+                          onCountryChange={c => setCountryCode(c)}
                           id="phoneInput"
                         />
                       )}
