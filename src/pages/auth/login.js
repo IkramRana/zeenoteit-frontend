@@ -12,8 +12,8 @@ import useAuth from 'hooks/useAuth';
 
 
 function Login() {
-   const auth = useAuth();
 
+  const auth = useAuth();
   const history = useHistory();
 
   // *For Loader
@@ -31,7 +31,7 @@ function Login() {
         password: data.password,
       }
       const { token } = await Service.login(obj);
-      auth.signin({token})
+      auth.signin({ token })
       localStorage.setItem('jwt', token)
       history.push('/my-missions');
     } catch (error) {
@@ -147,7 +147,7 @@ function Login() {
                   {errors?.password?.message && (
                     <p className="error">{errors?.password?.message}</p>
                   )}
-                  <button type="submit" className={`button ${loader === true ? 'spinner disabled' : ''}`} disabled={loader === true ? true : false} >LOGIN</button>
+                  <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >LOGIN</button>
                 </Grid>
               </Grid>
             </form>

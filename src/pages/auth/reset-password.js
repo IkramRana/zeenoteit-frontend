@@ -37,7 +37,7 @@ function ResetPassword() {
         password: data.password,
       }
       const { message } = await Service.resetPassword(obj);
-  
+
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -164,7 +164,7 @@ function ResetPassword() {
                   {errors?.confirmPassword?.message && (
                     <p className="error">{errors?.confirmPassword?.message}</p>
                   )}
-                  <button type="submit" className={`button ${loader === true ? 'spinner disabled' : ''}`} disabled={loader === true ? true : false} >Reset</button>
+                  <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >Reset</button>
                 </Grid>
               </Grid>
             </form>

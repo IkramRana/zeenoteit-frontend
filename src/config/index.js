@@ -2,21 +2,26 @@ import Axios from '../axios';
 import { errorHandler } from './errorHandler';
 
 export const Apis = {
+    // *Auth
     login: 'user/login',
     register: 'user/register',
     verifyToken: 'user/verifyToken',
     resetPassword: 'password-reset/resetPassword',
     getPasswordResetLink: 'password-reset/getPasswordResetLink',
     checkUserEmailAndPhone: 'user/checkUserEmailAndPhone',
+
+    // *Daily Quotes
+    addQuotes: 'quote/add-quote',
+    getQuotes: 'quote/get-quote',
 };
 
 export const headers = {
     'content-type': 'application/json',
 };
 
-export const get = async (endPoint, token) => {
+export const get = async (data, token) => {
     try {
-        const result = await Axios.get(endPoint);
+        const result = await Axios.get(data, { headers: { Authorization: `Bearer${token}` } });
         return result;
     } catch (e) {
         console.log('post -> e', e);

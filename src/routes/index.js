@@ -10,7 +10,7 @@ import Verification from 'pages/auth/verification';
 import MyMissions from 'pages/missions/my-missions';
 import MyThoughts from 'pages/thoughts/my-thoughts';
 import WriteThoughts from 'pages/thoughts/write-thoughts';
-import { Settings } from '@material-ui/icons';
+import Settings from 'pages/settings/settings';
 import PublicRoute from './PublicRoute';
 
 const AppRoutes = () => {
