@@ -1,36 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Service } from "config/service";
-
-import { Dialog, DialogContent, DialogTitle, DialogActions, List, Grid } from '@material-ui/core';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Dialog, DialogContent, DialogTitle, DialogActions, Grid } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import useAuth from 'hooks/useAuth';
-import { ImportantDevices } from '@material-ui/icons';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddQuote(props) {
 
-  const auth = useAuth();
-
-  const { open, onClose } = props
-
-  // *For Loader
-  const [loader, setLoader] = useState(false)
+  const { open, onClose, addDailyQuote } = props
 
   // *For Form Validation
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // *For Daily Quote
+  // *For Add Daily Quote
   const dailyQuote = async (data) => {
-    setLoader(true)
     try {
       let obj = {
         quote: data.quote,
         author: data.author,
-        sponsor: data.sponsored,
+        sponsor: data.sponsor,
       }
-      onClose(obj)
+      addDailyQuote(obj)
     } catch (error) {
       toast.error(error, {
         position: "top-center",
@@ -41,8 +31,6 @@ export default function AddQuote(props) {
         draggable: false,
         progress: undefined,
       });
-    } finally {
-      setLoader(false)
     }
   };
 
@@ -69,14 +57,23 @@ export default function AddQuote(props) {
           <input
             className="author"
             placeholder="- Quote Author"
-            {...register("author")}
+            {...register("author", {
+              required: 'Author is required'
+            })}
           />
+          {errors?.author?.message && (
+            <p className="error" >{errors?.author?.message}</p>
+          )}
           <input
-            className="sponsored"
+            className="sponsor"
             placeholder="Sponsor Link"
-            {...register("sponsored")}
+            {...register("sponsor", {
+              required: 'Sponsor is required'
+            })}
           />
-
+          {errors?.sponsor?.message && (
+            <p className="error" >{errors?.sponsor?.message}</p>
+          )}
         </DialogContent>
         <DialogActions>
           <Grid container spacing={0} justifyContent="center" alignItems="center">
@@ -86,7 +83,7 @@ export default function AddQuote(props) {
               </button>
             </Grid>
             <Grid item md={4}>
-              <button type="submit" className={`button-raised ${loader === true ? 'spinner disabled' : ''}`} disabled={loader === true ? true : false} >
+              <button type="submit" className="button-raised" >
                 Add Quote
               </button>
             </Grid>

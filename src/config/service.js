@@ -37,13 +37,13 @@ export const Service = {
     },
 
     // *Daily Quotes
-    addQuote: async (obj) => {
-        let result = await post(Apis.addQuotes, obj, token);
+    addDailyQuote: async (obj) => {
+        let result = await post(Apis.addDailyQuote, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },
-    getQuotes: async () => {
-        let result = await get(Apis.getQuotes, token);
+    getDailyQuote: async () => {
+        let result = await get(Apis.getDailyQuote, token);
         if (result.status === 200) return result.data;
         else throw result;
     },

@@ -14,6 +14,7 @@ import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => {
+
   const auth = useAuth();
 
   useEffect(() => {

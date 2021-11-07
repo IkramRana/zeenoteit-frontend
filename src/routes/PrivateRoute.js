@@ -1,10 +1,10 @@
-import useAuth from 'hooks/useAuth';
 import React from 'react';
 import { Redirect, Route } from 'react-router';
+import useAuth from 'hooks/useAuth';
 
 export default function PrivateRoute({ children, ...rest }) {
+
     let auth = useAuth();
-    console.log('file: PrivateRoute.js => line 7 => PrivateRoute => auth', auth);
 
     return (
         <Route

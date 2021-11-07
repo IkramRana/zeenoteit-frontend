@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
+import images from "assets/images/images";
 import { disabledInspect } from 'utils/index';
 
 import { Breadcrumbs, Grid, IconButton, Typography } from '@material-ui/core';
@@ -57,16 +58,12 @@ function MyMissions() {
                       </Grid>
                       <Grid item md={2}>
                         <IconButton aria-label="menu" size="small">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16.18" height="16.18" viewBox="0 0 20.18 20.18">
-                            <path id="add_tasks" d="M27.888,17.8H20.311V10.221a1.256,1.256,0,1,0-2.513,0V17.8H10.221a1.256,1.256,0,0,0,0,2.513H17.8v7.577a1.256,1.256,0,0,0,2.513,0V20.311h7.577a1.256,1.256,0,0,0,0-2.513Z" transform="translate(-8.965 -8.965)" fill="#003361" />
-                          </svg>
+                          {images.addTask}
                         </IconButton>
                       </Grid>
                       <Grid item md={2}>
                         <IconButton aria-label="menu" size="small">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="5.001" viewBox="0 0 23 5.001">
-                            <path id="menu_dots" d="M-12103-5230.5a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12103-5230.5Zm-9,0a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12112-5230.5Zm-9,0a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12121-5230.5Z" transform="translate(12121.001 5233.001)" fill="#003361" />
-                          </svg>
+                          {images.menuDots}
                         </IconButton>
                       </Grid>
                     </Grid>
@@ -77,9 +74,7 @@ function MyMissions() {
                 </Grid>
 
                 <Grid className="add-task" item md={12}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16.18" height="16.18" viewBox="0 0 20.18 20.18">
-                    <path id="add_tasks" d="M27.888,17.8H20.311V10.221a1.256,1.256,0,1,0-2.513,0V17.8H10.221a1.256,1.256,0,0,0,0,2.513H17.8v7.577a1.256,1.256,0,0,0,2.513,0V20.311h7.577a1.256,1.256,0,0,0,0-2.513Z" transform="translate(-8.965 -8.965)" />
-                  </svg>
+                  {images.addTask}
                   <Typography component="span">Add To Do List</Typography>
                 </Grid>
 

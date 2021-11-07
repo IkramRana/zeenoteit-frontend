@@ -11,8 +11,8 @@ export const Apis = {
     checkUserEmailAndPhone: 'user/checkUserEmailAndPhone',
 
     // *Daily Quotes
-    addQuotes: 'quote/add-quote',
-    getQuotes: 'quote/get-quote',
+    addDailyQuote: 'quote/add-quote',
+    getDailyQuote: 'quote/get-quote',
 };
 
 export const headers = {
