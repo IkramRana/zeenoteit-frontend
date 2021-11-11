@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-import images from 'assets/images/images';
+import { Logo, User, Lock } from 'assets/images/icons';
 import { disabledInspect, emailRegex } from 'utils/index';
 import { Service } from "config/service";
 import useAuth from 'hooks/useAuth';
@@ -31,12 +31,12 @@ function Login() {
         email: data.email,
         password: data.password,
       }
-      const { token } = await Service.login(obj);
+      const { token, user } = await Service.login(obj);
       auth.signin({ token })
       localStorage.setItem('jwt', token)
+      localStorage.setItem('userData', JSON.stringify(user));
       history.push('/my-missions');
     } catch (error) {
-      console.log('heeloe');
       toast.error(error, {
         position: "top-center",
         autoClose: 2000,
@@ -76,7 +76,7 @@ function Login() {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
-            {images.logo}
+            <Logo />
           </Grid>
 
           <Grid item md={12}>
@@ -86,7 +86,7 @@ function Login() {
                   <Typography variant="h2">Login</Typography>
                   <div className="input-field">
                     <div className="icon">
-                      {images.user}
+                      <User />
                     </div>
                     <input
                       placeholder="Email"
@@ -104,7 +104,7 @@ function Login() {
                   )}
                   <div className="input-field">
                     <div className="icon">
-                      {images.lock}
+                      <Lock />
                     </div>
                     <input
                       type="password"

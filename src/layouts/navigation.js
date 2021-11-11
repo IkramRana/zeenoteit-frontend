@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import images from "assets/images/images";
+import { Logo, MissionActive, ThoughtInactive, SettingActive, LogoutInactive } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
+import useAuth from "hooks/useAuth";
 
 import { Grid, Typography } from '@material-ui/core';
-import useAuth from "hooks/useAuth";
 
 function Navigation() {
 
@@ -24,26 +24,26 @@ function Navigation() {
       <Grid container spacing={0} item md={12} justifyContent="center" alignItems="center">
 
         <Grid item md={12}>
-          {images.logo}
+          <Logo />
         </Grid>
 
         <Grid item md={12}>
           <Typography component="ul">
             <Typography component="li" onClick={() => history.push('/my-missions')} >
               <div>
-                {images.missionActive}
+                <MissionActive />
                 <span>My Missions</span>
               </div>
             </Typography>
             <Typography component="li" onClick={() => history.push('/my-thoughts')}>
               <div>
-                {images.thoughtInactive}
+                <ThoughtInactive />
                 <span>My Thoughts</span>
               </div>
             </Typography>
             <Typography component="li" onClick={() => history.push('/settings')} >
               <div>
-                {images.settingActive}
+                <SettingActive />
                 <span>Settings</span>
               </div>
             </Typography>
@@ -56,7 +56,7 @@ function Navigation() {
         <Typography component="ul">
           <Typography component="li" onClick={signout}>
             <div>
-              {images.logoutInactive}
+              <LogoutInactive />
               <span>Logout</span>
             </div>
           </Typography>

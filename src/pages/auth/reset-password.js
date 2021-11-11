@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 
-import images from "assets/images/images";
+import { Lock, Logo } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
@@ -74,7 +74,7 @@ function ResetPassword() {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
-            {images.logo}
+            <Logo />
           </Grid>
 
           <ToastContainer
@@ -97,7 +97,7 @@ function ResetPassword() {
                   <Typography variant="h2">Reset Password</Typography>
                   <div className="input-field">
                     <div className="icon">
-                      {images.lock}
+                      <Lock />
                     </div>
                     <input
                       type="password"
@@ -116,7 +116,7 @@ function ResetPassword() {
                   )}
                   <div className="input-field">
                     <div className="icon">
-                      {images.lock}
+                      <Lock />
                     </div>
                     <input
                       type="password"

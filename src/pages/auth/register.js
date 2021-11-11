@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-import images from "assets/images/images";
+import { Logo, User, Lock } from "assets/images/icons";
 import { disabledInspect, emailRegex } from 'utils/index';
 import { Service } from "config/service";
 
@@ -18,7 +18,6 @@ function Register() {
 
   // *For Loader
   const [loader, setLoader] = useState(false)
-
 
   const [countryCode, setCountryCode] = useState('PK')
 
@@ -89,7 +88,7 @@ function Register() {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
-            {images.logo}
+            <Logo />
           </Grid>
 
           <Grid item md={12}>
@@ -99,7 +98,7 @@ function Register() {
                   <Typography variant="h2">Register</Typography>
                   <div className="input-field">
                     <div className="icon">
-                      {images.user}
+                      <User />
                     </div>
                     <input
                       placeholder="Email"
@@ -117,7 +116,7 @@ function Register() {
                   )}
                   <div className="input-field">
                     <div className="icon">
-                      {images.lock}
+                      <Lock />
                     </div>
                     <input
                       type="password"
@@ -136,7 +135,7 @@ function Register() {
                   )}
                   <div className="input-field">
                     <div className="icon">
-                      {images.lock}
+                      <Lock />
                     </div>
                     <input
                       type="password"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-import images from "assets/images/images";
+import { Logo, User } from "assets/images/icons";
 import { disabledInspect, emailRegex } from 'utils/index';
 import { Service } from "config/service";
 
@@ -103,7 +103,7 @@ function ForgotPassword() {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
-            {images.logo}
+            <Logo />
           </Grid>
 
           <ToastContainer
@@ -126,7 +126,7 @@ function ForgotPassword() {
                   <Typography variant="h2">Forgot Password</Typography>
                   <div className="input-field">
                     <div className="icon">
-                      {images.user}
+                      <User />
                     </div>
                     <input
                       placeholder="Email Address"

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AddQuote(props) {
+export default function DailyQuote(props) {
 
   const { open, onClose, addDailyQuote } = props
 

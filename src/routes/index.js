@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
+
+import PublicRoute from './PublicRoute';
+import PrivateRoute from './PrivateRoute';
 import useAuth from 'hooks/useAuth';
+
+// *Import Components
 import Login from 'pages/auth/login';
 import Register from 'pages/auth/register';
 import ResetPassword from 'pages/auth/reset-password';
@@ -8,10 +13,10 @@ import ForgotPassword from 'pages/auth/forgot-password';
 import Verification from 'pages/auth/verification';
 import MyMissions from 'pages/missions/my-missions';
 import MyThoughts from 'pages/thoughts/my-thoughts';
-import WriteThoughts from 'pages/thoughts/write-thoughts';
+import WriteThought from 'pages/thoughts/write-thought';
+import EditThought from 'pages/thoughts/edit-thought';
+import ReadThought from 'pages/thoughts/read-thought';
 import Settings from 'pages/settings/settings';
-import PublicRoute from './PublicRoute';
-import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => {
 
@@ -34,7 +39,9 @@ const AppRoutes = () => {
 
         <PrivateRoute path="/my-missions" exact ><MyMissions /></PrivateRoute>
         <PrivateRoute path="/my-thoughts" exact ><MyThoughts /></PrivateRoute>
-        <PrivateRoute path="/write-thoughts" exact ><WriteThoughts /></PrivateRoute>
+        <PrivateRoute path="/write-thought" exact ><WriteThought /></PrivateRoute>
+        <PrivateRoute path="/edit-thought" exact ><EditThought /></PrivateRoute>
+        <PrivateRoute path="/readmore" exact ><ReadThought /></PrivateRoute>
         <PrivateRoute path="/settings" exact ><Settings /></PrivateRoute>
       </Switch>
     </BrowserRouter >

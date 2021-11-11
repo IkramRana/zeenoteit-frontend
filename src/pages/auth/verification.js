@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import images from "assets/images/images";
+import { Logo } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
+import { firebase, auth } from 'config/firebase';
 
 import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
-import { firebase, auth } from 'config/firebase';
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -125,7 +125,6 @@ function Verification() {
     if (disabled === true) {
       return
     } else {
-      console.log('hello');
       setIconAnimation(false);
       sendOTP();
     }
@@ -135,7 +134,6 @@ function Verification() {
   const ValidateOtp = async () => {
     setLoader(true)
     try {
-      console.log('wrong OTP 137=>', loader)
       var otp;
       if (inputField === 6) {
         otp = form.input1 + form.input2 + form.input3 + form.input4 + form.input5 + form.input6;
@@ -237,7 +235,7 @@ function Verification() {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
           <Grid item md={12} >
-            {images.logo}
+            <Logo />
           </Grid>
 
           <ToastContainer

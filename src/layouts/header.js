@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import images from "assets/images/images";
-import { disabledInspect } from 'utils/index';
+import { EditQuote, Notification } from "assets/images/icons";
+import { disabledInspect, CurrentDate } from 'utils/index';
 import { Service } from "config/service";
 
-import { Button, ClickAwayListener, Grid, Grow, IconButton, Menu, MenuItem, MenuList, Paper, Popper, Tooltip, Typography, withStyles, } from '@material-ui/core';
+import { ClickAwayListener, Grid, Grow, IconButton, MenuItem, MenuList, Paper, Popper, Tooltip, Typography, withStyles, } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Daily Quote Dialog
-import AddQuote from "components/dialog";
+import DailyQuote from "components/daily-quote";
 
 const QuoteToolTip = withStyles({
   tooltip: {
@@ -22,7 +22,7 @@ const QuoteToolTip = withStyles({
   }
 })(Tooltip);
 
-function Header(props) {
+function Header() {
 
   const history = useHistory();
 
@@ -99,7 +99,7 @@ function Header(props) {
     <Grid id="Header" container spacing={0} justifyContent="space-between" alignItems="center">
 
       {/* ========== Add Daily Quote Dialog ========== */}
-      <AddQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} />
+      <DailyQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} />
 
       <Grid item md={8}>
         <Typography component="h2">
@@ -115,14 +115,16 @@ function Header(props) {
       </Grid>
 
       <Grid className="text-right" item md={4}>
-        <Typography component="h4">04 November 2021</Typography>
+        <Typography component="h4">
+          <CurrentDate />
+        </Typography>
         <QuoteToolTip className="tooltip" title="Write quote of the day">
           <IconButton className="add-quote" size="medium" onClick={() => { dialogHandler(true) }}>
-            {images.addQuote}
+            <EditQuote />
           </IconButton>
         </QuoteToolTip>
         <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { notificationHandler(true) }}>
-          {images.notification}
+          <Notification />
         </IconButton>
         <Popper
           open={openNotification}
@@ -146,9 +148,6 @@ function Header(props) {
                     id="menu-list-grow"
                   >
                     <Typography component="h1" >Notifications</Typography>
-                    <MenuItem onClick={() => { notificationHandler(false) }}>Profile</MenuItem>
-                    <MenuItem onClick={() => { notificationHandler(false) }}>My account</MenuItem>
-                    <MenuItem onClick={() => { notificationHandler(false) }}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

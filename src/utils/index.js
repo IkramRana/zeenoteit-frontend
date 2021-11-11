@@ -24,3 +24,15 @@ export const disabledInspect = (time) => {
 
 // *Email Regex
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+// *Current Date
+export const CurrentDate = () => {
+  let date = new Date();
+  let currentDate = date.getDate().toString().padStart(2, "0") + ' ' + date.toLocaleString('default', { month: 'long' }) + ' ' + date.getFullYear();
+
+  return (
+    <div>
+      {currentDate}
+    </div>
+  )
+}

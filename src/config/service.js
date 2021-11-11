@@ -48,4 +48,46 @@ export const Service = {
         else throw result;
     },
 
+    // *Missions
+    addTask: async (obj) => {
+        let result = await post(Apis.addTask, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    addSubTask: async (obj) => {
+        let result = await get(Apis.addSubTask, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    getUserTask: async () => {
+        let result = await get(Apis.getUserTask, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+
+    // *Thoughts
+    addThought: async (obj) => {
+        let result = await post(Apis.addThought, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    getThought: async () => {
+        let result = await get(Apis.getThought, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+
+    // *Setting
+    updateSetting: async (obj) => {
+        let result = await post(Apis.updateSetting, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+
+    // *Colors
+    getColors: async () => {
+        let result = await get(Apis.getColors, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
 }

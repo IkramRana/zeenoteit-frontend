@@ -13,6 +13,21 @@ export const Apis = {
     // *Daily Quotes
     addDailyQuote: 'quote/add-quote',
     getDailyQuote: 'quote/get-quote',
+
+    // *Missions
+    addTask: 'task/add-task',
+    addSubTask: 'subtask/add-subtask',
+    getUserTask: 'task/user-tasks',
+
+    // *Thoughts
+    addThought: 'thought/add-thought',
+    getThought: 'thought/get-thought',
+
+    // *Setting
+    updateSetting: 'app-settings/updateSetting',
+
+    // *Colors
+    getColors: 'color/get-colors',
 };
 
 export const headers = {
