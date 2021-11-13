@@ -1,4 +1,4 @@
-import { Apis, get, post } from './';
+import { Apis, get, post, patch, deleted } from './';
 
 var token = localStorage.getItem('jwt')
 
@@ -48,19 +48,34 @@ export const Service = {
         else throw result;
     },
 
-    // *Missions
+    // *Tasks
     addTask: async (obj) => {
         let result = await post(Apis.addTask, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },
     addSubTask: async (obj) => {
-        let result = await get(Apis.addSubTask, obj, token);
+        let result = await post(Apis.addSubTask, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },
     getUserTask: async () => {
         let result = await get(Apis.getUserTask, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    editTask: async (obj) => {
+        let result = await patch(Apis.editTask, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    completeSubTask: async (obj) => {
+        let result = await patch(Apis.completeSubTask, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    deleteTask: async (obj) => {
+        let result = await deleted(Apis.deleteTask, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },
@@ -76,10 +91,30 @@ export const Service = {
         if (result.status === 200) return result.data;
         else throw result;
     },
+    getThoughtByThoughtId: async (id) => {
+        let result = await get(Apis.getThoughtByThoughtId + '?id=' + id, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    editThought: async (obj) => {
+        let result = await patch(Apis.editThought, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    deleteThought: async (obj) => {
+        let result = await deleted(Apis.deleteThought, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
 
     // *Setting
     updateSetting: async (obj) => {
-        let result = await post(Apis.updateSetting, obj, token);
+        let result = await patch(Apis.updateSetting, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    deleteAccount: async (obj) => {
+        let result = await deleted(Apis.deleteAccount, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },

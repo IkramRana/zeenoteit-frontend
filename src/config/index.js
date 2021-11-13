@@ -14,17 +14,24 @@ export const Apis = {
     addDailyQuote: 'quote/add-quote',
     getDailyQuote: 'quote/get-quote',
 
-    // *Missions
+    // *Task
     addTask: 'task/add-task',
     addSubTask: 'subtask/add-subtask',
     getUserTask: 'task/user-tasks',
+    editTask: 'task/update-title',
+    completeSubTask: 'subtask/complete-subtask',
+    deleteTask: 'task/delete-task',
 
-    // *Thoughts
+    // *Thought
     addThought: 'thought/add-thought',
     getThought: 'thought/get-thought',
+    getThoughtByThoughtId: 'thought/get-thought-by',
+    editThought: 'thought/update-thought',
+    deleteThought: 'thought/delete-thought',
 
     // *Setting
     updateSetting: 'app-settings/updateSetting',
+    deleteAccount: 'user/deactivateAccount',
 
     // *Colors
     getColors: 'color/get-colors',
@@ -55,6 +62,24 @@ export const post = async (endPoint, data, token) => {
 export const put = async (endPoint, data, token) => {
     try {
         const result = await Axios.put(endPoint, data, { headers: { Authorization: `Bearer ${token}` } });
+        return result;
+    } catch (e) {
+        throw errorHandler(e);
+    }
+};
+
+export const patch = async (endPoint, data, token) => {
+    try {
+        const result = await Axios.patch(endPoint, data, { headers: { Authorization: `Bearer ${token}` } });
+        return result;
+    } catch (e) {
+        throw errorHandler(e);
+    }
+};
+
+export const deleted = async (endPoint, data, token) => {
+    try {
+        const result = await Axios.delete(endPoint, { headers: { Authorization: `Bearer ${token}` }, data: data });
         return result;
     } catch (e) {
         throw errorHandler(e);

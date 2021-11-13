@@ -36,7 +36,7 @@ function Settings() {
   const [loader, setLoader] = useState(false)
 
   // *For Form Validation
-  const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, control, setValue } = useForm();
 
   // *For Save Button Hide
   const [button, setButton] = useState(false)
@@ -45,12 +45,17 @@ function Settings() {
   const getUserData = () => {
     try {
       userData = JSON.parse(localStorage.getItem('userData'));
-      setEmail(userData[0].email);
+      // setEmail(userData[0].email);
       setPhone(userData[0].phone_number);
       setCountryCode(userData[0].countryCode);
       setOpenTime(userData[0].appSettings[0].dailyOpenTime);
       setTimeInterval(userData[0].appSettings[0].dailyTimeInterval);
       setNotification(userData[0].appSettings[0].isNotifyEnable);
+
+      // *For Default Value
+      setValue("email", userData[0].email);
+      setValue("phoneInput", userData[0].phone_number);
+      setValue("timeInterval", userData[0].dailyTimeInterval);
     } catch (error) {
       console.log('file: settings.js => line 22 => getUserData => error', error)
     }
@@ -85,14 +90,8 @@ function Settings() {
         countryCode: countryCode,
         phone: control._formValues.phoneInput,
         time: data.timeInterval,
-        notify: data.active
       }
-      console.log('file: settings.js => line 94 => updateSetting => obj', obj.email)
-      console.log('file: settings.js => line 94 => updateSetting => obj', obj.countryCode)
-      console.log('file: settings.js => line 94 => updateSetting => obj', obj.phone)
-      console.log('file: settings.js => line 94 => updateSetting => obj', obj.time)
-      console.log('file: settings.js => line 94 => updateSetting => obj', obj.notify)
-
+      console.log('file: settings.js => line 87 => updateSetting => obj', obj)
       // const { message } = await Service.updateSetting(obj);
       // toast.success(message, {
       //   position: "top-center",
@@ -175,7 +174,6 @@ function Settings() {
                       <label>Email</label>
                       <input
                         type="text"
-                        defaultValue={email}
                         {...register("email", {
                           required: 'Email is required',
                         })}
@@ -214,6 +212,7 @@ function Settings() {
                         }}
                         render={({ field: { onChange, value } }) => (
                           <PhoneInput
+                            disabled
                             value={phone}
                             onChange={onChange}
                             defaultCountry={countryCode}

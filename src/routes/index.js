@@ -14,8 +14,8 @@ import Verification from 'pages/auth/verification';
 import MyMissions from 'pages/missions/my-missions';
 import MyThoughts from 'pages/thoughts/my-thoughts';
 import WriteThought from 'pages/thoughts/write-thought';
-import EditThought from 'pages/thoughts/edit-thought';
 import ReadThought from 'pages/thoughts/read-thought';
+import EditThought from 'pages/thoughts/edit-thought';
 import Settings from 'pages/settings/settings';
 
 const AppRoutes = () => {
@@ -40,8 +40,8 @@ const AppRoutes = () => {
         <PrivateRoute path="/my-missions" exact ><MyMissions /></PrivateRoute>
         <PrivateRoute path="/my-thoughts" exact ><MyThoughts /></PrivateRoute>
         <PrivateRoute path="/write-thought" exact ><WriteThought /></PrivateRoute>
-        <PrivateRoute path="/edit-thought" exact ><EditThought /></PrivateRoute>
-        <PrivateRoute path="/readmore" exact ><ReadThought /></PrivateRoute>
+        <PrivateRoute path="/readmore/:id" exact ><ReadThought /></PrivateRoute>
+        <PrivateRoute path="/edit-thought/:id" exact ><EditThought /></PrivateRoute>
         <PrivateRoute path="/settings" exact ><Settings /></PrivateRoute>
       </Switch>
     </BrowserRouter >

@@ -79,7 +79,7 @@ export default function DailyQuote(props) {
           <Grid container spacing={0} justifyContent="center" alignItems="center">
             <Grid item md={4}>
               <button type="button" className="button-stroke" onClick={onClose}>
-                cancel
+                Cancel
               </button>
             </Grid>
             <Grid item md={4}>

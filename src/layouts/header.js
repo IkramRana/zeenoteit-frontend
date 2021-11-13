@@ -9,7 +9,7 @@ import { ClickAwayListener, Grid, Grow, IconButton, MenuItem, MenuList, Paper, P
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// *Daily Quote Dialog
+// *Import Dialog Component
 import DailyQuote from "components/daily-quote";
 
 const QuoteToolTip = withStyles({
@@ -56,6 +56,7 @@ function Header() {
         draggable: false,
         progress: undefined,
       });
+      getDailyQuote()
       dialogHandler(false)
     } catch (error) {
       console.log('file: header.js => line 40 => dialogCloseHandler => error', error)
@@ -93,7 +94,7 @@ function Header() {
     getDailyQuote();
     disabledInspect();
     window.scrollTo({ top: 0 });
-  }, [dailyQuote])
+  }, [])
 
   return (
     <Grid id="Header" container spacing={0} justifyContent="space-between" alignItems="center">

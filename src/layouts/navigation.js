@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Logo, MissionActive, ThoughtInactive, SettingActive, LogoutInactive } from "assets/images/icons";
+import { Logo, MissionActive, MissionInactive, ThoughtInactive, SettingActive, LogoutInactive } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
 import useAuth from "hooks/useAuth";
 
 import { Grid, Typography } from '@material-ui/core';
 
+var isActive = '/my-missions';
+
 function Navigation() {
 
   const { signout } = useAuth();
-
   const history = useHistory();
+
+  const activeHandler = (route) => {
+    isActive = route
+    history.push(route)
+  }
 
   useEffect(() => {
     disabledInspect();
@@ -29,21 +35,21 @@ function Navigation() {
 
         <Grid item md={12}>
           <Typography component="ul">
-            <Typography component="li" onClick={() => history.push('/my-missions')} >
+            <Typography component="li" className={isActive === '/my-missions' ? 'active' : ''} onClick={() => { activeHandler('/my-missions') }} >
               <div>
-                <MissionActive />
+                {isActive === '/my-missions' ? <MissionActive /> : <MissionInactive />}
                 <span>My Missions</span>
               </div>
             </Typography>
-            <Typography component="li" onClick={() => history.push('/my-thoughts')}>
+            <Typography component="li" className={isActive === '/my-thoughts' ? 'active' : ''} onClick={() => { activeHandler('/my-thoughts') }}>
               <div>
-                <ThoughtInactive />
+                {isActive === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
                 <span>My Thoughts</span>
               </div>
             </Typography>
-            <Typography component="li" onClick={() => history.push('/settings')} >
+            <Typography component="li" className={isActive === '/settings' ? 'active' : ''} onClick={() => { activeHandler('/settings') }} >
               <div>
-                <SettingActive />
+                {isActive === '/settings' ? <SettingActive /> : <SettingActive />}
                 <span>Settings</span>
               </div>
             </Typography>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
@@ -12,13 +12,35 @@ import 'react-toastify/dist/ReactToastify.css';
 // *Import Components
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
-import MyThoughts from "./my-thoughts";
 
 function ReadThought() {
 
   const history = useHistory();
+  const { id } = useParams();
+
+  // *For Read Thought
+  const [thought, setThought] = useState('')
+
+  // *Get Read Thought
+  const getThoughtByThoughtId = async () => {
+    try {
+      const { data } = await Service.getThoughtByThoughtId(id);
+      setThought(data[0])
+    } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    }
+  };
 
   useEffect(() => {
+    getThoughtByThoughtId();
     disabledInspect();
     window.scrollTo({ top: 0 });
   }, [])
@@ -50,11 +72,11 @@ function ReadThought() {
           {/* ========== Read Thought ========== */}
           <Grid className="read-thought" container spacing={0} justifyContent="center">
             <Grid item md={12}>
-              <Typography className="title">My Thought</Typography>
+              <Typography className="title">{thought.title}</Typography>
             </Grid>
             <Grid item md={12}>
               <Typography className="description">
-                Description
+                {thought.description}
               </Typography>
             </Grid>
           </Grid>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
@@ -16,27 +16,54 @@ import Header from 'layouts/header'
 function EditThought() {
 
   const history = useHistory();
+  const { id } = useParams();
+
+  // *For Get Thought By Id
+  const [thought, setThought] = useState([])
 
   // *For Form Validation
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+
+  // *Get Thought By Id
+  const getThoughtByThoughtId = async () => {
+    try {
+      const { data } = await Service.getThoughtByThoughtId(id);
+      setThought(data[0]);
+
+      // *For Default Value
+      setValue("title", data[0].title);
+      setValue("description", data[0].description);
+    } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    }
+  };
 
   // *For Update Thought
   const update = async (data) => {
     try {
       let obj = {
+        id: id,
         title: data.title,
         description: data.description,
       }
-      // const { message } = await Service.addThought(obj);
-      // toast.success(message, {
-      //   position: "top-center",
-      //   autoClose: 2000,
-      //   hideProgressBar: true,
-      //   closeOnClick: false,
-      //   pauseOnHover: false,
-      //   draggable: false,
-      //   progress: undefined,
-      // });
+      const { message } = await Service.editThought(obj);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
       history.push('/my-thoughts')
     } catch (error) {
       console.log('Login -> error', error);
@@ -44,9 +71,10 @@ function EditThought() {
   }
 
   useEffect(() => {
+    getThoughtByThoughtId();
     disabledInspect();
     window.scrollTo({ top: 0 });
-  }, [])
+  }, [register])
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
@@ -77,8 +105,10 @@ function EditThought() {
             <Grid container spacing={0} justifyContent="center">
               <Grid item md={12}>
                 <input
+                  name="title"
                   className="title"
                   placeholder="Thought Title"
+                  setValue={thought.title}
                   {...register("title", {
                     required: 'Title is required'
                   })}
@@ -89,6 +119,7 @@ function EditThought() {
               </Grid>
               <Grid item md={12}>
                 <textarea
+                  name="description"
                   className="description"
                   placeholder="Description"
                   {...register("description", {

@@ -167,6 +167,11 @@ input::-webkit-inner-spin-button {
   cursor: context-menu !important;
 }
 
+.text-strike {
+  text-decoration: line-through !important;
+  opacity: 0.4 !important;
+}
+
 // *Loader
 .resend {
   animation: spinner 0.8s linear infinite;
@@ -197,7 +202,7 @@ input::-webkit-inner-spin-button {
 // *Header
 #Header {
   padding: 20px 0px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(42, 42, 42, 0.1);
 
   h2 {
     font-size: 32px;
@@ -338,7 +343,6 @@ input::-webkit-inner-spin-button {
     list-style: none;
     padding: 0px;
     margin: 0px;
-    // margin-top: 50px;
 
     li {
       font-size: 14px;
@@ -372,6 +376,11 @@ input::-webkit-inner-spin-button {
         fill: #7ac8c3;
       }
     }
+
+    .active {
+      box-shadow: 0px 3px 28px #00000014;
+      transition: 0.3s ease-in-out;
+    }
   }
 }
 
@@ -385,6 +394,7 @@ input::-webkit-inner-spin-button {
       font-family: "Avenir";
       font-weight: 900;
       color: #58595b;
+      opacity: 0.7;
 
       &:hover {
         text-decoration: none !important;
@@ -401,17 +411,17 @@ input::-webkit-inner-spin-button {
   .wrapper {
     margin-right: 10px !important;
     flex-grow: 0 !important;
-    max-width: 19% !important;
-    flex-basis: 19% !important;
+    max-width: 18.8% !important;
+    flex-basis: 18.8% !important;
   }
 
   .task-box {
     width: 100%;
     height: auto;
     background-color: #fff;
-    border: 1px solid red;
-    border-radius: 20px;
-    margin-bottom: 15px !important;
+    border: 1px solid;
+    border-radius: 12px;
+    margin-bottom: 12px !important;
     opacity: color 0.5;
     transition: 0.3s ease-in-out;
 
@@ -421,9 +431,8 @@ input::-webkit-inner-spin-button {
     }
 
     .header {
-      background-color: #7ac8c3;
-      border-radius: 20px;
-      padding: 12px 8px;
+      border-radius: 11px;
+      padding: 8px 8px;
       opacity: background-color 0.1;
 
       .MuiIconButton-root {
@@ -451,51 +460,11 @@ input::-webkit-inner-spin-button {
         font-weight: 900;
         color: #7ac8c3;
       }
-
-      .menu-option {
-        .MuiPaper-root {
-          box-shadow: none !important;
-          background-color: transparent !important;
-          margin-top: 10px;
-        }
-
-        .edit {
-          background-color: rgba($color: #7ac8c3, $alpha: 0.2);
-          width: 38px;
-          height: 38px;
-          padding: 7px;
-          display: block;
-
-          svg {
-            fill: #7ac8c3 !important;
-
-            path {
-              fill: #7ac8c3 !important;
-            }
-          }
-        }
-
-        .deleted {
-          background-color: rgba($color: #e94444, $alpha: 0.2);
-          width: 38px;
-          height: 38px;
-          padding: 10px;
-          margin-top: 5px;
-          display: block;
-
-          svg {
-            fill: #e94444 !important;
-
-            path {
-              fill: #e94444 !important;
-            }
-          }
-        }
-      }
     }
 
     .content {
       padding: 4px;
+      padding-top: 6px;
 
       .task {
         display: flex;
@@ -566,12 +535,36 @@ input::-webkit-inner-spin-button {
           font-size: 14px;
           font-family: "Avenir";
           color: #58595b;
+          opacity: 0.8;
           margin-bottom: 7px;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
+        }
+      }
+
+      .add-subtask {
+        display: flex;
+        padding: 5px;
+
+        svg {
+          fill: #58595b !important;
+          margin-right: 10px;
+          opacity: 0.6;
+
+          path {
+            fill: #58595b !important;
+            opacity: 0.6;
+          }
+        }
+
+        p {
+          font-size: 14px;
+          font-family: "Avenir";
+          color: #58595b;
+          opacity: 0.6;
         }
       }
     }
@@ -594,7 +587,7 @@ input::-webkit-inner-spin-button {
     height: auto;
     background-color: #fff;
     border: 1px solid #7ac8c3;
-    border-radius: 20px;
+    border-radius: 12px;
     margin-right: 10px !important;
     margin-bottom: 15px !important;
     flex-grow: 0 !important;
@@ -609,8 +602,8 @@ input::-webkit-inner-spin-button {
 
     .header {
       background-color: rgba($color: #7ac8c3, $alpha: 0.1);
-      border-radius: 20px;
-      padding: 12px 8px;
+      border-radius: 11px;
+      padding: 10px 8px;
 
       .MuiIconButton-root {
         background-color: rgba($color: #003361, $alpha: 0.1);
@@ -636,56 +629,16 @@ input::-webkit-inner-spin-button {
         font-weight: 900;
         color: #7ac8c3;
       }
-
-      .menu-option {
-        .MuiPaper-root {
-          box-shadow: none !important;
-          background-color: transparent !important;
-          margin-top: 10px;
-        }
-
-        .edit {
-          background-color: rgba($color: #7ac8c3, $alpha: 0.2);
-          width: 38px;
-          height: 38px;
-          padding: 7px;
-          display: block;
-
-          svg {
-            fill: #7ac8c3 !important;
-
-            path {
-              fill: #7ac8c3 !important;
-            }
-          }
-        }
-
-        .deleted {
-          background-color: rgba($color: #e94444, $alpha: 0.2);
-          width: 38px;
-          height: 38px;
-          padding: 10px;
-          margin-top: 5px;
-          display: block;
-
-          svg {
-            fill: #e94444 !important;
-
-            path {
-              fill: #e94444 !important;
-            }
-          }
-        }
-      }
     }
 
     .content {
-      padding: 18px 8px;
+      padding: 10px 8px;
 
       p {
         font-size: 14px;
         font-family: "Avenir";
         color: #58595b;
+        opacity: 0.8;
         margin-bottom: 7px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -698,7 +651,7 @@ input::-webkit-inner-spin-button {
         font-size: 14px;
         font-family: "Avenir";
         font-weight: 700;
-        color: #7ac8c3;
+        color: rgba($color: #7ac8c3, $alpha: 0.7);
         cursor: pointer;
       }
     }
@@ -708,7 +661,7 @@ input::-webkit-inner-spin-button {
 // *Write Thought
 .write-thought {
   .title {
-    font-size: 30px;
+    font-size: 26px;
     font-family: "Avenir";
     font-weight: 900;
     color: rgba($color: #003361, $alpha: 0.4);
@@ -724,7 +677,7 @@ input::-webkit-inner-spin-button {
   }
 
   .description {
-    font-size: 18px;
+    font-size: 16px;
     font-family: "Avenir";
     color: rgba($color: #003361, $alpha: 0.4);
     width: 100%;
@@ -738,6 +691,10 @@ input::-webkit-inner-spin-button {
     &::placeholder {
       color: rgba($color: #003361, $alpha: 0.2);
     }
+  }
+
+  .error {
+    padding-left: 0px !important;
   }
 }
 
@@ -801,7 +758,7 @@ input::-webkit-inner-spin-button {
   }
 
   span {
-    font-size: 16px;
+    font-size: 15px;
     font-family: "Avenir";
     color: rgba($color: #003361, $alpha: 0.3);
   }
@@ -826,7 +783,7 @@ input::-webkit-inner-spin-button {
       margin: 20px 10px;
       padding: 5px;
       width: 70%;
-      border-bottom: 1px solid rgba($color: #2a2a2a, $alpha: 0.4);
+      border-bottom: 1px solid rgba($color: #2a2a2a, $alpha: 0.1);
 
       .MuiSwitch-colorSecondary.Mui-checked {
         color: #fff !important;
@@ -1046,6 +1003,60 @@ input::-webkit-inner-spin-button {
   }
 }
 
+// *Menu Drop Down
+.menu-option {
+  .MuiPaper-root {
+    box-shadow: none !important;
+    background-color: transparent !important;
+    margin-top: 10px;
+
+    .MuiList-padding {
+      padding: 0px !important;
+    }
+  }
+
+  .edit {
+    background-color: rgba($color: #7ac8c3, $alpha: 0.2);
+    width: 38px;
+    height: 38px;
+    padding: 7px;
+    display: block;
+
+    &:hover {
+      background-color: rgba($color: #7ac8c3, $alpha: 0.2) !important;
+    }
+
+    svg {
+      fill: #7ac8c3 !important;
+
+      path {
+        fill: #7ac8c3 !important;
+      }
+    }
+  }
+
+  .deleted {
+    background-color: rgba($color: #e94444, $alpha: 0.2);
+    width: 38px;
+    height: 38px;
+    padding: 10px;
+    margin-top: 5px;
+    display: block;
+
+    &:hover {
+      background-color: rgba($color: #e94444, $alpha: 0.2) !important;
+    }
+
+    svg {
+      fill: #e94444 !important;
+
+      path {
+        fill: #e94444 !important;
+      }
+    }
+  }
+}
+
 // *Dialog
 .MuiDialog-paper {
   margin: 0px !important;
@@ -1167,5 +1178,14 @@ input::-webkit-inner-spin-button {
       border-radius: 50%;
       background: white;
     }
+  }
+
+  h5 {
+    font-size: 18px;
+    font-weight: 900;
+    font-family: "Avenir";
+    color: rgba($color: #003361, $alpha: 0.4);
+    width: 500px;
+    text-align: center;
   }
 }

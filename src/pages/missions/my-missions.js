@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { AddTask, EditTask, Menu, Trash, VerticalMenu } from "assets/images/icons";
+import { Plus, EditTask, More, Trash, VerticalMenu } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
-import { Breadcrumbs, Grid, Grow, IconButton, MenuList, Paper, Popper, Typography } from '@material-ui/core';
+import { Breadcrumbs, Grid, Grow, IconButton, Menu, MenuItem, MenuList, Paper, Popper, Typography } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,37 +14,70 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
 
-// *Add Task Dialog
-import Task from "components/task";
+// *Import Dialog Components
+import AddTask from "components/add-task";
+import AddSubTask from "components/add-subtask";
+import EditTaskList from "components/edit-task-list";
+import Deleted from "components/delete";
+
+var taskId = '';
+var deleteTaskId = '';
 
 function MyMissions() {
 
   const history = useHistory();
 
-  // *For Task
-  const [openDialog, setOpenDialog] = useState(false)
+  // *For Task List
+  const [openAddTask, setOpenAddTask] = useState(false)
   const [task, setTask] = useState([])
 
+  // *For Edit Task List
+  const [openEditTask, setOpenEditTask] = useState(false)
+
+  // *For Sub Task
+  const [openAddSubTask, setOpenAddSubTask] = useState(false)
+
+  // *For Delete Task
+  const [openDeleteTask, setOpenDeleteTask] = useState(false)
+
   // *For Menu
-  const [openMenu, setOpenMenu] = useState(false)
-  const menuOption = useRef(null)
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   // *For Colors
   const [colors, setColors] = useState([])
 
-  // *For Open and Close Dialog
-  const dialogHandler = (type) => {
+  // *For Task List Open and Close Dialog
+  const taskDialog = (type) => {
     if (type === true) {
-      setOpenDialog(true);
+      setOpenAddTask(true);
     } else {
-      setOpenDialog(false);
+      setOpenAddTask(false);
+    }
+  }
+
+  // *For Edit Task List Open and Close Dialog
+  const editTaskDialog = (type, ID) => {
+    if (type === true) {
+      taskId = ID
+      setOpenEditTask(true);
+    } else {
+      setOpenEditTask(false);
+    }
+  }
+
+  // *For Sub Task Open and Close Dialog
+  const subTaskDialog = (type, ID) => {
+    if (type === true) {
+      taskId = ID
+      setOpenAddSubTask(true);
+    } else {
+      setOpenAddSubTask(false);
     }
   }
 
   // *For Add Task List
   const addTaskList = async (obj) => {
     try {
-      console.log('file: my-missions.js => line 46 => addTaskList => obj', obj)
       const { message } = await Service.addTask(obj);
       toast.success(message, {
         position: "top-center",
@@ -55,7 +88,50 @@ function MyMissions() {
         draggable: false,
         progress: undefined,
       });
-      dialogHandler(false)
+      getTask()
+      taskDialog(false)
+    } catch (error) {
+      console.log('file: missions.js => line 40 => error', error)
+    }
+  }
+
+  // *For Edit Task List
+  const editTaskList = async (obj) => {
+    try {
+      console.log('file: my-missions.js => line 99 => editTaskList => obj', obj)
+      const { message } = await Service.editTask(obj);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      handleClose()
+      getTask()
+      editTaskDialog(false)
+    } catch (error) {
+      console.log('file: missions.js => line 40 => error', error)
+    }
+  }
+
+  // *For Add Sub Task 
+  const addSubTask = async (obj) => {
+    try {
+      const { message } = await Service.addSubTask(obj);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      getTask()
+      subTaskDialog(false)
     } catch (error) {
       console.log('file: missions.js => line 40 => error', error)
     }
@@ -79,14 +155,14 @@ function MyMissions() {
     }
   };
 
-  // *For Open and Close Menu
-  const menuHandler = (type) => {
-    if (type === true) {
-      setOpenMenu((prev) => !prev)
-    } else {
-      setOpenMenu(false)
-    }
-  }
+  // *For Menu Open and Close 
+  const menuHandler = (index, event) => {
+    setAnchorEl({ [index]: event.currentTarget });
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   // *Get Colors 
   const getColors = async () => {
@@ -106,6 +182,62 @@ function MyMissions() {
     }
   };
 
+  // *For Delete Task Open and Close Dialog
+  const deleteTaskDialog = (type, ID) => {
+    if (type === true) {
+      deleteTaskId = ID
+      setOpenDeleteTask(true);
+      handleClose()
+    } else {
+      setOpenDeleteTask(false);
+    }
+  }
+
+  // *For Delete Task 
+  const deleteTask = async (ID) => {
+    try {
+      let obj = {
+        id: ID
+      }
+      const { message } = await Service.deleteTask(obj);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      getTask()
+      deleteTaskDialog(false)
+    } catch (error) {
+      console.log('file: missions.js => line 40 => error', error)
+    }
+  }
+
+  // *For Task Complete
+  const taskComplete = async (subTaskId) => {
+    try {
+      let obj = {
+        id: subTaskId
+      }
+      const { message } = await Service.completeSubTask(obj);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      getTask()
+    } catch (error) {
+      console.log('file: my-missions.js => line 224 => MyMissions => error', error)
+    }
+  }
+
   useEffect(() => {
     getTask();
     getColors();
@@ -116,8 +248,17 @@ function MyMissions() {
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-      {/* ========== Add Daily Quote Dialog ========== */}
-      <Task open={openDialog} onClose={() => { dialogHandler(false) }} taskColor={colors} addTaskList={addTaskList} />
+      {/* ========== Add Task List Dialog ========== */}
+      <AddTask open={openAddTask} onClose={() => { taskDialog(false) }} taskColor={colors} addTaskList={addTaskList} />
+
+      {/* ========== Add Task Dialog ========== */}
+      <AddSubTask open={openAddSubTask} id={taskId} onClose={() => { subTaskDialog(false) }} addSubTask={addSubTask} />
+
+      {/* ========== Edit Task List Dialog ========== */}
+      <EditTaskList open={openEditTask} id={taskId} onClose={() => { editTaskDialog(false) }} editTaskList={editTaskList} />
+
+      {/* ========== Delete Task Dialog ========== */}
+      <Deleted open={openDeleteTask} id={deleteTaskId} onClose={() => { deleteTaskDialog(false) }} deleted={deleteTask} />
 
       {/* ========== Left Side ========== */}
       <Grid className="left-side" item md={2}>
@@ -141,102 +282,82 @@ function MyMissions() {
           </Breadcrumbs>
 
           {/* ========== Missions ========== */}
-          <DragDropContext>
-            <Grid className="mission" container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+          <Grid className="mission" container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-              <Grid className="wrapper" container spacing={0} item md={2}>
+
+
+            {[...Array(5)].map((x, i) => (
+              <Grid key={i} className="wrapper" container spacing={0} item md={2}>
                 {task.map((task, index) => (
-                  <Grid key={index} className="task-box" item md={12} style={{ borderColor: task.color }}>
-                    <div className="header">
+                  <Grid key={index} className="task-box" item md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
+                    <div className="header" style={{ backgroundColor: task.color[0].code + '1a' }} >
                       <Grid container spacing={0} justifyContent="space-between" alignItems="center">
                         <Grid item md={8}>
                           <Typography component="h5">{task.title}</Typography>
                         </Grid>
                         <Grid item md={2}>
-                          <IconButton aria-label="menu" size="small">
-                            <AddTask />
+                          <IconButton aria-label="menu" size="small" onClick={() => { subTaskDialog(true, task._id) }}>
+                            <Plus />
                           </IconButton>
                         </Grid>
                         <Grid item md={2}>
-                          <IconButton aria-label="menu" size="small" ref={menuOption} onClick={() => { menuHandler(true) }}>
-                            {openMenu &&
-                              <VerticalMenu />
-                            }
-                            {openMenu === false &&
-                              <Menu />
-                            }
+                          <IconButton aria-label="menu" size="small" onClick={(e) => { menuHandler(index, e) }}>
+                            {anchorEl && Boolean(anchorEl[index]) === true ? <VerticalMenu /> : <More />}
                           </IconButton>
 
                           {/* ========== Menu Options ========== */}
-                          <Popper
-                            open={openMenu}
-                            anchorEl={menuOption.current}
+                          <Menu
                             className="menu-option"
-                            transition
-                            disablePortal
+                            anchorEl={anchorEl && anchorEl[index]}
+                            keepMounted
+                            open={anchorEl && Boolean(anchorEl[index])}
+                            onClose={handleClose}
+                            getContentAnchorEl={null}
+                            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                            transformOrigin={{ vertical: "top", horizontal: "center" }}
                           >
-                            {({ TransitionProps, placement }) => (
-                              <Grow
-                                {...TransitionProps}
-                                style={{
-                                  transformOrigin:
-                                    placement === "bottom" ? "center top" : "center bottom"
-                                }}
-                              >
-                                <Paper>
-                                  <MenuList
-                                    autoFocusItem={openMenu}
-                                    id="menu-list-grow"
-                                  >
-                                    <IconButton className="edit" aria-label="edit">
-                                      <EditTask />
-                                    </IconButton>
-                                    <IconButton className="deleted" aria-label="deleted">
-                                      <Trash />
-                                    </IconButton>
-                                  </MenuList>
-                                </Paper>
-                              </Grow>
-                            )}
-                          </Popper>
+                            <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, task._id) }}>
+                              <EditTask />
+                            </IconButton>
+                            <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteTaskDialog(true, task._id) }}>
+                              <Trash />
+                            </IconButton>
+                          </Menu>
                         </Grid>
                       </Grid>
                     </div>
                     <div className="content">
-                      <div className="task">
-                        <div className="checkbox">
-                          <input type="checkbox" id="checkbox1" />
-                          <label for="checkbox1"></label>
+                      {task.subtasks.map((subTask, i) => (
+                        <div key={i} className="task">
+                          <div className="checkbox">
+                            {subTask.isCompleted &&
+                              <input type="checkbox" checked={true} id={subTask._id} />
+                            }
+                            {subTask.isCompleted === false &&
+                              <input type="checkbox" id={subTask._id} onClick={(e) => taskComplete(subTask._id)} />
+                            }
+                            <label for={subTask._id}></label>
+                          </div>
+                          <Typography className={subTask.isCompleted == true ? 'text-strike' : ''} component="p">{subTask.title}</Typography>
                         </div>
-                        <Typography component="p">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae, assumenda! Eligendi ipsam ab soluta libero.</Typography>
-                      </div>
-                      <div className="task">
-                        <div className="checkbox">
-                          <input type="checkbox" id="checkbox2" />
-                          <label for="checkbox2"></label>
-                        </div>
-                        <Typography component="p">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae, assumenda! Eligendi ipsam ab soluta libero.</Typography>
-                      </div>
-                      <div className="task">
-                        <div className="checkbox">
-                          <input type="checkbox" id="checkbox3" />
-                          <label for="checkbox3"></label>
-                        </div>
-                        <Typography component="p">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae, assumenda! Eligendi ipsam ab soluta libero.</Typography>
+                      ))}
+
+                      <div className="add-subtask cursor-pointer" onClick={() => { subTaskDialog(true, task._id) }}>
+                        <Plus />
+                        <Typography component="p">Add New Task</Typography>
                       </div>
                     </div>
                   </Grid>
                 ))}
 
-                <Grid className="add-task" item md={12} onClick={() => { dialogHandler(true) }}>
-                  <AddTask />
+                <Grid className="add-task" item md={12} onClick={() => { taskDialog(true) }}>
+                  <Plus />
                   <Typography component="span">Add To Do List</Typography>
                 </Grid>
-
               </Grid>
+            ))}
 
-            </Grid>
-          </DragDropContext>
+          </Grid>
 
         </Grid>
 

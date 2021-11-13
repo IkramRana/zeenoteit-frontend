@@ -7,9 +7,9 @@ import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Task(props) {
+export default function EditTaskList(props) {
 
-  const { open, onClose, taskColor, addTaskList } = props
+  const { open, onClose, id, taskColor, editTaskList } = props
 
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -18,10 +18,11 @@ export default function Task(props) {
   const addList = async (data) => {
     try {
       let obj = {
+        id: id,
         title: data.title,
-        color: data.color
+        // color: data.color
       }
-      addTaskList(obj)
+      editTaskList(obj)
       reset()
     } catch (error) {
       toast.error(error, {
@@ -48,7 +49,7 @@ export default function Task(props) {
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
     >
-      <DialogTitle>New List</DialogTitle>
+      <DialogTitle>Edit Title</DialogTitle>
       <form onSubmit={handleSubmit(addList)}>
         <DialogContent>
           <input
@@ -58,28 +59,28 @@ export default function Task(props) {
               required: 'Title is required'
             })}
           />
-          {errors?.taskSubject?.message && (
-            <p className="error" >{errors?.taskSubject?.message}</p>
+          {errors?.title?.message && (
+            <p className="error" >{errors?.title?.message}</p>
           )}
-          <div className="task-color">
+          {/* <div className="task-color">
             {taskColor.map((color, index) => (
               <label key={index} className="radio-container">
-                <input type="radio" name="radio" value={color.code} {...register("color")} />
+                <input type="radio" name="radio" value={color._id} {...register("color")} />
                 <span className="checkmark" style={{ backgroundColor: color.code }}></span>
               </label>
             ))}
-          </div>
+          </div> */}
         </DialogContent>
         <DialogActions>
           <Grid container spacing={0} justifyContent="center" alignItems="center">
             <Grid item md={4}>
               <button type="button" className="button-stroke" onClick={onClose}>
-                cancel
+                Cancel
               </button>
             </Grid>
             <Grid item md={4}>
               <button type="submit" className="button-raised" >
-                Add Quote
+                Update
               </button>
             </Grid>
           </Grid>

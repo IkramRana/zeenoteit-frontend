@@ -56,6 +56,14 @@ export const MissionActive = () => {
   )
 }
 
+export const MissionInactive = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+      <path id="Mission_Empty" d="M30.929,2H11.643a1.071,1.071,0,0,0-1.071,1.071v7.5h-7.5A1.071,1.071,0,0,0,2,11.643V30.929A1.071,1.071,0,0,0,3.071,32H22.357a1.071,1.071,0,0,0,1.071-1.071v-7.5h7.5A1.071,1.071,0,0,0,32,22.357V3.071A1.071,1.071,0,0,0,30.929,2ZM21.286,29.857H4.143V12.714H21.286Zm8.571-8.571H23.429V11.643a1.071,1.071,0,0,0-1.071-1.071H12.714V4.143H29.857Z" transform="translate(-2 -2)" fill="#7ac8c3" />
+    </svg>
+  )
+}
+
 export const ThoughtInactive = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="22.748" viewBox="0 0 30 22.748">
@@ -104,7 +112,7 @@ export const Notification = () => {
   )
 }
 
-export const AddTask = () => {
+export const Plus = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="16.18" height="16.18" viewBox="0 0 20.18 20.18">
       <path id="add_tasks" d="M27.888,17.8H20.311V10.221a1.256,1.256,0,1,0-2.513,0V17.8H10.221a1.256,1.256,0,0,0,0,2.513H17.8v7.577a1.256,1.256,0,0,0,2.513,0V20.311h7.577a1.256,1.256,0,0,0,0-2.513Z" transform="translate(-8.965 -8.965)" fill="#003361" />
@@ -112,7 +120,7 @@ export const AddTask = () => {
   )
 }
 
-export const Menu = () => {
+export const More = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="5.001" viewBox="0 0 23 5.001">
       <path id="menu_dots" d="M-12103-5230.5a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12103-5230.5Zm-9,0a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12112-5230.5Zm-9,0a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12121-5230.5Z" transform="translate(12121.001 5233.001)" fill="#003361" />

@@ -36,3 +36,10 @@ export const CurrentDate = () => {
     </div>
   )
 }
+
+// *Date Format
+export const DateFormat = (string) => {
+  const todayDate = new Date(string);
+  const date = todayDate.getDate() + ' ' + todayDate.toLocaleString('en-us', { month: 'short' }) + ' ' + todayDate.getFullYear();
+  return date;
+}

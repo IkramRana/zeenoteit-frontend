@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { EditTask, Menu, Trash, VerticalMenu } from "assets/images/icons";
-import { disabledInspect } from 'utils/index';
+import { EditTask, More, Trash, VerticalMenu } from "assets/images/icons";
+import { disabledInspect, DateFormat } from 'utils/index';
 import { Service } from "config/service";
 
-import { Breadcrumbs, Grid, Grow, IconButton, MenuList, Paper, Popper, Typography } from '@material-ui/core';
+import { Breadcrumbs, Grid, IconButton, Menu, Typography } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,6 +13,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
 
+// *Import Dialog Components
+import Deleted from "components/delete";
+
+var deleteThoughtId = '';
 
 function MyThoughts() {
 
@@ -22,17 +26,19 @@ function MyThoughts() {
   const [thoughts, setThoughts] = useState([])
 
   // *For Menu
-  const [openMenu, setOpenMenu] = useState(false)
-  const menuOption = useRef(null)
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // *For Delete Thought
+  const [openDeleteThought, setOpenDeleteThought] = useState(false)
 
   // *For Open and Close Menu
-  const menuHandler = (type) => {
-    if (type === true) {
-      setOpenMenu((prev) => !prev)
-    } else {
-      setOpenMenu(false)
-    }
-  }
+  const menuHandler = (index, event) => {
+    setAnchorEl({ [index]: event.currentTarget });
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   // *Get Thoughts
   const getThought = async () => {
@@ -52,6 +58,50 @@ function MyThoughts() {
     }
   };
 
+  // *For Edit Thought
+  const editThought = (ID) => {
+    try {
+      history.push('/edit-thought/' + ID)
+      handleClose()
+    } catch (error) {
+      console.log('file: my-thoughts.js => line 67 => editThought => error', error)
+    }
+  }
+
+  // *For Delete Thought Open and Close Dialog
+  const deleteThoughtDialog = (type, ID) => {
+    if (type === true) {
+      deleteThoughtId = ID
+      setOpenDeleteThought(true);
+      handleClose()
+    } else {
+      setOpenDeleteThought(false);
+    }
+  }
+
+  // *For Delete Thought 
+  const deleteThought = async (ID) => {
+    try {
+      let obj = {
+        id: ID
+      }
+      const { message } = await Service.deleteThought(obj);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      getThought()
+      deleteThoughtDialog(false)
+    } catch (error) {
+      console.log('file: missions.js => line 40 => error', error)
+    }
+  }
+
   useEffect(() => {
     getThought();
     disabledInspect();
@@ -60,6 +110,9 @@ function MyThoughts() {
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+
+      {/* ========== Delete Thought Dialog ========== */}
+      <Deleted open={openDeleteThought} id={deleteThoughtId} onClose={() => { deleteThoughtDialog(false) }} deleted={deleteThought} />
 
       {/* ========== Left Side ========== */}
       <Grid className="left-side" item md={2}>
@@ -84,112 +137,46 @@ function MyThoughts() {
 
           {/* ========== Thoughts ========== */}
           <Grid className="thought" container spacing={0} justifyContent="flex-start" alignItems="flex-start" alignContent="flex-start">
-            {/* {thoughts.map((value, index) => (
+            {thoughts.map((thought, index) => (
               <Grid key={index} className="thought-box" item md={3}>
                 <div className="header">
                   <Grid container spacing={0} justifyContent="space-between" alignItems="center">
                     <Grid item md={10}>
-                      <Typography component="h5">{value.title}</Typography>
-                      <Typography component="h6">{value.creationAt}</Typography>
+                      <Typography component="h5">{thought.title}</Typography>
+                      <Typography component="h6">{DateFormat(thought.creationAt)}</Typography>
                     </Grid>
                     <Grid item>
-                      <IconButton aria-label="menu" size="small" ref={menuOption} onClick={() => { menuHandler(true) }}>
-                        <Menu className="menuIconForChecking" />
+                      <IconButton aria-label="menu" size="small" onClick={(e) => { menuHandler(index, e) }}>
+                        {anchorEl && Boolean(anchorEl[index]) === true ? <VerticalMenu /> : <More />}
                       </IconButton>
-                      <Popper
-                        open={openMenu}
-                        anchorEl={menuOption.current}
-                        className="dropdown"
-                        transition
-                        disablePortal
+
+                      {/* ========== Menu Options ========== */}
+                      <Menu
+                        className="menu-option"
+                        anchorEl={anchorEl && anchorEl[index]}
+                        keepMounted
+                        open={anchorEl && Boolean(anchorEl[index])}
+                        onClose={handleClose}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        transformOrigin={{ vertical: "top", horizontal: "center" }}
                       >
-                        {({ TransitionProps, placement }) => (
-                          <Grow
-                            {...TransitionProps}
-                            style={{
-                              transformOrigin:
-                                placement === "bottom" ? "center top" : "center bottom"
-                            }}
-                          >
-                            <Paper>
-                              <MenuList
-                                autoFocusItem={openMenu}
-                                id="menu-list-grow"
-                              >
-                                <Typography component="h1" >icon</Typography>
-                              </MenuList>
-                            </Paper>
-                          </Grow>
-                        )}
-                      </Popper>
+                        <IconButton className="edit" aria-label="edit" onClick={() => { editThought(thought._id) }}>
+                          <EditTask />
+                        </IconButton>
+                        <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteThoughtDialog(true, thought._id) }}>
+                          <Trash />
+                        </IconButton>
+                      </Menu>
                     </Grid>
                   </Grid>
                 </div>
                 <div className="content">
-                  <Typography component="p">{value.description}</Typography>
-                  <Typography component="span" onClick={() => history.push('/readmore')}>ReadMore</Typography>
+                  <Typography component="p">{thought.description}</Typography>
+                  <Typography component="span" onClick={() => history.push('/readmore/' + thought._id)}>Read More</Typography>
                 </div>
               </Grid>
-            ))} */}
-
-
-            <Grid className="thought-box" item md={3}>
-              <div className="header">
-                <Grid container spacing={0} justifyContent="space-between" alignItems="center">
-                  <Grid item md={10}>
-                    <Typography component="h5">7894521</Typography>
-                    <Typography component="h6">45645</Typography>
-                  </Grid>
-                  <Grid item>
-                    <IconButton aria-label="menu" size="small" ref={menuOption} onClick={() => { menuHandler(true) }}>
-                      {openMenu &&
-                        <VerticalMenu />
-                      }
-                      {openMenu === false &&
-                        <Menu />
-                      }
-                    </IconButton>
-
-                    {/* ========== Menu Options ========== */}
-                    <Popper
-                      open={openMenu}
-                      anchorEl={menuOption.current}
-                      className="menu-option"
-                      transition
-                      disablePortal
-                    >
-                      {({ TransitionProps, placement }) => (
-                        <Grow
-                          {...TransitionProps}
-                          style={{
-                            transformOrigin:
-                              placement === "bottom" ? "center top" : "center bottom"
-                          }}
-                        >
-                          <Paper>
-                            <MenuList
-                              autoFocusItem={openMenu}
-                              id="menu-list-grow"
-                            >
-                              <IconButton className="edit" aria-label="edit" onClick={() => history.push('/edit-thought')}>
-                                <EditTask />
-                              </IconButton>
-                              <IconButton className="deleted" aria-label="deleted">
-                                <Trash />
-                              </IconButton>
-                            </MenuList>
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
-                  </Grid>
-                </Grid>
-              </div>
-              <div className="content">
-                <Typography component="p">Lorem ipsum dolor sit amet coectetur adipisicing elit. Assumenda ducimus architecto voluptates voluptatem dicta quisquam ratione enim cupiditate ipsa culpa.</Typography>
-                <Typography component="span" onClick={() => history.push('/readmore')}>ReadMore</Typography>
-              </div>
-            </Grid>
+            ))}
 
             <Grid className="add-thought" item md={3} onClick={() => history.push('/write-thought')}>
               <EditTask />
