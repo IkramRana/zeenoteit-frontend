@@ -77,17 +77,18 @@ function Header() {
   const getDailyQuote = async () => {
     try {
       const { data } = await Service.getDailyQuote();
-      setDailyQuote(data[0])
+      setDailyQuote(data)
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+      console.log('file: header.js => line 82 => getDailyQuote => error', error)
+      // toast.error(error, {
+      //   position: "top-center",
+      //   autoClose: 2000,
+      //   hideProgressBar: true,
+      //   closeOnClick: false,
+      //   pauseOnHover: false,
+      //   draggable: false,
+      //   progress: undefined,
+      // });
     }
   };
 
@@ -131,10 +132,10 @@ function Header() {
           <span>Welcome </span><span className="text-color">To Your New Day!</span>
         </Typography>
         <div className="quote">
-          <Typography component="p">{dailyQuote.quote} - {dailyQuote.author}</Typography>
+          <Typography component="p">{dailyQuote[0]?.quote} - {dailyQuote[0]?.author}</Typography>
           <div className="sponsored">
             <Typography component="span">Sponsored by</Typography>
-            <Typography className="link" component="span" onClick={() => history.push(`/${dailyQuote.sponsor}`)}>{dailyQuote.sponsor}</Typography>
+            <Typography className="link" component="span" onClick={() => history.push(`/${dailyQuote[0]?.sponsor}`)}>{dailyQuote[0]?.sponsor}</Typography>
           </div>
         </div>
       </Grid>

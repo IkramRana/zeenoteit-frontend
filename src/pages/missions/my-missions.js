@@ -149,15 +149,16 @@ function MyMissions() {
       const { data } = await Service.getUserTask();
       setTask(data)
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+      console.log('file: my-missions.js => line 152 => getTask => error', error)
+      // toast.error(error, {
+      //   position: "top-center",
+      //   autoClose: 2000,
+      //   hideProgressBar: true,
+      //   closeOnClick: false,
+      //   pauseOnHover: false,
+      //   draggable: false,
+      //   progress: undefined,
+      // });
     }
   };
 
@@ -176,15 +177,16 @@ function MyMissions() {
       const { data } = await Service.getColors();
       setColors(data)
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+      console.log('file: my-missions.js => line 180 => getColors => error', error)
+      // toast.error(error, {
+      //   position: "top-center",
+      //   autoClose: 2000,
+      //   hideProgressBar: true,
+      //   closeOnClick: false,
+      //   pauseOnHover: false,
+      //   draggable: false,
+      //   progress: undefined,
+      // });
     }
   };
 

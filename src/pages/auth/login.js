@@ -35,7 +35,9 @@ function Login() {
       auth.signin({ token })
       localStorage.setItem('jwt', token)
       localStorage.setItem('userData', JSON.stringify(user));
-      history.push('/my-missions');
+      setTimeout(() => {
+        history.push('/my-missions');
+      }, 800);
     } catch (error) {
       toast.error(error, {
         position: "top-center",
