@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddTask(props) {
 
-  const { open, onClose, taskColor, addTaskList } = props
+  const { open, onClose, columnNo, taskColor, addTaskList } = props
 
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -18,6 +18,7 @@ export default function AddTask(props) {
   const addList = async (data) => {
     try {
       let obj = {
+        columnNo: columnNo,
         title: data.title,
         color: data.color
       }

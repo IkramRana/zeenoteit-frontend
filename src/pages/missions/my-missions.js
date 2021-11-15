@@ -20,6 +20,7 @@ import AddSubTask from "components/add-subtask";
 import EditTaskList from "components/edit-task-list";
 import Deleted from "components/delete";
 
+var columnNo = '';
 var taskId = '';
 var deleteTaskId = '';
 
@@ -47,7 +48,8 @@ function MyMissions() {
   const [colors, setColors] = useState([])
 
   // *For Task List Open and Close Dialog
-  const taskDialog = (type) => {
+  const taskDialog = (type, column_no) => {
+    columnNo = column_no;
     if (type === true) {
       setOpenAddTask(true);
     } else {
@@ -249,7 +251,7 @@ function MyMissions() {
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
       {/* ========== Add Task List Dialog ========== */}
-      <AddTask open={openAddTask} onClose={() => { taskDialog(false) }} taskColor={colors} addTaskList={addTaskList} />
+      <AddTask open={openAddTask} columnNo={columnNo} onClose={() => { taskDialog(false) }} taskColor={colors} addTaskList={addTaskList} />
 
       {/* ========== Add Task Dialog ========== */}
       <AddSubTask open={openAddSubTask} id={taskId} onClose={() => { subTaskDialog(false) }} addSubTask={addSubTask} />
@@ -287,74 +289,83 @@ function MyMissions() {
 
 
             {[...Array(5)].map((x, i) => (
+
               <Grid key={i} className="wrapper" container spacing={0} item md={2}>
-                {task.map((task, index) => (
-                  <Grid key={index} className="task-box" item md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
-                    <div className="header" style={{ backgroundColor: task.color[0].code + '1a' }} >
-                      <Grid container spacing={0} justifyContent="space-between" alignItems="center">
-                        <Grid item md={8}>
-                          <Typography component="h5">{task.title}</Typography>
-                        </Grid>
-                        <Grid item md={2}>
-                          <IconButton aria-label="menu" size="small" onClick={() => { subTaskDialog(true, task._id) }}>
-                            <Plus />
-                          </IconButton>
-                        </Grid>
-                        <Grid item md={2}>
-                          <IconButton aria-label="menu" size="small" onClick={(e) => { menuHandler(index, e) }}>
-                            {anchorEl && Boolean(anchorEl[index]) === true ? <VerticalMenu /> : <More />}
-                          </IconButton>
 
-                          {/* ========== Menu Options ========== */}
-                          <Menu
-                            className="menu-option"
-                            anchorEl={anchorEl && anchorEl[index]}
-                            keepMounted
-                            open={anchorEl && Boolean(anchorEl[index])}
-                            onClose={handleClose}
-                            getContentAnchorEl={null}
-                            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                            transformOrigin={{ vertical: "top", horizontal: "center" }}
-                          >
-                            <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, task._id) }}>
-                              <EditTask />
-                            </IconButton>
-                            <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteTaskDialog(true, task._id) }}>
-                              <Trash />
-                            </IconButton>
-                          </Menu>
-                        </Grid>
-                      </Grid>
-                    </div>
-                    <div className="content">
-                      {task.subtasks.map((subTask, i) => (
-                        <div key={i} className="task">
-                          <div className="checkbox">
-                            {subTask.isCompleted &&
-                              <input type="checkbox" checked={true} id={subTask._id} />
-                            }
-                            {subTask.isCompleted === false &&
-                              <input type="checkbox" id={subTask._id} onClick={(e) => taskComplete(subTask._id)} />
-                            }
-                            <label for={subTask._id}></label>
-                          </div>
-                          <Typography className={subTask.isCompleted == true ? 'text-strike' : ''} component="p">{subTask.title}</Typography>
-                        </div>
-                      ))}
+                {task.map((task, index) => {
 
-                      <div className="add-subtask cursor-pointer" onClick={() => { subTaskDialog(true, task._id) }}>
-                        <Plus />
-                        <Typography component="p">Add New Task</Typography>
+                  if((i+1) === task.column_no) {
+                    return (
+                      <Grid key={index} className="task-box" item md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
+                      <div className="header" style={{ backgroundColor: task.color[0].code + '1a' }} >
+                        <Grid container spacing={0} justifyContent="space-between" alignItems="center">
+                          <Grid item md={8}>
+                            <Typography component="h5">{task.title}</Typography>
+                          </Grid>
+                          <Grid item md={2}>
+                            <IconButton aria-label="menu" size="small" onClick={() => { subTaskDialog(true, task._id) }}>
+                              <Plus />
+                            </IconButton>
+                          </Grid>
+                          <Grid item md={2}>
+                            <IconButton aria-label="menu" size="small" onClick={(e) => { menuHandler(index, e) }}>
+                              {anchorEl && Boolean(anchorEl[index]) === true ? <VerticalMenu /> : <More />}
+                            </IconButton>
+
+                            {/* ========== Menu Options ========== */}
+                            <Menu
+                              className="menu-option"
+                              anchorEl={anchorEl && anchorEl[index]}
+                              keepMounted
+                              open={anchorEl && Boolean(anchorEl[index])}
+                              onClose={handleClose}
+                              getContentAnchorEl={null}
+                              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                              transformOrigin={{ vertical: "top", horizontal: "center" }}
+                            >
+                              <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, task._id) }}>
+                                <EditTask />
+                              </IconButton>
+                              <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteTaskDialog(true, task._id) }}>
+                                <Trash />
+                              </IconButton>
+                            </Menu>
+                          </Grid>
+                        </Grid>
                       </div>
-                    </div>
-                  </Grid>
-                ))}
+                      <div className="content">
+                        {task.subtasks.map((subTask, i) => (
+                          <div key={i} className="task">
+                            <div className="checkbox">
+                              {subTask.isCompleted &&
+                                <input type="checkbox" checked={true} id={subTask._id} />
+                              }
+                              {subTask.isCompleted === false &&
+                                <input type="checkbox" id={subTask._id} onClick={(e) => taskComplete(subTask._id)} />
+                              }
+                              <label for={subTask._id}></label>
+                            </div>
+                            <Typography className={subTask.isCompleted == true ? 'text-strike' : ''} component="p">{subTask.title}</Typography>
+                          </div>
+                        ))}
 
-                <Grid className="add-task" item md={12} onClick={() => { taskDialog(true) }}>
+                        <div className="add-subtask cursor-pointer" onClick={() => { subTaskDialog(true, task._id) }}>
+                          <Plus />
+                          <Typography component="p">Add New Task</Typography>
+                        </div>
+                      </div>
+                      </Grid>
+                    )
+                  }
+
+                })}
+
+                <Grid className="add-task" item md={12} onClick={() => { taskDialog(true,(i+1)) }}>
                   <Plus />
                   <Typography component="span">Add To Do List</Typography>
                 </Grid>
               </Grid>
+
             ))}
 
           </Grid>
