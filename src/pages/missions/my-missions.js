@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 import { Plus, EditTask, More, Trash, VerticalMenu } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
-import { Breadcrumbs, Grid, Grow, IconButton, Menu, MenuItem, MenuList, Paper, Popper, Typography } from '@material-ui/core';
+import { Breadcrumbs, Grid, IconButton, Menu, Typography } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,11 +20,10 @@ import EditTaskList from "components/edit-task-list";
 import Deleted from "components/delete";
 
 var taskId = '';
+var taskTitle = '';
 var deleteTaskId = '';
 
 function MyMissions() {
-
-  const history = useHistory();
 
   // *For Task List
   const [openAddTask, setOpenAddTask] = useState(false)
@@ -56,9 +54,10 @@ function MyMissions() {
   }
 
   // *For Edit Task List Open and Close Dialog
-  const editTaskDialog = (type, ID) => {
+  const editTaskDialog = (type, ID, title) => {
     if (type === true) {
       taskId = ID
+      taskTitle = title
       setOpenEditTask(true);
     } else {
       setOpenEditTask(false);
@@ -255,7 +254,7 @@ function MyMissions() {
       <AddSubTask open={openAddSubTask} id={taskId} onClose={() => { subTaskDialog(false) }} addSubTask={addSubTask} />
 
       {/* ========== Edit Task List Dialog ========== */}
-      <EditTaskList open={openEditTask} id={taskId} onClose={() => { editTaskDialog(false) }} editTaskList={editTaskList} />
+      <EditTaskList open={openEditTask} id={taskId} taskTitle={taskTitle} onClose={() => { editTaskDialog(false) }} editTaskList={editTaskList} />
 
       {/* ========== Delete Task Dialog ========== */}
       <Deleted open={openDeleteTask} id={deleteTaskId} onClose={() => { deleteTaskDialog(false) }} deleted={deleteTask} />
@@ -283,8 +282,6 @@ function MyMissions() {
 
           {/* ========== Missions ========== */}
           <Grid className="mission" container spacing={0} justifyContent="flex-start" alignItems="flex-start">
-
-
 
             {[...Array(5)].map((x, i) => (
               <Grid key={i} className="wrapper" container spacing={0} item md={2}>
@@ -316,7 +313,7 @@ function MyMissions() {
                             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                             transformOrigin={{ vertical: "top", horizontal: "center" }}
                           >
-                            <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, task._id) }}>
+                            <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, task._id, task.title) }}>
                               <EditTask />
                             </IconButton>
                             <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteTaskDialog(true, task._id) }}>
@@ -336,7 +333,7 @@ function MyMissions() {
                             {subTask.isCompleted === false &&
                               <input type="checkbox" id={subTask._id} onClick={(e) => taskComplete(subTask._id)} />
                             }
-                            <label for={subTask._id}></label>
+                            <label htmlFor={subTask._id}></label>
                           </div>
                           <Typography className={subTask.isCompleted == true ? 'text-strike' : ''} component="p">{subTask.title}</Typography>
                         </div>

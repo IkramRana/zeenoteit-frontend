@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { disabledInspect } from 'utils';
+import { disabledInspect } from 'utils/index';
 
 import { Dialog, DialogContent, DialogTitle, DialogActions, Grid } from '@material-ui/core';
 import { useForm } from "react-hook-form";
@@ -9,10 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function EditTaskList(props) {
 
-  const { open, onClose, id, taskColor, editTaskList } = props
+  const { open, onClose, id, taskTitle, editTaskList } = props
 
   // *For Form Validation
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
 
   // *For Add List 
   const addList = async (data) => {
@@ -20,7 +20,6 @@ export default function EditTaskList(props) {
       let obj = {
         id: id,
         title: data.title,
-        // color: data.color
       }
       editTaskList(obj)
       reset()
@@ -38,9 +37,10 @@ export default function EditTaskList(props) {
   };
 
   useEffect(() => {
+    setValue("title", taskTitle);
     disabledInspect();
     window.scrollTo({ top: 0 });
-  }, [])
+  }, [open])
 
   return (
     <Dialog
@@ -62,14 +62,6 @@ export default function EditTaskList(props) {
           {errors?.title?.message && (
             <p className="error" >{errors?.title?.message}</p>
           )}
-          {/* <div className="task-color">
-            {taskColor.map((color, index) => (
-              <label key={index} className="radio-container">
-                <input type="radio" name="radio" value={color._id} {...register("color")} />
-                <span className="checkmark" style={{ backgroundColor: color.code }}></span>
-              </label>
-            ))}
-          </div> */}
         </DialogContent>
         <DialogActions>
           <Grid container spacing={0} justifyContent="center" alignItems="center">

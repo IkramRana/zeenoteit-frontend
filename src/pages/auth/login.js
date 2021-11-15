@@ -7,15 +7,15 @@ import { Service } from "config/service";
 import useAuth from 'hooks/useAuth';
 
 import { Grid, Typography } from '@material-ui/core';
+import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useForm } from "react-hook-form";
 
 
 function Login() {
 
-  const auth = useAuth();
   const history = useHistory();
+  const auth = useAuth();
 
   // *For Loader
   const [loader, setLoader] = useState(false)

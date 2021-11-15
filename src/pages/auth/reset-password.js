@@ -47,7 +47,6 @@ function ResetPassword() {
         progress: undefined,
       });
       history.push('/login');
-
     } catch (error) {
       toast.error(error, {
         position: "top-center",

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { ChangePassword, DeleteAccount, Email, LogoutSetting, NotifySetting, Reminder } from "assets/images/icons";
 import { disabledInspect, emailRegex } from 'utils/index';
+import { Service } from "config/service";
 import useAuth from "hooks/useAuth";
 
 import { Breadcrumbs, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, Switch, TextField, Typography } from '@material-ui/core';
@@ -13,7 +14,6 @@ import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 // *Import Components
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
-import { Service } from "config/service";
 import { toast } from "react-toastify";
 
 
@@ -25,7 +25,6 @@ function Settings() {
   const history = useHistory();
   const { signout } = useAuth();
 
-  const [email, setEmail] = useState()
   const [phone, setPhone] = useState()
   const [countryCode, setCountryCode] = useState()
   const [openTime, setOpenTime] = useState()
@@ -38,6 +37,15 @@ function Settings() {
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, control, setValue } = useForm();
 
+  // *For onChange Email Validation
+  const emailValidation = register("email", {
+    required: 'Email is required',
+    pattern: {
+      value: emailRegex,
+      message: 'Please enter a valid email address',
+    }
+  });
+
   // *For Save Button Hide
   const [button, setButton] = useState(false)
 
@@ -45,7 +53,6 @@ function Settings() {
   const getUserData = () => {
     try {
       userData = JSON.parse(localStorage.getItem('userData'));
-      // setEmail(userData[0].email);
       setPhone(userData[0].phone_number);
       setCountryCode(userData[0].countryCode);
       setOpenTime(userData[0].appSettings[0].dailyOpenTime);
@@ -176,8 +183,12 @@ function Settings() {
                         type="text"
                         {...register("email", {
                           required: 'Email is required',
+                          pattern: {
+                            value: emailRegex,
+                            message: 'Please enter a valid email address',
+                          }
                         })}
-                        onChange={() => saveButton()}
+                        onChange={(e) => { emailValidation.onChange(e); saveButton(e) }}
                       />
                     </div>
                   </div>
