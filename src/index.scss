@@ -344,7 +344,8 @@ input::-webkit-inner-spin-button {
     padding: 0px;
     margin: 0px;
 
-    li {
+    li,
+    a {
       font-size: 14px;
       font-family: "Avenir";
       color: #7ac8c3;
@@ -354,6 +355,7 @@ input::-webkit-inner-spin-button {
       display: table;
       text-align: center;
       cursor: pointer;
+      text-decoration: none;
       border-radius: 20px;
       margin: 15px 0px;
       transition: 0.3s ease-in-out;

@@ -6,7 +6,7 @@ import { Service } from "config/service";
 
 import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
@@ -17,6 +17,9 @@ function EditThought() {
 
   const history = useHistory();
   const { id } = useParams();
+
+  // *For Loader
+  const [loader, setLoader] = useState(false)
 
   // *For Get Thought By Id
   const [thought, setThought] = useState([])
@@ -48,6 +51,7 @@ function EditThought() {
 
   // *For Update Thought
   const update = async (data) => {
+    setLoader(true)
     try {
       let obj = {
         id: id,
@@ -64,9 +68,13 @@ function EditThought() {
         draggable: false,
         progress: undefined,
       });
-      history.push('/my-thoughts')
+      setTimeout(() => {
+        history.push('/my-thoughts')
+      }, 1000);
     } catch (error) {
       console.log('Login -> error', error);
+    } finally {
+      setLoader(false)
     }
   }
 
@@ -78,6 +86,20 @@ function EditThought() {
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
 
       {/* ========== Left Side ========== */}
       <Grid className="left-side" item md={2}>
@@ -132,7 +154,7 @@ function EditThought() {
                 )}
               </Grid>
               <Grid item md={3}>
-                <button type="submit" className="button-raised">Save</button>
+                <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false}>Save</button>
               </Grid>
             </Grid>
           </form>

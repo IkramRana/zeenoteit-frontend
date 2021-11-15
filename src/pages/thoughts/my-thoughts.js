@@ -6,14 +6,12 @@ import { disabledInspect, DateFormat } from 'utils/index';
 import { Service } from "config/service";
 
 import { Breadcrumbs, Grid, IconButton, Menu, Typography } from '@material-ui/core';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
-
-// *Import Dialog Components
 import Deleted from "components/delete";
 
 var deleteThoughtId = '';
@@ -110,6 +108,20 @@ function MyThoughts() {
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
 
       {/* ========== Delete Thought Dialog ========== */}
       <Deleted open={openDeleteThought} id={deleteThoughtId} onClose={() => { deleteThoughtDialog(false) }} deleted={deleteThought} />

@@ -114,7 +114,7 @@ export const Service = {
         else throw result;
     },
     deleteAccount: async (obj) => {
-        let result = await deleted(Apis.deleteAccount, obj, token);
+        let result = await patch(Apis.deleteAccount, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },

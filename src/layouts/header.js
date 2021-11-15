@@ -5,8 +5,8 @@ import { EditQuote, Notification } from "assets/images/icons";
 import { disabledInspect, CurrentDate } from 'utils/index';
 import { Service } from "config/service";
 
-import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Tooltip, Typography, withStyles, } from '@material-ui/core';
-import { toast } from 'react-toastify';
+import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Tooltip, Typography, withStyles, Badge } from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Dialog Component
@@ -21,6 +21,16 @@ const QuoteToolTip = withStyles({
     marginTop: "4px"
   }
 })(Tooltip);
+
+const NotificationBadge = withStyles({
+  badge: {
+    fontSize: '10px',
+    backgroundColor: '#E82D2D',
+    top: '-6px',
+    right: '-5px',
+    padding: '0 4px',
+  }
+})(Badge);
 
 function Header() {
 
@@ -99,6 +109,20 @@ function Header() {
   return (
     <Grid id="Header" container spacing={0} justifyContent="space-between" alignItems="center">
 
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
+
       {/* ========== Add Daily Quote Dialog ========== */}
       <DailyQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} />
 
@@ -125,7 +149,9 @@ function Header() {
           </IconButton>
         </QuoteToolTip>
         <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { notificationHandler(true) }}>
-          <Notification />
+          <NotificationBadge badgeContent={5} color="secondary">
+            <Notification />
+          </NotificationBadge>
         </IconButton>
         <Popper
           open={openNotification}

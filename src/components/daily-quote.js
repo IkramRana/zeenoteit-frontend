@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Dialog, DialogContent, DialogTitle, DialogActions, Grid } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function DailyQuote(props) {
 
   const { open, onClose, addDailyQuote } = props
 
+  // *For Loader
+  const [loader, setLoader] = useState(false)
+
   // *For Form Validation
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   // *For Add Daily Quote
   const dailyQuote = async (data) => {
+    setLoader(true)
     try {
       let obj = {
         quote: data.quote,
@@ -31,6 +35,8 @@ export default function DailyQuote(props) {
         draggable: false,
         progress: undefined,
       });
+    } finally {
+      setLoader(false)
     }
   };
 
@@ -41,6 +47,21 @@ export default function DailyQuote(props) {
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
     >
+
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
+
       <DialogTitle>Daily Quote</DialogTitle>
       <form onSubmit={handleSubmit(dailyQuote)}>
         <DialogContent>
@@ -83,7 +104,7 @@ export default function DailyQuote(props) {
               </button>
             </Grid>
             <Grid item md={4}>
-              <button type="submit" className="button-raised" >
+              <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >
                 Add Quote
               </button>
             </Grid>
