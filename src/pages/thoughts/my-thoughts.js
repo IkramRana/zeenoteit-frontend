@@ -41,7 +41,8 @@ function MyThoughts() {
   // *Get Thoughts
   const getThought = async () => {
     try {
-      const { data } = await Service.getThought();
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getThought(token);
       setThoughts(data)
     } catch (error) {
       toast.error(error, {
@@ -80,10 +81,11 @@ function MyThoughts() {
   // *For Delete Thought 
   const deleteThought = async (ID) => {
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         id: ID
       }
-      const { message } = await Service.deleteThought(obj);
+      const { message } = await Service.deleteThought(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,

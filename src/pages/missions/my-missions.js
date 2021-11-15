@@ -78,7 +78,8 @@ function MyMissions() {
   // *For Add Task List
   const addTaskList = async (obj) => {
     try {
-      const { message } = await Service.addTask(obj);
+      let token = localStorage.getItem('jwt')
+      const { message } = await Service.addTask(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -98,7 +99,8 @@ function MyMissions() {
   // *For Edit Task List
   const editTaskList = async (obj) => {
     try {
-      const { message } = await Service.editTask(obj);
+      let token = localStorage.getItem('jwt')
+      const { message } = await Service.editTask(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -126,7 +128,8 @@ function MyMissions() {
   // *For Add Sub Task 
   const addSubTask = async (obj) => {
     try {
-      const { message } = await Service.addSubTask(obj);
+      let token = localStorage.getItem('jwt')
+      const { message } = await Service.addSubTask(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -146,19 +149,11 @@ function MyMissions() {
   // *Get Task
   const getTask = async () => {
     try {
-      const { data } = await Service.getUserTask();
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getUserTask(token);
       setTask(data)
     } catch (error) {
       console.log('file: my-missions.js => line 152 => getTask => error', error)
-      // toast.error(error, {
-      //   position: "top-center",
-      //   autoClose: 2000,
-      //   hideProgressBar: true,
-      //   closeOnClick: false,
-      //   pauseOnHover: false,
-      //   draggable: false,
-      //   progress: undefined,
-      // });
     }
   };
 
@@ -174,7 +169,8 @@ function MyMissions() {
   // *Get Colors 
   const getColors = async () => {
     try {
-      const { data } = await Service.getColors();
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getColors(token);
       setColors(data)
     } catch (error) {
       console.log('file: my-missions.js => line 180 => getColors => error', error)
@@ -204,10 +200,11 @@ function MyMissions() {
   // *For Delete Task 
   const deleteTask = async (ID) => {
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         id: ID
       }
-      const { message } = await Service.deleteTask(obj);
+      const { message } = await Service.deleteTask(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -227,10 +224,11 @@ function MyMissions() {
   // *For Task Complete
   const taskComplete = async (subTaskId) => {
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         id: subTaskId
       }
-      const { message } = await Service.completeSubTask(obj);
+      const { message } = await Service.completeSubTask(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,

@@ -85,6 +85,7 @@ function Settings() {
   const updateSetting = async (data) => {
     setLoader(true)
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         email: data.email,
         countryCode: countryCode,
@@ -95,7 +96,7 @@ function Settings() {
       }
       notify = obj.isNotifyEnable
       setValue("notification", obj.isNotifyEnable)
-      const { message } = await Service.updateSetting(obj);
+      const { message } = await Service.updateSetting(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -153,8 +154,9 @@ function Settings() {
   // *For Delete Account
   const deleteAccount = async () => {
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {}
-      const { message } = await Service.deleteAccount(obj);
+      const { message } = await Service.deleteAccount(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,

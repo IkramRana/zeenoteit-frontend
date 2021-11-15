@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import { Logo, MissionActive, MissionInactive, ThoughtInactive, SettingActive, LogoutInactive } from "assets/images/icons";
@@ -11,6 +11,18 @@ function Navigation() {
 
   const { signout } = useAuth();
   const { pathname } = useLocation();
+
+  const [isActive, setIsActive] = useState()
+
+  const hoverActive = (route) => {
+    setIsActive(route)
+  }
+
+  const logOut = () => {
+    localStorage.removeItem('jwt')
+    localStorage.removeItem('userData')
+    signout()
+  }
 
   useEffect(() => {
     disabledInspect();
@@ -28,14 +40,32 @@ function Navigation() {
 
         <Grid item md={12}>
           <Typography component="ul">
-            <NavLink to="/my-missions" activeClassName="active" >
+            <NavLink to="/my-missions" activeClassName="active" onMouseOver={() => hoverActive('/my-missions')} onMouseOut={() => hoverActive('')}>
               <div>
-                {pathname === '/my-missions' ? <MissionActive /> : <MissionInactive />}
+                {/* {isActive === '/my-missions' &&
+                  <MissionActive />
+                }
+                {isActive === '' &&
+                  <MissionInactive />
+                } */}
+                {/* {pathname === '/my-missions' ? <MissionActive /> : <span>
+                  {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
+                </span>} */}
+                {pathname === '/my-thoughts' ? <MissionInactive /> : <MissionActive />}
                 <span>My Missions</span>
               </div>
             </NavLink>
-            <NavLink to="/my-thoughts" activeClassName="active" >
+            <NavLink to="/my-thoughts" activeClassName="active" onMouseOver={() => hoverActive('/my-thoughts')} onMouseOut={() => hoverActive('')}>
               <div>
+                {/* {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />} */}
+                {/* {isActive === '/my-thoughts' &&
+                  < MissionActive />
+                }
+                {isActive === '' &&
+                  <span>
+                    {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
+                  </span>
+                } */}
                 {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
                 <span>My Thoughts</span>
               </div>
@@ -53,7 +83,7 @@ function Navigation() {
 
       <Grid item md={12}>
         <Typography component="ul">
-          <Typography component="li" onClick={signout}>
+          <Typography component="li" onClick={() => logOut()}>
             <div>
               <LogoutInactive />
               <span>Logout</span>

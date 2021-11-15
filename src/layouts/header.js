@@ -56,7 +56,8 @@ function Header() {
   // *For Add Daily Quote
   const addDailyQuote = async (obj) => {
     try {
-      const { message } = await Service.addDailyQuote(obj);
+      let token = localStorage.getItem('jwt')
+      const { message } = await Service.addDailyQuote(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -76,19 +77,11 @@ function Header() {
   // *Get Daily Quote
   const getDailyQuote = async () => {
     try {
-      const { data } = await Service.getDailyQuote();
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getDailyQuote(token);
       setDailyQuote(data)
     } catch (error) {
       console.log('file: header.js => line 82 => getDailyQuote => error', error)
-      // toast.error(error, {
-      //   position: "top-center",
-      //   autoClose: 2000,
-      //   hideProgressBar: true,
-      //   closeOnClick: false,
-      //   pauseOnHover: false,
-      //   draggable: false,
-      //   progress: undefined,
-      // });
     }
   };
 

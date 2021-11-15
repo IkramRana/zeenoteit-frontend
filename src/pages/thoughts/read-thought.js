@@ -23,7 +23,8 @@ function ReadThought() {
   // *Get Read Thought
   const getThoughtByThoughtId = async () => {
     try {
-      const { data } = await Service.getThoughtByThoughtId(id);
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getThoughtByThoughtId(id, token);
       setThought(data[0])
     } catch (error) {
       toast.error(error, {

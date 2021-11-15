@@ -30,7 +30,8 @@ function EditThought() {
   // *Get Thought By Id
   const getThoughtByThoughtId = async () => {
     try {
-      const { data } = await Service.getThoughtByThoughtId(id);
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getThoughtByThoughtId(id, token);
       setThought(data[0]);
 
       // *For Default Value
@@ -53,12 +54,13 @@ function EditThought() {
   const update = async (data) => {
     setLoader(true)
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         id: id,
         title: data.title,
         description: data.description,
       }
-      const { message } = await Service.editThought(obj);
+      const { message } = await Service.editThought(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,

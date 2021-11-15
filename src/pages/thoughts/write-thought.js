@@ -27,11 +27,12 @@ function WriteThought() {
   const save = async (data) => {
     setLoader(true)
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         title: data.title,
         description: data.description,
       }
-      const { message } = await Service.addThought(obj);
+      const { message } = await Service.addThought(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
