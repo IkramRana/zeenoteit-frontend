@@ -1,7 +1,5 @@
 import { Apis, get, post, patch, deleted } from './';
 
-// var token = localStorage.getItem('jwt')
-
 export const Service = {
 
     // *Auth

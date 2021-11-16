@@ -92,7 +92,15 @@ function MyMissions() {
       getTask()
       taskDialog(false)
     } catch (error) {
-      console.log('file: missions.js => line 40 => error', error)
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     }
   }
 
@@ -113,7 +121,7 @@ function MyMissions() {
       getTask()
       editTaskDialog(false)
     } catch (error) {
-      toast.success(error, {
+      toast.error(error, {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
@@ -142,7 +150,15 @@ function MyMissions() {
       getTask()
       subTaskDialog(false)
     } catch (error) {
-      console.log('file: missions.js => line 40 => error', error)
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     }
   }
 
@@ -174,15 +190,6 @@ function MyMissions() {
       setColors(data)
     } catch (error) {
       console.log('file: my-missions.js => line 180 => getColors => error', error)
-      // toast.error(error, {
-      //   position: "top-center",
-      //   autoClose: 2000,
-      //   hideProgressBar: true,
-      //   closeOnClick: false,
-      //   pauseOnHover: false,
-      //   draggable: false,
-      //   progress: undefined,
-      // });
     }
   };
 
@@ -217,7 +224,15 @@ function MyMissions() {
       getTask()
       deleteTaskDialog(false)
     } catch (error) {
-      console.log('file: missions.js => line 40 => error', error)
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     }
   }
 
@@ -240,7 +255,15 @@ function MyMissions() {
       });
       getTask()
     } catch (error) {
-      console.log('file: my-missions.js => line 224 => MyMissions => error', error)
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     }
   }
 
@@ -305,11 +328,9 @@ function MyMissions() {
           <Grid className="mission" container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
             {[...Array(5)].map((x, i) => (
-
               <Grid key={i} className="wrapper" container spacing={0} item md={2}>
 
                 {task.map((task, index) => {
-
                   if ((i + 1) === task.column_no) {
                     return (
                       <Grid key={index} className="task-box" item md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
@@ -373,15 +394,14 @@ function MyMissions() {
                       </Grid>
                     )
                   }
-
                 })}
 
                 <Grid className="add-task" item md={12} onClick={() => { taskDialog(true, (i + 1)) }}>
                   <Plus />
                   <Typography component="span">Add To Do List</Typography>
                 </Grid>
-              </Grid>
 
+              </Grid>
             ))}
 
           </Grid>

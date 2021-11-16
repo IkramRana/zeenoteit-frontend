@@ -46,7 +46,15 @@ function WriteThought() {
         history.push('/my-thoughts')
       }, 1000);
     } catch (error) {
-      console.log('Login -> error', error);
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     } finally {
       setLoader(false)
     }

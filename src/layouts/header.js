@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { EditQuote, Notification } from "assets/images/icons";
+import { EditQuote, EditTask, Notification, Reminder } from "assets/images/icons";
 import { disabledInspect, CurrentDate } from 'utils/index';
 import { Service } from "config/service";
 
-import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Tooltip, Typography, withStyles, Badge } from '@material-ui/core';
+import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Tooltip, Typography, withStyles, Badge, MenuItem } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Dialog Component
 import DailyQuote from "components/daily-quote";
 
+// *For Quote Tooltip
 const QuoteToolTip = withStyles({
   tooltip: {
     fontSize: "12px",
@@ -22,6 +23,7 @@ const QuoteToolTip = withStyles({
   }
 })(Tooltip);
 
+// *For Notification Badge
 const NotificationBadge = withStyles({
   badge: {
     fontSize: '10px',
@@ -70,7 +72,15 @@ function Header() {
       getDailyQuote()
       dialogHandler(false)
     } catch (error) {
-      console.log('file: header.js => line 40 => dialogCloseHandler => error', error)
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     }
   }
 
@@ -169,6 +179,40 @@ function Header() {
                     id="menu-list-grow"
                   >
                     <Typography component="h1" >Notifications</Typography>
+                    <div className="notify-wrapper">
+                      <MenuItem onClick={() => { notificationHandler(false) }}>
+                        <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+                          <Grid item md={1}>
+                            <div className="icon">
+                              <EditTask />
+                            </div>
+                          </Grid>
+                          <Grid item md={11}>
+                            <div className="head">
+                              <Typography className="text-color" component="span">Daily Quote</Typography>
+                              <Typography component="span">09:00 AM</Typography>
+                            </div>
+                            <Typography component="p">Let's complete your daily quote challenge</Typography>
+                          </Grid>
+                        </Grid>
+                      </MenuItem>
+                      <MenuItem onClick={() => { notificationHandler(false) }}>
+                        <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+                          <Grid item md={1}>
+                            <div className="icon">
+                              <Reminder />
+                            </div>
+                          </Grid>
+                          <Grid item md={11}>
+                            <div className="head">
+                              <Typography className="text-color" component="span">Daily Reminder</Typography>
+                              <Typography component="span">09:00 AM</Typography>
+                            </div>
+                            <Typography component="p">Its time to add a task in daily routine work</Typography>
+                          </Grid>
+                        </Grid>
+                      </MenuItem>
+                    </div>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

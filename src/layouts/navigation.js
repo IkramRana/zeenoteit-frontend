@@ -18,12 +18,6 @@ function Navigation() {
     setIsActive(route)
   }
 
-  const logOut = () => {
-    localStorage.removeItem('jwt')
-    localStorage.removeItem('userData')
-    signout()
-  }
-
   useEffect(() => {
     disabledInspect();
     window.scrollTo({ top: 0 });
@@ -83,7 +77,7 @@ function Navigation() {
 
       <Grid item md={12}>
         <Typography component="ul">
-          <Typography component="li" onClick={() => logOut()}>
+          <Typography component="li" onClick={signout}>
             <div>
               <LogoutInactive />
               <span>Logout</span>

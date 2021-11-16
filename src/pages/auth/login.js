@@ -35,32 +35,7 @@ function Login() {
       localStorage.setItem('jwt', token)
       localStorage.setItem('userData', JSON.stringify(user));
       auth.signin({ token })
-      //window.location.href = "/my-missions";
-      //setTimeout(() => {
-
       history.push('/my-missions');
-      //window.location.href = '/my-missions';
-
-      // let getToken = await localStorage.getItem('jwt');
-      // console.log('file: login.js => line 43 => //setTimeout => getToken', getToken)
-      // if (getToken) {
-      //   console.log('if');
-      //   setTimeout(() => {
-      //     history.push('/my-missions');
-      //   }, 30000);
-      // } else {
-      //   console.log('else');
-      //   setInterval(() => {
-      //     console.log('here')
-      //     let getToken = localStorage.getItem('jwt');
-      //     if (getToken) {
-      //       setTimeout(() => {
-      //         history.push('/my-missions');
-      //       }, 30000);
-      //     }
-      //   }, 2000);
-      // }
-      //}, 60000);
     } catch (error) {
       toast.error(error, {
         position: "top-center",

@@ -27,15 +27,7 @@ function ReadThought() {
       const { data } = await Service.getThoughtByThoughtId(id, token);
       setThought(data[0])
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+      console.log('file: read-thought.js => line 30 => getThoughtByThoughtId => error', error)
     }
   };
 

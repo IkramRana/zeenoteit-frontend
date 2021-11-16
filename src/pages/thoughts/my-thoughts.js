@@ -45,15 +45,7 @@ function MyThoughts() {
       const { data } = await Service.getThought(token);
       setThoughts(data)
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+      console.log('file: my-thoughts.js => line 48 => getThought => error', error)
     }
   };
 
@@ -98,7 +90,15 @@ function MyThoughts() {
       getThought()
       deleteThoughtDialog(false)
     } catch (error) {
-      console.log('file: missions.js => line 40 => error', error)
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     }
   }
 

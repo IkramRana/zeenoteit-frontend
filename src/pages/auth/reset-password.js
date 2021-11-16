@@ -36,7 +36,6 @@ function ResetPassword() {
         password: data.password,
       }
       const { message } = await Service.resetPassword(obj);
-
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,

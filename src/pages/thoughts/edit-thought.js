@@ -38,15 +38,7 @@ function EditThought() {
       setValue("title", data[0].title);
       setValue("description", data[0].description);
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+      console.log('file: edit-thought.js => line 41 => getThoughtByThoughtId => error', error)
     }
   };
 
@@ -74,7 +66,15 @@ function EditThought() {
         history.push('/my-thoughts')
       }, 1000);
     } catch (error) {
-      console.log('Login -> error', error);
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
     } finally {
       setLoader(false)
     }

@@ -308,13 +308,17 @@ input::-webkit-inner-spin-button {
   }
 
   .dropdown {
-    width: 300px;
+    width: 310px;
     margin-top: 10px !important;
-    margin-right: 15px !important;
+    margin-right: 18px !important;
 
     .MuiPaper-root {
       box-shadow: 0px 3px 99px #0000001a;
       border-radius: 20px;
+
+      .MuiListItem-button:hover {
+        background-color: transparent !important;
+      }
     }
 
     h1 {
@@ -323,6 +327,55 @@ input::-webkit-inner-spin-button {
       color: #6ba570;
       text-align: center;
       margin: 8px 0px;
+    }
+
+    .notify-wrapper {
+      height: auto;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .MuiMenuItem-root {
+      padding-top: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(42, 42, 42, 0.1);
+
+      &:nth-last-child(1) {
+        border-bottom: none;
+      }
+
+      .icon {
+        background-color: rgba($color: #7ac8c3, $alpha: 0.2);
+        text-align: center;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+
+        svg {
+          fill: #7ac8c3 !important;
+          width: 14px;
+        }
+      }
+
+      .head {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 15px;
+        margin-bottom: 8px;
+
+        span {
+          font-size: 12px;
+          font-family: "Avenir";
+          color: rgba($color: #58595b, $alpha: 0.5);
+        }
+      }
+
+      p {
+        font-size: 12px;
+        font-family: "Avenir";
+        color: #58595b;
+        margin-left: 15px;
+      }
     }
   }
 }
