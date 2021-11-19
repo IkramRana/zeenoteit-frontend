@@ -44,6 +44,8 @@ export default function DailyQuote(props) {
     <Dialog
       open={open}
       onClose={onClose}
+      disableEscapeKeyDown
+      disableBackdropClick
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
     >

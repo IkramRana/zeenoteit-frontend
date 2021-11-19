@@ -51,6 +51,8 @@ export default function EditTaskList(props) {
     <Dialog
       open={open}
       onClose={onClose}
+      disableEscapeKeyDown
+      disableBackdropClick
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
     >
