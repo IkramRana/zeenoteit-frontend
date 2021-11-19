@@ -1,7 +1,6 @@
 import authContext from "context/authContext";
 import useProvideAuth from "hooks/useProvideAuth";
 
-
 export default function AuthProvider({ children }) {
     const auth = useProvideAuth();
     return (

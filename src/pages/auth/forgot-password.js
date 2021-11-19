@@ -7,9 +7,9 @@ import { Service } from "config/service";
 
 import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
+import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useForm } from "react-hook-form";
 
 var resendMail = '';
 
@@ -101,6 +101,20 @@ function ForgotPassword() {
     <div className='form-bg'>
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
+
+          {/* ========== Alert Toaster ========== */}
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            limit={1}
+          />
 
           <Grid item md={12} >
             <Logo />

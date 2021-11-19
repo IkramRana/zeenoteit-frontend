@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 import { Logo, MissionActive, MissionInactive, ThoughtInactive, SettingActive, LogoutInactive } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
@@ -7,16 +7,15 @@ import useAuth from "hooks/useAuth";
 
 import { Grid, Typography } from '@material-ui/core';
 
-var isActive = '/my-missions';
-
 function Navigation() {
 
   const { signout } = useAuth();
-  const history = useHistory();
+  const { pathname } = useLocation();
 
-  const activeHandler = (route) => {
-    isActive = route
-    history.push(route)
+  const [isActive, setIsActive] = useState()
+
+  const hoverActive = (route) => {
+    setIsActive(route)
   }
 
   useEffect(() => {
@@ -35,24 +34,42 @@ function Navigation() {
 
         <Grid item md={12}>
           <Typography component="ul">
-            <Typography component="li" className={isActive === '/my-missions' ? 'active' : ''} onClick={() => { activeHandler('/my-missions') }} >
+            <NavLink to="/my-missions" activeClassName="active" onMouseOver={() => hoverActive('/my-missions')} onMouseOut={() => hoverActive('')}>
               <div>
-                {isActive === '/my-missions' ? <MissionActive /> : <MissionInactive />}
+                {/* {isActive === '/my-missions' &&
+                  <MissionActive />
+                }
+                {isActive === '' &&
+                  <MissionInactive />
+                } */}
+                {/* {pathname === '/my-missions' ? <MissionActive /> : <span>
+                  {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
+                </span>} */}
+                {pathname === '/my-thoughts' ? <MissionInactive /> : <MissionActive />}
                 <span>My Missions</span>
               </div>
-            </Typography>
-            <Typography component="li" className={isActive === '/my-thoughts' ? 'active' : ''} onClick={() => { activeHandler('/my-thoughts') }}>
+            </NavLink>
+            <NavLink to="/my-thoughts" activeClassName="active" onMouseOver={() => hoverActive('/my-thoughts')} onMouseOut={() => hoverActive('')}>
               <div>
-                {isActive === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
+                {/* {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />} */}
+                {/* {isActive === '/my-thoughts' &&
+                  < MissionActive />
+                }
+                {isActive === '' &&
+                  <span>
+                    {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
+                  </span>
+                } */}
+                {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
                 <span>My Thoughts</span>
               </div>
-            </Typography>
-            <Typography component="li" className={isActive === '/settings' ? 'active' : ''} onClick={() => { activeHandler('/settings') }} >
+            </NavLink>
+            <NavLink to="/settings" activeClassName="active" >
               <div>
-                {isActive === '/settings' ? <SettingActive /> : <SettingActive />}
+                {pathname === '/settings' ? <SettingActive /> : <SettingActive />}
                 <span>Settings</span>
               </div>
-            </Typography>
+            </NavLink>
           </Typography>
         </Grid>
 

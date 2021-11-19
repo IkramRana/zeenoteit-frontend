@@ -6,7 +6,7 @@ import { Service } from "config/service";
 
 import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
@@ -17,17 +17,22 @@ function WriteThought() {
 
   const history = useHistory();
 
+  // *For Loader
+  const [loader, setLoader] = useState(false)
+
   // *For Form Validation
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   // *For Save Thought
   const save = async (data) => {
+    setLoader(true)
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         title: data.title,
         description: data.description,
       }
-      const { message } = await Service.addThought(obj);
+      const { message } = await Service.addThought(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -37,9 +42,21 @@ function WriteThought() {
         draggable: false,
         progress: undefined,
       });
-      history.push('/my-thoughts')
+      setTimeout(() => {
+        history.push('/my-thoughts')
+      }, 1000);
     } catch (error) {
-      console.log('Login -> error', error);
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    } finally {
+      setLoader(false)
     }
   }
 
@@ -50,6 +67,20 @@ function WriteThought() {
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
 
       {/* ========== Left Side ========== */}
       <Grid className="left-side" item md={2}>
@@ -101,7 +132,7 @@ function WriteThought() {
                 )}
               </Grid>
               <Grid item md={3}>
-                <button type="submit" className="button-raised">Save</button>
+                <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false}>Save</button>
               </Grid>
             </Grid>
           </form>

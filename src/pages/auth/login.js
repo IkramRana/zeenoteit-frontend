@@ -7,15 +7,15 @@ import { Service } from "config/service";
 import useAuth from 'hooks/useAuth';
 
 import { Grid, Typography } from '@material-ui/core';
+import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useForm } from "react-hook-form";
 
 
 function Login() {
 
-  const auth = useAuth();
   const history = useHistory();
+  const auth = useAuth();
 
   // *For Loader
   const [loader, setLoader] = useState(false)
@@ -32,9 +32,9 @@ function Login() {
         password: data.password,
       }
       const { token, user } = await Service.login(obj);
-      auth.signin({ token })
       localStorage.setItem('jwt', token)
       localStorage.setItem('userData', JSON.stringify(user));
+      auth.signin({ token })
       history.push('/my-missions');
     } catch (error) {
       toast.error(error, {
@@ -59,21 +59,21 @@ function Login() {
   return (
     <div className='form-bg'>
       <div className="form-wrapper">
-
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable={false}
-          pauseOnHover={false}
-          limit={1}
-        />
-
         <Grid container spacing={2} justifyContent="center" alignItems="center">
+
+          {/* ========== Alert Toaster ========== */}
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            limit={1}
+          />
 
           <Grid item md={12} >
             <Logo />

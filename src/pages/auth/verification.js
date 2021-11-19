@@ -234,10 +234,7 @@ function Verification() {
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
-          <Grid item md={12} >
-            <Logo />
-          </Grid>
-
+          {/* ========== Alert Toaster ========== */}
           <ToastContainer
             position="top-center"
             autoClose={2000}
@@ -250,6 +247,10 @@ function Verification() {
             pauseOnHover={false}
             limit={1}
           />
+
+          <Grid item md={12} >
+            <Logo />
+          </Grid>
 
           <Grid item md={12}>
             <form onSubmit={handleSubmit(ValidateOtp)}>

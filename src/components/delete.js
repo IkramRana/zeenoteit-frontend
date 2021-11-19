@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { disabledInspect } from 'utils';
 
-import { Dialog, DialogContent, DialogTitle, DialogActions, Grid, Typography } from '@material-ui/core';
-import { useForm } from "react-hook-form";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Dialog, DialogContent, DialogActions, Grid, Typography } from '@material-ui/core';
 
 export default function Deleted(props) {
 

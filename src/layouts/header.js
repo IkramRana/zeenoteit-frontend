@@ -4,17 +4,17 @@ import { useHistory } from "react-router-dom";
 import { EditQuote, EditTask, Notification, Reminder } from "assets/images/icons";
 import { disabledInspect, CurrentDate } from 'utils/index';
 import { Service } from "config/service";
-
 import { socketConfig } from "../config/socket";
 
-import { ClickAwayListener, Grid, Grow, IconButton, MenuItem, MenuList, Paper, Popper, Tooltip, Typography, withStyles,Badge } from '@material-ui/core';
-import { toast } from 'react-toastify';
+import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Tooltip, Typography, withStyles, Badge, MenuItem } from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 // *Import Dialog Component
 import DailyQuote from "components/daily-quote";
 
+// *For Quote Tooltip
 const QuoteToolTip = withStyles({
   tooltip: {
     fontSize: "12px",
@@ -25,6 +25,7 @@ const QuoteToolTip = withStyles({
   }
 })(Tooltip);
 
+// *For Notification Badge
 const NotificationBadge = withStyles({
   badge: {
     fontSize: '10px',
@@ -44,6 +45,7 @@ function Header() {
 
   // *notification
   const [notificationCount, setNotificationCount] = useState(0)
+  const [notifications, setNotifications] = useState('')
 
   // *For Daily Quote
   const [openDialog, setOpenDialog] = useState(false)
@@ -65,7 +67,8 @@ function Header() {
   // *For Add Daily Quote
   const addDailyQuote = async (obj) => {
     try {
-      const { message } = await Service.addDailyQuote(obj);
+      let token = localStorage.getItem('jwt')
+      const { message } = await Service.addDailyQuote(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,
@@ -78,16 +81,6 @@ function Header() {
       getDailyQuote()
       dialogHandler(false)
     } catch (error) {
-      console.log('file: header.js => line 40 => dialogCloseHandler => error', error)
-    }
-  }
-
-  // *Get Daily Quote
-  const getDailyQuote = async () => {
-    try {
-      const { data } = await Service.getDailyQuote();
-      setDailyQuote(data[0])
-    } catch (error) {
       toast.error(error, {
         position: "top-center",
         autoClose: 2000,
@@ -97,6 +90,34 @@ function Header() {
         draggable: false,
         progress: undefined,
       });
+    }
+  }
+
+  // *Get Daily Quote
+  const getDailyQuote = async () => {
+    try {
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getDailyQuote(token);
+      setDailyQuote(data)
+    } catch (error) {
+      console.log('file: header.js => line 82 => getDailyQuote => error', error)
+    }
+  };
+
+  // *Get User Notifications
+  const getUserNotification = async () => {
+    try {
+      if(notifications.length < notificationCount || notifications === ''){
+        let token = localStorage.getItem('jwt')
+        const { data } = await Service.getUserNotification(token);
+        console.log('file: header.js => line 112 => getUserNotification => data', data);
+        setNotifications(data)
+        setNotificationCount(0)
+      }
+    } catch (error) {
+      console.log('file: header.js => line 82 => getDailyQuote => error', error)
+    } finally {
+      notificationHandler(true)
     }
   };
 
@@ -115,7 +136,7 @@ function Header() {
     let userId = userData[0]._id;
 
     if (socket?.disconnect) {
-      socket.off('user-notifications', (e) => null);
+      socket.off('show_notification', (e) => null);
       clearTimeout(timer);
     }
 
@@ -123,7 +144,7 @@ function Header() {
     let isSocketConnected;
 
     socket.on("connect", () => {
-      socket.emit("user-notifications", userId);
+      socket.emit("new_notification", userId);
       isSocketConnected = true;
     });
 
@@ -138,12 +159,12 @@ function Header() {
       }, 1000);
     });
 
-    socket.on('user-notifications', obj => {
-      //console.log('file: header.js => line 137 => getNotificationCount => obj', obj);
+    socket.on('show_notification', obj => {
+      console.log('file: header.js => line 137 => getNotificationCount => obj', obj);
       setNotificationCount(obj.notificationCount)
       timer = setTimeout(() => {
-        socket.emit("user-notifications", userId);
-      }, 10000);
+        socket.emit("new_notification", userId);
+      }, 20000);
     })
 
     if (isSocketConnected === false) {
@@ -155,27 +176,41 @@ function Header() {
   useEffect(() => {
     getDailyQuote();
     disabledInspect();
-    setTimeout(() => {
-      getNotificationCount();
-    }, 1000);
+    // setTimeout(() => {
+    //   getNotificationCount();
+    // }, 5000);
     window.scrollTo({ top: 0 });
   }, [])
 
   return (
     <Grid id="Header" container spacing={0} justifyContent="space-between" alignItems="center">
 
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
+
       {/* ========== Add Daily Quote Dialog ========== */}
-      <DailyQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} />
+      {/* <DailyQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} /> */}
 
       <Grid item md={8}>
         <Typography component="h2">
           <span>Welcome </span><span className="text-color">To Your New Day!</span>
         </Typography>
         <div className="quote">
-          <Typography component="p">{dailyQuote.quote} - {dailyQuote.author}</Typography>
+          <Typography component="p">{dailyQuote[0]?.quote} - {dailyQuote[0]?.author}</Typography>
           <div className="sponsored">
             <Typography component="span">Sponsored by</Typography>
-            <Typography className="link" component="span" onClick={() => history.push(`/${dailyQuote.sponsor}`)}>{dailyQuote.sponsor}</Typography>
+            <Typography className="link" component="span" onClick={() => history.push(`/${dailyQuote[0]?.sponsor}`)}>{dailyQuote[0]?.sponsor}</Typography>
           </div>
         </div>
       </Grid>
@@ -189,8 +224,8 @@ function Header() {
             <EditQuote />
           </IconButton>
         </QuoteToolTip>
-        <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { notificationHandler(true) }}>
-        <NotificationBadge badgeContent={notificationCount} color="secondary">
+        <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { getUserNotification() }}>
+          <NotificationBadge badgeContent={notificationCount} color="secondary">
             <Notification />
           </NotificationBadge>
         </IconButton>
@@ -217,38 +252,25 @@ function Header() {
                   >
                     <Typography component="h1" >Notifications</Typography>
                     <div className="notify-wrapper">
-                      <MenuItem onClick={() => { notificationHandler(false) }}>
+                    {notifications.map((notification, i) => (
+                      <MenuItem key={i} onClick={() => { notificationHandler(false) }}>
                         <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
                           <Grid item md={1}>
                             <div className="icon">
-                              <EditTask />
+                              <div className={ notification.isRead === false ? "unread" : ""}></div>
+                              <Reminder/>
                             </div>
                           </Grid>
                           <Grid item md={11}>
                             <div className="head">
-                              <Typography className="text-color" component="span">Daily Quote</Typography>
-                              <Typography component="span">09:00 AM</Typography>
+                              <Typography className="text-color" component="span">{notification.notificationTitle}</Typography>
+                              <Typography component="span">{notification.notificationTime}</Typography>
                             </div>
-                            <Typography component="p">Let's complete your daily quote challenge</Typography>
+                            <Typography component="p">{notification.notificationDescription}</Typography>
                           </Grid>
                         </Grid>
                       </MenuItem>
-                      <MenuItem onClick={() => { notificationHandler(false) }}>
-                        <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
-                          <Grid item md={1}>
-                            <div className="icon">
-                              <Reminder />
-                            </div>
-                          </Grid>
-                          <Grid item md={11}>
-                            <div className="head">
-                              <Typography className="text-color" component="span">Daily Reminder</Typography>
-                              <Typography component="span">09:00 AM</Typography>
-                            </div>
-                            <Typography component="p">Its time to add a task in daily routine work</Typography>
-                          </Grid>
-                        </Grid>
-                      </MenuItem>
+                    ))}
                     </div>
                   </MenuList>
                 </ClickAwayListener>

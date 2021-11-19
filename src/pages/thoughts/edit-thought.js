@@ -6,7 +6,7 @@ import { Service } from "config/service";
 
 import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
@@ -18,6 +18,9 @@ function EditThought() {
   const history = useHistory();
   const { id } = useParams();
 
+  // *For Loader
+  const [loader, setLoader] = useState(false)
+
   // *For Get Thought By Id
   const [thought, setThought] = useState([])
 
@@ -27,12 +30,41 @@ function EditThought() {
   // *Get Thought By Id
   const getThoughtByThoughtId = async () => {
     try {
-      const { data } = await Service.getThoughtByThoughtId(id);
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getThoughtByThoughtId(id, token);
       setThought(data[0]);
 
       // *For Default Value
       setValue("title", data[0].title);
       setValue("description", data[0].description);
+    } catch (error) {
+      console.log('file: edit-thought.js => line 41 => getThoughtByThoughtId => error', error)
+    }
+  };
+
+  // *For Update Thought
+  const update = async (data) => {
+    setLoader(true)
+    try {
+      let token = localStorage.getItem('jwt')
+      let obj = {
+        id: id,
+        title: data.title,
+        description: data.description,
+      }
+      const { message } = await Service.editThought(obj, token);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        history.push('/my-thoughts')
+      }, 1000);
     } catch (error) {
       toast.error(error, {
         position: "top-center",
@@ -43,30 +75,8 @@ function EditThought() {
         draggable: false,
         progress: undefined,
       });
-    }
-  };
-
-  // *For Update Thought
-  const update = async (data) => {
-    try {
-      let obj = {
-        id: id,
-        title: data.title,
-        description: data.description,
-      }
-      const { message } = await Service.editThought(obj);
-      toast.success(message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-      history.push('/my-thoughts')
-    } catch (error) {
-      console.log('Login -> error', error);
+    } finally {
+      setLoader(false)
     }
   }
 
@@ -78,6 +88,20 @@ function EditThought() {
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
 
       {/* ========== Left Side ========== */}
       <Grid className="left-side" item md={2}>
@@ -132,7 +156,7 @@ function EditThought() {
                 )}
               </Grid>
               <Grid item md={3}>
-                <button type="submit" className="button-raised">Save</button>
+                <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false}>Save</button>
               </Grid>
             </Grid>
           </form>

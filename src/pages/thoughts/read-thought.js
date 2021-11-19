@@ -5,8 +5,7 @@ import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
 import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
-import { useForm } from "react-hook-form";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
@@ -24,18 +23,11 @@ function ReadThought() {
   // *Get Read Thought
   const getThoughtByThoughtId = async () => {
     try {
-      const { data } = await Service.getThoughtByThoughtId(id);
+      let token = localStorage.getItem('jwt')
+      const { data } = await Service.getThoughtByThoughtId(id, token);
       setThought(data[0])
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+      console.log('file: read-thought.js => line 30 => getThoughtByThoughtId => error', error)
     }
   };
 
@@ -47,6 +39,20 @@ function ReadThought() {
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
 
       {/* ========== Left Side ========== */}
       <Grid className="left-side" item md={2}>

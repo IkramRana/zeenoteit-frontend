@@ -1,42 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import { ChangePassword, DeleteAccount, Email, LogoutSetting, NotifySetting, Reminder } from "assets/images/icons";
 import { disabledInspect, emailRegex } from 'utils/index';
+import { Service } from "config/service";
 import useAuth from "hooks/useAuth";
 
-import { Breadcrumbs, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, Switch, TextField, Typography } from '@material-ui/core';
+import { Breadcrumbs, FormControl, Grid, MenuItem, Select, Switch, Typography } from '@material-ui/core';
 import { useForm, Controller } from "react-hook-form";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
-import { Service } from "config/service";
-import { toast } from "react-toastify";
-
+import Deleted from "components/delete";
 
 let userData;
-// var notify;
+var notify = Boolean;
 
 function Settings() {
 
-  const history = useHistory();
   const { signout } = useAuth();
 
-  const [email, setEmail] = useState()
   const [phone, setPhone] = useState()
   const [countryCode, setCountryCode] = useState()
   const [openTime, setOpenTime] = useState()
   const [timeInterval, setTimeInterval] = useState('')
-  const [notification, setNotification] = useState()
 
   // *For Loader
   const [loader, setLoader] = useState(false)
 
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, control, setValue } = useForm();
+
+  // *For onChange Email Validation
+  const email = register("email", {
+    required: 'Email is required',
+    pattern: {
+      value: emailRegex,
+      message: 'Please enter a valid email address',
+    }
+  });
+
+  // *For Delete Account
+  const [openDeleteAccount, setOpenDeleteAccount] = useState(false)
 
   // *For Save Button Hide
   const [button, setButton] = useState(false)
@@ -45,29 +54,20 @@ function Settings() {
   const getUserData = () => {
     try {
       userData = JSON.parse(localStorage.getItem('userData'));
-      // setEmail(userData[0].email);
       setPhone(userData[0].phone_number);
       setCountryCode(userData[0].countryCode);
       setOpenTime(userData[0].appSettings[0].dailyOpenTime);
       setTimeInterval(userData[0].appSettings[0].dailyTimeInterval);
-      setNotification(userData[0].appSettings[0].isNotifyEnable);
+      notify = userData[0].appSettings[0].isNotifyEnable;
 
       // *For Default Value
       setValue("email", userData[0].email);
       setValue("phoneInput", userData[0].phone_number);
-      setValue("timeInterval", userData[0].dailyTimeInterval);
+      setValue("openTime", userData[0].appSettings[0].dailyOpenTime);
+      setValue("timeInterval", userData[0].appSettings[0].dailyTimeInterval);
+      setValue("notification", userData[0].appSettings[0].isNotifyEnable);
     } catch (error) {
       console.log('file: settings.js => line 22 => getUserData => error', error)
-    }
-  }
-
-  // *For Notification
-  const notifyHandler = (event) => {
-    try {
-      setNotification(event.target.checked)
-      console.log('file: settings.js => line 65 => notifyHandler => setNotification', notification)
-    } catch (error) {
-      console.log('file: settings.js => line 65 => notifyHandler => error', error)
     }
   }
 
@@ -85,23 +85,39 @@ function Settings() {
   const updateSetting = async (data) => {
     setLoader(true)
     try {
+      let token = localStorage.getItem('jwt')
       let obj = {
         email: data.email,
         countryCode: countryCode,
-        phone: control._formValues.phoneInput,
-        time: data.timeInterval,
+        phoneNumber: control._formValues.phoneInput,
+        dailyOpenTime: data.openTime,
+        dailyTimeInterval: data.timeInterval,
+        isNotifyEnable: data.notification
       }
-      console.log('file: settings.js => line 87 => updateSetting => obj', obj)
-      // const { message } = await Service.updateSetting(obj);
-      // toast.success(message, {
-      //   position: "top-center",
-      //   autoClose: 2000,
-      //   hideProgressBar: true,
-      //   closeOnClick: false,
-      //   pauseOnHover: false,
-      //   draggable: false,
-      //   progress: undefined,
-      // });
+      notify = obj.isNotifyEnable
+      setValue("notification", obj.isNotifyEnable)
+      const { message } = await Service.updateSetting(obj, token);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      })
+      let updateUserData = [{
+        appSettings: [{
+          dailyOpenTime: obj.dailyOpenTime,
+          dailyTimeInterval: obj.dailyTimeInterval,
+          isNotifyEnable: obj.isNotifyEnable,
+        }],
+        email: obj.email,
+        countryCode: obj.countryCode,
+        phone_number: obj.phoneNumber,
+      }]
+      localStorage.setItem('userData', JSON.stringify(updateUserData))
+      getUserData()
     } catch (error) {
       toast.error(error, {
         position: "top-center",
@@ -115,7 +131,6 @@ function Settings() {
     } finally {
       setLoader(false)
     }
-
   };
 
   // *For Save Button Hide & Show
@@ -127,6 +142,45 @@ function Settings() {
     }
   }
 
+  // *For Delete Account Open and Close Dialog
+  const deleteAccountDialog = (type) => {
+    if (type === true) {
+      setOpenDeleteAccount(true);
+    } else {
+      setOpenDeleteAccount(false);
+    }
+  }
+
+  // *For Delete Account
+  const deleteAccount = async () => {
+    try {
+      let token = localStorage.getItem('jwt')
+      let obj = {}
+      const { message } = await Service.deleteAccount(obj, token);
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      deleteAccountDialog(false)
+      signout()
+    } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    }
+  };
+
   useEffect(() => {
     getUserData();
     disabledInspect();
@@ -135,6 +189,23 @@ function Settings() {
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+
+      {/* ========== Alert Toaster ========== */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        limit={1}
+      />
+
+      {/* ========== Delete Account Dialog ========== */}
+      <Deleted open={openDeleteAccount} onClose={() => { deleteAccountDialog(false) }} deleted={deleteAccount} />
 
       {/* ========== Left Side ========== */}
       <Grid className="left-side" item md={2}>
@@ -176,8 +247,12 @@ function Settings() {
                         type="text"
                         {...register("email", {
                           required: 'Email is required',
+                          pattern: {
+                            value: emailRegex,
+                            message: 'Please enter a valid email address',
+                          }
                         })}
-                        onChange={() => saveButton()}
+                        onChange={(e) => { email.onChange(e); saveButton(e) }}
                       />
                     </div>
                   </div>
@@ -243,9 +318,10 @@ function Settings() {
                     <div className="input-text">
                       <label>Daily Open Time</label>
                       <input
-                        type="text"
+                        type="time"
                         defaultValue={openTime}
-                        disabled
+                        {...register("openTime")}
+                        onChange={(e) => { saveButton() }}
                       />
                     </div>
                   </div>
@@ -263,13 +339,14 @@ function Settings() {
                           {...register("timeInterval")}
                           onChange={(e) => { getTimeInterval(e); saveButton() }}
                         >
+                          {/* Hours Convert into Mins */}
                           <MenuItem value={30}>30 Min</MenuItem>
                           <MenuItem value={45}>45 Min</MenuItem>
-                          <MenuItem value={1}>1 Hrs</MenuItem>
-                          <MenuItem value={2}>2 Hrs</MenuItem>
-                          <MenuItem value={3}>3 Hrs</MenuItem>
-                          <MenuItem value={4}>4 Hrs</MenuItem>
-                          <MenuItem value={5}>5 Hrs</MenuItem>
+                          <MenuItem value={60}>1 Hrs</MenuItem>
+                          <MenuItem value={120}>2 Hrs</MenuItem>
+                          <MenuItem value={180}>3 Hrs</MenuItem>
+                          <MenuItem value={240}>4 Hrs</MenuItem>
+                          <MenuItem value={300}>5 Hrs</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
@@ -282,18 +359,10 @@ function Settings() {
                     </div>
                     <div className="input-text">
                       <Typography component="p">Notification
-                        <Controller
-                          control={control}
-                          name="active"
-                          defaultValue={notification}
+                        <Switch
+                          defaultChecked={notify === true ? true : false}
+                          {...register("notification")}
                           onChange={() => { saveButton() }}
-                          render={({ field: { onChange, ref } }) => (
-                            <Switch
-                              value={notification}
-                              inputRef={ref}
-                              onChange={onChange}
-                            />
-                          )}
                         />
                       </Typography>
                     </div>
@@ -312,7 +381,7 @@ function Settings() {
                       <DeleteAccount />
                     </div>
                     <div className="input-text">
-                      <Typography className="cursor-pointer" component="p">Delete My Account</Typography>
+                      <Typography className="cursor-pointer" component="p" onClick={() => deleteAccountDialog(true)}>Delete My Account</Typography>
                     </div>
                   </div>
                 </Grid>

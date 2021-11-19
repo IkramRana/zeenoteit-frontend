@@ -19,7 +19,7 @@ function Register() {
   // *For Loader
   const [loader, setLoader] = useState(false)
 
-  const [countryCode, setCountryCode] = useState('PK')
+  const [countryCode, setCountryCode] = useState('UK')
 
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
@@ -31,7 +31,6 @@ function Register() {
   const signUp = async (data) => {
     setLoader(true)
     try {
-
       let obj = {
         email: data.email,
         password: data.password,
@@ -71,21 +70,21 @@ function Register() {
   return (
     <div className='form-bg'>
       <div className="form-wrapper">
-
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable={false}
-          pauseOnHover={false}
-          limit={1}
-        />
-
         <Grid container spacing={2} justifyContent="center" alignItems="center">
+
+          {/* ========== Alert Toaster ========== */}
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            limit={1}
+          />
 
           <Grid item md={12} >
             <Logo />
