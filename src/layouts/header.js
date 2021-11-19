@@ -219,11 +219,11 @@ function Header() {
         <Typography component="h4">
           <CurrentDate />
         </Typography>
-        <QuoteToolTip className="tooltip" title="Write quote of the day">
+        {/* <QuoteToolTip className="tooltip" title="Write quote of the day">
           <IconButton className="add-quote" size="medium" onClick={() => { dialogHandler(true) }}>
             <EditQuote />
           </IconButton>
-        </QuoteToolTip>
+        </QuoteToolTip> */}
         <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { getUserNotification() }}>
           <NotificationBadge badgeContent={notificationCount} color="secondary">
             <Notification />
