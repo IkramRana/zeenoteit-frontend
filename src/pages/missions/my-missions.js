@@ -302,13 +302,11 @@ function MyMissions() {
       {/* ========== Delete Task Dialog ========== */}
       <Deleted open={openDeleteTask} id={deleteTaskId} onClose={() => { deleteTaskDialog(false) }} deleted={deleteTask} />
 
-      {/* ========== Left Side ========== */}
-      <Grid className="left-side" item md={2}>
-        <Navigation />
-      </Grid>
+      {/* ========== Navigation ========== */}
+      <Navigation />
 
-      {/* ========== Right Side ========== */}
-      <Grid className="right-side" container spacing={0} item md={10}  >
+      {/* ========== Main Content ========== */}
+      <Grid id="MainContent" container spacing={0} item md={10}  >
 
         {/* ========== Header ========== */}
         <Grid item md={12}>
@@ -331,11 +329,10 @@ function MyMissions() {
                 {task.map((task, index) => {
                   if ((i + 1) === task.column_no) {
                     return (
-                      <Grid key={task._id} ref={provided.innerRef}
-                        {...provided.draggableProps} className="task-box" item md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
-                        <div className="header"  {...provided.dragHandleProps} style={{ backgroundColor: task.color[0].code + '1a' }} >
+                      <Grid key={task._id} className="task-box" item md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
+                        <div className="header" style={{ backgroundColor: task.color[0].code + '1a' }} >
                           <Grid container spacing={0} justifyContent="space-between" alignItems="center">
-                            <Grid item md={8}>
+                            <Grid item md={7}>
                               <Typography component="h5">{task.title}</Typography>
                             </Grid>
                             <Grid item md={2}>

@@ -1,4 +1,13 @@
-//* disable developer inspect tool options
+// *For Responsive
+import json2mq from "json2mq";
+
+export const Responsive = {
+  isMobile: json2mq({ maxWidth: 480, }),
+  isTablet: json2mq({ maxWidth: 768 }),
+  isLaptop: json2mq({ maxWidth: 1280 })
+};
+
+//*Disable Developer Inspect Tool Options
 export const disabledInspect = (time) => {
   //   document.onkeydown = function (e) {
   //     if (e.keyCode === 123) {

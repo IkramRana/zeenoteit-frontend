@@ -1,9 +1,6 @@
 @font-face {
   font-family: "Rockness";
   src: local("Rockness"), url(assets/fonts/Rockness.otf) format("truetype");
-}
-
-@font-face {
   font-family: "Avenir";
   src: local("Avenir"), url(assets/fonts/Avenir.otf) format("truetype");
 }
@@ -49,13 +46,13 @@ code {
 }
 
 @media (min-width: 960px) {
-  .left-side {
+  #Navigation {
     flex-grow: 0 !important;
     max-width: 10.666667% !important;
     flex-basis: 10.666667% !important;
   }
 
-  .right-side {
+  #MainContent {
     flex-grow: 0 !important;
     max-width: 89.333333% !important;
     flex-basis: 89.333333% !important;
@@ -82,22 +79,12 @@ input::-webkit-inner-spin-button {
   text-align: right !important;
 }
 
-.cursor-pointer {
-  cursor: pointer !important;
-}
-
 .text-color {
   color: #7ac8c3 !important;
 }
 
-.left-side {
-  background-color: #fff;
-  padding: 20px;
-}
-
-.right-side {
-  background-color: #ecf4f8;
-  padding: 10px 20px;
+.cursor-pointer {
+  cursor: pointer !important;
 }
 
 .error {
@@ -199,210 +186,25 @@ input::-webkit-inner-spin-button {
   }
 }
 
-// *Header
-#Header {
-  padding: 20px 0px;
-  border-bottom: 1px solid rgba(42, 42, 42, 0.1);
-
-  h2 {
-    font-size: 32px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: #003361;
-    text-transform: capitalize;
-  }
-
-  h4 {
-    font-size: 18px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: #003361;
-    text-transform: capitalize;
-    display: inline-block;
-  }
-
-  .quote {
-    position: relative;
-
-    &:hover {
-      p {
-        opacity: 0;
-        transition: 0.3s ease-in-out;
-      }
-      .sponsored {
-        opacity: 1;
-        transition: 0.3s ease-in-out;
-      }
-    }
-
-    p {
-      font-size: 14px;
-      font-family: "Avenir";
-      color: #58595b;
-      padding: 0px;
-      cursor: inherit;
-      transition: 0.3s ease-in-out;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
-
-    .sponsored {
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      padding: 2px 12px;
-      background-color: rgba($color: #7ac8c3, $alpha: 0.4);
-      border-radius: 20px;
-      width: 100%;
-      opacity: 0;
-      transition: 0.3s ease-in-out;
-
-      span {
-        font-size: 12px;
-        font-family: "Avenir";
-        color: #7ac8c3;
-        margin-right: 70px;
-      }
-
-      .link {
-        font-size: 12px;
-        font-family: "Avenir";
-        color: #58595b;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .add-quote,
-  .notification {
-    margin: 0px 6px;
-    width: 55px;
-    height: 55px;
-  }
-
-  .add-quote {
-    background-color: rgba($color: #7ac8c3, $alpha: 0.1);
-
-    svg {
-      fill: #7ac8c3;
-    }
-
-    &:hover {
-      background-color: #7ac8c3;
-
-      svg {
-        fill: #fff;
-      }
-    }
-  }
-
-  .notification {
-    background-color: rgba($color: #003361, $alpha: 0.1);
-
-    svg {
-      fill: #003361;
-    }
-  }
-
-  .dropdown {
-    width: 310px;
-    margin-top: 10px !important;
-    margin-right: 18px !important;
-    z-index: 100;
-
-    .MuiPaper-root {
-      box-shadow: 0px 3px 99px #0000001a;
-      border-radius: 20px;
-
-      .MuiListItem-button:hover {
-        background-color: transparent !important;
-      }
-    }
-
-    h1 {
-      font-size: 34px;
-      font-family: "Rockness";
-      color: #6ba570;
-      text-align: center;
-      margin: 8px 0px;
-    }
-
-    .notify-wrapper {
-      height: auto;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    .MuiMenuItem-root {
-      padding-top: 18px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(42, 42, 42, 0.1);
-
-      &:nth-last-child(1) {
-        border-bottom: none;
-      }
-
-      .icon {
-        background-color: rgba($color: #7ac8c3, $alpha: 0.2);
-        text-align: center;
-        border-radius: 50%;
-        width: 25px;
-        height: 25px;
-        position: relative;
-
-        svg {
-          fill: #7ac8c3 !important;
-          width: 14px;
-        }
-
-        .unread {
-          position: absolute;
-          left: 2px;
-          top: 2px;
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background-color: #e94444;
-        }
-      }
-
-      .head {
-        display: flex;
-        justify-content: space-between;
-        margin-left: 15px;
-        margin-bottom: 8px;
-
-        span {
-          font-size: 12px;
-          font-family: "Avenir";
-          color: rgba($color: #58595b, $alpha: 0.5);
-        }
-      }
-
-      p {
-        font-size: 12px;
-        font-family: "Avenir";
-        color: #58595b;
-        margin-left: 15px;
-      }
-    }
-  }
-}
-
 // *Navigation
-.navigation {
+#Navigation {
   background-color: #fff;
+  padding: 20px;
   width: 100%;
-  height: calc(100vh - 40px);
+  height: 100vh;
   text-align: center;
 
   .logo {
     width: 100px;
     height: 90px;
   }
+
+  // @media (max-width: 1200px) {
+  //   .logo {
+  //     width: 80px;
+  //     height: 70px;
+  //   }
+  // }
 
   ul {
     list-style: none;
@@ -444,6 +246,14 @@ input::-webkit-inner-spin-button {
       }
     }
 
+    // @media (max-width: 1200px) {
+    //   li,
+    //   a {
+    //     font-size: 12px;
+    //     height: 90px;
+    //   }
+    // }
+
     .active {
       box-shadow: 0px 3px 28px #00000014;
       transition: 0.3s ease-in-out;
@@ -451,69 +261,54 @@ input::-webkit-inner-spin-button {
   }
 }
 
-// *Breadcrumbs
-.MuiBreadcrumbs-root {
-  padding: 15px 0px;
+// *Main Content
+#MainContent {
+  background-color: #ecf4f8;
+  padding: 10px 20px;
 
-  .MuiBreadcrumbs-li {
-    p {
-      font-size: 16px;
+  // *Header
+  .header {
+    padding: 20px 0px;
+    border-bottom: 1px solid rgba(42, 42, 42, 0.1);
+
+    h2 {
+      font-size: 32px;
       font-family: "Avenir";
       font-weight: 900;
-      color: #58595b;
-      opacity: 0.7;
+      color: #003361;
+      text-transform: capitalize;
+    }
+
+    h4 {
+      font-size: 18px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #003361;
+      text-transform: capitalize;
+      display: inline-block;
+    }
+
+    .quote {
+      position: relative;
 
       &:hover {
-        text-decoration: none !important;
-      }
-    }
-  }
-}
-
-// *My Mission
-.mission {
-  height: calc(100vh - 184px);
-  overflow-y: auto;
-
-  .wrapper {
-    margin-right: 10px !important;
-    flex-grow: 0 !important;
-    max-width: 18.8% !important;
-    flex-basis: 18.8% !important;
-  }
-
-  .task-box {
-    width: 100%;
-    height: auto;
-    background-color: #fff;
-    border: 1px solid;
-    border-radius: 12px;
-    margin-bottom: 12px !important;
-    opacity: color 0.5;
-    transition: 0.3s ease-in-out;
-
-    &:hover {
-      box-shadow: 0px 3px 23px #0000000f;
-      transition: 0.3s ease-in-out;
-    }
-
-    .header {
-      border-radius: 11px;
-      padding: 8px 8px;
-      opacity: background-color 0.1;
-
-      .MuiIconButton-root {
-        background-color: rgba($color: #003361, $alpha: 0.1);
-        width: 30px;
-        height: 30px;
+        p {
+          opacity: 0;
+          transition: 0.3s ease-in-out;
+        }
+        .sponsored {
+          opacity: 1;
+          transition: 0.3s ease-in-out;
+        }
       }
 
-      h5 {
+      p {
         font-size: 14px;
         font-family: "Avenir";
-        font-weight: 900;
         color: #58595b;
-        padding-right: 5px;
+        padding: 0px;
+        cursor: inherit;
+        transition: 0.3s ease-in-out;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -521,83 +316,382 @@ input::-webkit-inner-spin-button {
         -webkit-box-orient: vertical;
       }
 
-      h6 {
-        font-size: 14px;
-        font-family: "Avenir";
-        font-weight: 900;
-        color: #7ac8c3;
+      .sponsored {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        padding: 2px 12px;
+        background-color: rgba($color: #7ac8c3, $alpha: 0.4);
+        border-radius: 20px;
+        width: 100%;
+        opacity: 0;
+        transition: 0.3s ease-in-out;
+
+        span {
+          font-size: 12px;
+          font-family: "Avenir";
+          color: #7ac8c3;
+          margin-right: 70px;
+        }
+
+        .link {
+          font-size: 12px;
+          font-family: "Avenir";
+          color: #58595b;
+          cursor: pointer;
+        }
       }
     }
 
-    .content {
-      padding: 4px;
-      padding-top: 6px;
+    .notification {
+      margin: 0px 20px;
+      width: 55px;
+      height: 55px;
+    }
 
-      .task {
-        display: flex;
-        padding: 2px 0px;
-        background-color: #fff;
+    .notification {
+      background-color: rgba($color: #003361, $alpha: 0.1);
 
-        .checkbox {
+      svg {
+        fill: #003361;
+      }
+    }
+
+    .dropdown {
+      width: 310px;
+      margin-top: 10px !important;
+      margin-right: 18px !important;
+      z-index: 100;
+
+      .MuiPaper-root {
+        box-shadow: 0px 3px 99px #0000001a;
+        border-radius: 20px;
+
+        .MuiListItem-button:hover {
+          background-color: transparent !important;
+        }
+      }
+
+      h1 {
+        font-size: 34px;
+        font-family: "Rockness";
+        color: #6ba570;
+        text-align: center;
+        margin: 8px 0px;
+      }
+
+      .notify-wrapper {
+        height: auto;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .MuiMenuItem-root {
+        padding-top: 18px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid rgba(42, 42, 42, 0.1);
+
+        &:nth-last-child(1) {
+          border-bottom: none;
+        }
+
+        .icon {
+          background-color: rgba($color: #7ac8c3, $alpha: 0.2);
+          text-align: center;
+          border-radius: 50%;
+          width: 25px;
+          height: 25px;
           position: relative;
 
-          input[type="checkbox"] {
-            visibility: hidden;
+          svg {
+            fill: #7ac8c3 !important;
+            width: 14px;
           }
 
-          input[type="checkbox"]:checked + label {
-            background-color: #7ac8c3;
-            border-color: #7ac8c3;
-          }
-
-          input[type="checkbox"]:checked + label:after {
-            opacity: 1;
-          }
-
-          input {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 1px solid #7ac8c3;
-            background-color: white;
-            margin-right: 5px;
-            vertical-align: middle;
-            appearance: none;
-            -webkit-appearance: none;
-            outline: none;
-            cursor: pointer;
-
-            &:checked {
-              background-color: #7ac8c3;
-            }
-          }
-
-          label {
-            border: 1px solid #7ac8c3;
-            background-color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            width: 16px;
-            height: 16px;
+          .unread {
             position: absolute;
             left: 2px;
-            top: 1px;
-
-            &::after {
-              content: "";
-              width: 9px;
-              height: 5px;
-              position: absolute;
-              left: 2px;
-              top: 3px;
-              border: 2px solid #fff;
-              border-top: none;
-              border-right: none;
-              opacity: 0;
-              transform: rotate(-45deg);
-            }
+            top: 2px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #e94444;
           }
         }
+
+        .head {
+          display: flex;
+          justify-content: space-between;
+          margin-left: 15px;
+          margin-bottom: 8px;
+
+          span {
+            font-size: 12px;
+            font-family: "Avenir";
+            color: rgba($color: #58595b, $alpha: 0.5);
+          }
+        }
+
+        p {
+          font-size: 12px;
+          font-family: "Avenir";
+          color: #58595b;
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+
+  // *Breadcrumbs
+  .MuiBreadcrumbs-root {
+    padding: 15px 0px;
+
+    .MuiBreadcrumbs-li {
+      p {
+        font-size: 16px;
+        font-family: "Avenir";
+        font-weight: 900;
+        color: #58595b;
+        opacity: 0.7;
+
+        &:hover {
+          text-decoration: none !important;
+        }
+      }
+    }
+  }
+
+  // *My Mission
+  .mission {
+    height: calc(100vh - 184px);
+    overflow-y: auto;
+
+    .wrapper {
+      margin-right: 10px !important;
+      flex-grow: 0 !important;
+      max-width: 18.8% !important;
+      flex-basis: 18.8% !important;
+    }
+
+    .task-box {
+      width: 100%;
+      height: auto;
+      background-color: #fff;
+      border: 1px solid;
+      border-radius: 12px;
+      margin-bottom: 12px !important;
+      opacity: color 0.5;
+      transition: 0.3s ease-in-out;
+
+      &:hover {
+        box-shadow: 0px 3px 23px #0000000f;
+        transition: 0.3s ease-in-out;
+      }
+
+      .header {
+        border-radius: 11px;
+        padding: 8px 8px;
+        opacity: background-color 0.1;
+
+        .MuiIconButton-root {
+          background-color: rgba($color: #003361, $alpha: 0.1);
+          width: 30px;
+          height: 30px;
+        }
+
+        h5 {
+          font-size: 14px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #58595b;
+          padding-right: 5px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
+
+        h6 {
+          font-size: 14px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #7ac8c3;
+        }
+      }
+
+      .content {
+        padding: 4px;
+        padding-top: 6px;
+
+        .task {
+          display: flex;
+          padding: 2px 0px;
+          background-color: #fff;
+
+          .checkbox {
+            position: relative;
+
+            input[type="checkbox"] {
+              visibility: hidden;
+            }
+
+            input[type="checkbox"]:checked + label {
+              background-color: #7ac8c3;
+              border-color: #7ac8c3;
+            }
+
+            input[type="checkbox"]:checked + label:after {
+              opacity: 1;
+            }
+
+            input {
+              width: 16px;
+              height: 16px;
+              border-radius: 50%;
+              border: 1px solid #7ac8c3;
+              background-color: white;
+              margin-right: 5px;
+              vertical-align: middle;
+              appearance: none;
+              -webkit-appearance: none;
+              outline: none;
+              cursor: pointer;
+
+              &:checked {
+                background-color: #7ac8c3;
+              }
+            }
+
+            label {
+              border: 1px solid #7ac8c3;
+              background-color: white;
+              border-radius: 50%;
+              cursor: pointer;
+              width: 16px;
+              height: 16px;
+              position: absolute;
+              left: 2px;
+              top: 1px;
+
+              &::after {
+                content: "";
+                width: 9px;
+                height: 5px;
+                position: absolute;
+                left: 2px;
+                top: 3px;
+                border: 2px solid #fff;
+                border-top: none;
+                border-right: none;
+                opacity: 0;
+                transform: rotate(-45deg);
+              }
+            }
+          }
+
+          p {
+            font-size: 14px;
+            font-family: "Avenir";
+            color: #58595b;
+            opacity: 0.8;
+            margin-bottom: 7px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+        }
+
+        .add-subtask {
+          display: flex;
+          padding: 5px;
+
+          svg {
+            fill: #58595b !important;
+            margin-right: 10px;
+            opacity: 0.6;
+
+            path {
+              fill: #58595b !important;
+              opacity: 0.6;
+            }
+          }
+
+          p {
+            font-size: 14px;
+            font-family: "Avenir";
+            color: #58595b;
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+
+    .add-task {
+      svg {
+        vertical-align: text-top;
+      }
+    }
+  }
+
+  // *My Thought
+  .thought {
+    height: calc(100vh - 184px);
+    overflow-y: auto;
+
+    .thought-box {
+      width: 100%;
+      height: auto;
+      background-color: #fff;
+      border: 1px solid #7ac8c3;
+      border-radius: 12px;
+      margin-right: 10px !important;
+      margin-bottom: 15px !important;
+      flex-grow: 0 !important;
+      max-width: 24% !important;
+      flex-basis: 24% !important;
+      transition: 0.3s ease-in-out;
+
+      &:hover {
+        box-shadow: 0px 3px 23px #0000000f;
+        transition: 0.3s ease-in-out;
+      }
+
+      .header {
+        background-color: rgba($color: #7ac8c3, $alpha: 0.1);
+        border-radius: 11px;
+        padding: 10px 8px;
+
+        .MuiIconButton-root {
+          background-color: rgba($color: #003361, $alpha: 0.1);
+          width: 33px;
+          height: 33px;
+        }
+
+        h5 {
+          font-size: 15px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #58595b;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
+
+        h6 {
+          font-size: 14px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #7ac8c3;
+        }
+      }
+
+      .content {
+        padding: 10px 8px;
 
         p {
           font-size: 14px;
@@ -608,328 +702,226 @@ input::-webkit-inner-spin-button {
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 1;
+          -webkit-line-clamp: 9;
           -webkit-box-orient: vertical;
         }
-      }
 
-      .add-subtask {
-        display: flex;
-        padding: 5px;
-
-        svg {
-          fill: #58595b !important;
-          margin-right: 10px;
-          opacity: 0.6;
-
-          path {
-            fill: #58595b !important;
-            opacity: 0.6;
-          }
-        }
-
-        p {
+        span {
           font-size: 14px;
           font-family: "Avenir";
-          color: #58595b;
-          opacity: 0.6;
+          font-weight: 700;
+          color: rgba($color: #7ac8c3, $alpha: 0.7);
+          cursor: pointer;
         }
       }
     }
   }
 
-  .add-task {
-    svg {
-      vertical-align: text-top;
+  // *Write Thought
+  .write-thought {
+    .title {
+      font-size: 26px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: rgba($color: #003361, $alpha: 0.4);
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      margin: 10px 0px;
+
+      &::placeholder {
+        color: rgba($color: #003361, $alpha: 0.2);
+      }
+    }
+
+    .description {
+      font-size: 16px;
+      font-family: "Avenir";
+      color: rgba($color: #003361, $alpha: 0.4);
+      width: 100%;
+      border: none;
+      background: transparent;
+      outline: none;
+      height: calc(100vh - 320px);
+      margin: 10px 0px;
+      resize: none;
+
+      &::placeholder {
+        color: rgba($color: #003361, $alpha: 0.2);
+      }
+    }
+
+    .error {
+      padding-left: 0px !important;
     }
   }
-}
 
-// *My Thought
-.thought {
-  height: calc(100vh - 184px);
-  overflow-y: auto;
+  // *Read Thought
+  .read-thought {
+    .title {
+      font-size: 30px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #003361;
+      width: 100%;
+      margin: 10px 0px;
+    }
 
-  .thought-box {
-    width: 100%;
-    height: auto;
-    background-color: #fff;
-    border: 1px solid #7ac8c3;
-    border-radius: 12px;
-    margin-right: 10px !important;
-    margin-bottom: 15px !important;
-    flex-grow: 0 !important;
-    max-width: 24% !important;
-    flex-basis: 24% !important;
-    transition: 0.3s ease-in-out;
+    .description {
+      font-size: 16px;
+      font-family: "Avenir";
+      color: #003361;
+      line-height: 1.8;
+      width: 100%;
+      height: calc(100vh - 270px);
+      overflow-y: auto;
+      margin: 10px 0px;
+    }
+  }
+
+  // *Add Task & Thought Dotted Box
+  .add-task,
+  .add-thought {
+    padding: 10px 15px;
+    border: 2px dashed rgba($color: #003361, $alpha: 0.4);
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
 
     &:hover {
-      box-shadow: 0px 3px 23px #0000000f;
-      transition: 0.3s ease-in-out;
-    }
+      border: 2px dashed rgba($color: #003361, $alpha: 1);
+      transition: 0.3s;
 
-    .header {
-      background-color: rgba($color: #7ac8c3, $alpha: 0.1);
-      border-radius: 11px;
-      padding: 10px 8px;
+      svg {
+        fill: #003361 !important;
 
-      .MuiIconButton-root {
-        background-color: rgba($color: #003361, $alpha: 0.1);
-        width: 33px;
-        height: 33px;
-      }
-
-      h5 {
-        font-size: 15px;
-        font-family: "Avenir";
-        font-weight: 900;
-        color: #58595b;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
-
-      h6 {
-        font-size: 14px;
-        font-family: "Avenir";
-        font-weight: 900;
-        color: #7ac8c3;
-      }
-    }
-
-    .content {
-      padding: 10px 8px;
-
-      p {
-        font-size: 14px;
-        font-family: "Avenir";
-        color: #58595b;
-        opacity: 0.8;
-        margin-bottom: 7px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 9;
-        -webkit-box-orient: vertical;
+        path {
+          fill: #003361 !important;
+        }
       }
 
       span {
-        font-size: 14px;
-        font-family: "Avenir";
-        font-weight: 700;
-        color: rgba($color: #7ac8c3, $alpha: 0.7);
-        cursor: pointer;
+        color: rgba($color: #003361, $alpha: 1);
       }
     }
-  }
-}
-
-// *Write Thought
-.write-thought {
-  .title {
-    font-size: 26px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: rgba($color: #003361, $alpha: 0.4);
-    border: none;
-    outline: none;
-    background: transparent;
-    width: 100%;
-    margin: 10px 0px;
-
-    &::placeholder {
-      color: rgba($color: #003361, $alpha: 0.2);
-    }
-  }
-
-  .description {
-    font-size: 16px;
-    font-family: "Avenir";
-    color: rgba($color: #003361, $alpha: 0.4);
-    width: 100%;
-    border: none;
-    background: transparent;
-    outline: none;
-    height: calc(100vh - 320px);
-    margin: 10px 0px;
-    resize: none;
-
-    &::placeholder {
-      color: rgba($color: #003361, $alpha: 0.2);
-    }
-  }
-
-  .error {
-    padding-left: 0px !important;
-  }
-}
-
-// *Read Thought
-.read-thought {
-  .title {
-    font-size: 30px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: #003361;
-    width: 100%;
-    margin: 10px 0px;
-  }
-
-  .description {
-    font-size: 16px;
-    font-family: "Avenir";
-    color: #003361;
-    line-height: 1.8;
-    width: 100%;
-    height: calc(100vh - 270px);
-    overflow-y: auto;
-    margin: 10px 0px;
-  }
-}
-
-// *Add Task & Thought Dotted Box
-.add-task,
-.add-thought {
-  padding: 10px 15px;
-  border: 2px dashed rgba($color: #003361, $alpha: 0.4);
-  border-radius: 20px;
-  text-align: center;
-  cursor: pointer;
-
-  &:hover {
-    border: 2px dashed rgba($color: #003361, $alpha: 1);
-    transition: 0.3s;
 
     svg {
-      fill: #003361 !important;
+      vertical-align: bottom;
+      margin-right: 5px;
+      fill: rgba($color: #003361, $alpha: 0.2) !important;
 
       path {
-        fill: #003361 !important;
+        fill: rgba($color: #003361, $alpha: 0.2) !important;
       }
     }
 
     span {
-      color: rgba($color: #003361, $alpha: 1);
+      font-size: 15px;
+      font-family: "Avenir";
+      color: rgba($color: #003361, $alpha: 0.3);
     }
   }
 
-  svg {
-    vertical-align: bottom;
-    margin-right: 5px;
-    fill: rgba($color: #003361, $alpha: 0.2) !important;
-
-    path {
-      fill: rgba($color: #003361, $alpha: 0.2) !important;
+  // *Settings
+  .setting {
+    .heading {
+      font-size: 26px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: rgba(0, 51, 97, 0.4);
+      margin-bottom: 10px;
     }
-  }
 
-  span {
-    font-size: 15px;
-    font-family: "Avenir";
-    color: rgba($color: #003361, $alpha: 0.3);
-  }
-}
+    .account,
+    .app-setting,
+    .user-decision {
+      margin-bottom: 40px;
 
-// *Settings
-.setting {
-  .heading {
-    font-size: 26px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: rgba(0, 51, 97, 0.4);
-    margin-bottom: 10px;
-  }
+      .input-field {
+        margin: 20px 10px;
+        padding: 5px;
+        width: 70%;
+        border-bottom: 1px solid rgba($color: #2a2a2a, $alpha: 0.1);
 
-  .account,
-  .app-setting,
-  .user-decision {
-    margin-bottom: 40px;
-
-    .input-field {
-      margin: 20px 10px;
-      padding: 5px;
-      width: 70%;
-      border-bottom: 1px solid rgba($color: #2a2a2a, $alpha: 0.1);
-
-      .MuiSwitch-colorSecondary.Mui-checked {
-        color: #fff !important;
-      }
-
-      .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
-        background-color: #003361 !important;
-        opacity: 1 !important;
-      }
-
-      .MuiSwitch-colorSecondary.Mui-checked:hover {
-        background-color: rgba($color: #003361, $alpha: 0.04);
-      }
-
-      .icon {
-        display: inline-block;
-
-        svg {
-          width: 25px;
-          height: 25px;
-          margin-right: 5px;
-          vertical-align: super;
-        }
-      }
-
-      .align-icon {
-        vertical-align: middle;
-        margin-top: 8px;
-      }
-
-      .input-text {
-        display: inline-block;
-        padding: 0px 5px;
-        width: 80%;
-
-        .MuiFormControl-root {
-          width: 100%;
+        .MuiSwitch-colorSecondary.Mui-checked {
+          color: #fff !important;
         }
 
-        .MuiSelect-select {
-          font-size: 16px;
-          font-family: "Avenir";
-          color: rgba(42, 42, 42, 0.4);
-          background-color: transparent;
-          padding-top: 7px;
-          padding-bottom: 0px;
+        .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+          background-color: #003361 !important;
+          opacity: 1 !important;
         }
 
-        .MuiInput-underline:before,
-        .MuiInput-underline:after {
-          border: none !important;
+        .MuiSwitch-colorSecondary.Mui-checked:hover {
+          background-color: rgba($color: #003361, $alpha: 0.04);
         }
 
-        label {
-          font-size: 14px;
-          font-family: "Avenir";
-          font-weight: 900;
-          color: rgba($color: #003361, $alpha: 0.4);
-          display: block;
+        .icon {
+          display: inline-block;
+
+          svg {
+            width: 25px;
+            height: 25px;
+            margin-right: 5px;
+            vertical-align: super;
+          }
         }
 
-        input {
-          border: none;
-          margin: 0px !important;
-          background: transparent;
-          color: rgba($color: #2a2a2a, $alpha: 0.4);
-          font-size: 16px;
-          outline: none;
-          line-height: 1.5;
+        .align-icon {
+          vertical-align: middle;
+          margin-top: 8px;
         }
 
-        P {
-          font-size: 18px;
-          font-family: "Avenir";
-          color: rgba(42, 42, 42, 0.4);
+        .input-text {
+          display: inline-block;
+          padding: 0px 5px;
+          width: 80%;
 
-          .MuiSwitch-root {
-            margin-left: 15px;
+          .MuiFormControl-root {
+            width: 100%;
+          }
+
+          .MuiSelect-select {
+            font-size: 16px;
+            font-family: "Avenir";
+            color: rgba(42, 42, 42, 0.4);
+            background-color: transparent;
+            padding-top: 7px;
+            padding-bottom: 0px;
+          }
+
+          .MuiInput-underline:before,
+          .MuiInput-underline:after {
+            border: none !important;
+          }
+
+          label {
+            font-size: 14px;
+            font-family: "Avenir";
+            font-weight: 900;
+            color: rgba($color: #003361, $alpha: 0.4);
+            display: block;
+          }
+
+          input {
+            border: none;
+            margin: 0px !important;
+            background: transparent;
+            color: rgba($color: #2a2a2a, $alpha: 0.4);
+            font-size: 16px;
+            outline: none;
+            line-height: 1.5;
+          }
+
+          P {
+            font-size: 18px;
+            font-family: "Avenir";
+            color: rgba(42, 42, 42, 0.4);
+
+            .MuiSwitch-root {
+              margin-left: 15px;
+            }
           }
         }
       }

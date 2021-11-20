@@ -1,29 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
 
-import { EditQuote, EditTask, Notification, Reminder } from "assets/images/icons";
+import { Notification, Reminder } from "assets/images/icons";
 import { disabledInspect, CurrentDate } from 'utils/index';
 import { Service } from "config/service";
 import { socketConfig } from "../config/socket";
 
-import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Tooltip, Typography, withStyles, Badge, MenuItem } from '@material-ui/core';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
-// *Import Dialog Component
-import DailyQuote from "components/daily-quote";
-
-// *For Quote Tooltip
-const QuoteToolTip = withStyles({
-  tooltip: {
-    fontSize: "12px",
-    fontFamily: "Avenir",
-    color: "#58595B",
-    backgroundColor: "transparent",
-    marginTop: "4px"
-  }
-})(Tooltip);
+import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Typography, withStyles, Badge, MenuItem } from '@material-ui/core';
 
 // *For Notification Badge
 const NotificationBadge = withStyles({
@@ -41,57 +23,16 @@ let socket = null;
 
 function Header() {
 
-  const history = useHistory();
-
-  // *notification
-  const [notificationCount, setNotificationCount] = useState(0)
-  const [notifications, setNotifications] = useState('')
-
-  // *For Daily Quote
-  const [openDialog, setOpenDialog] = useState(false)
-  const [dailyQuote, setDailyQuote] = useState('')
-
   // *For Notification
   const [openNotification, setOpenNotification] = useState(false)
   const notifyDropdown = useRef(null)
 
-  // *For Open and Close Dialog
-  const dialogHandler = (type) => {
-    if (type === true) {
-      setOpenDialog(true);
-    } else {
-      setOpenDialog(false);
-    }
-  }
+  // *For Notification Count
+  const [notificationCount, setNotificationCount] = useState(0)
+  const [notifications, setNotifications] = useState('')
 
-  // *For Add Daily Quote
-  const addDailyQuote = async (obj) => {
-    try {
-      let token = localStorage.getItem('jwt')
-      const { message } = await Service.addDailyQuote(obj, token);
-      toast.success(message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-      getDailyQuote()
-      dialogHandler(false)
-    } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-    }
-  }
+  // *For Daily Quote
+  const [dailyQuote, setDailyQuote] = useState('')
 
   // *Get Daily Quote
   const getDailyQuote = async () => {
@@ -130,7 +71,7 @@ function Header() {
     }
   }
 
-  // *socket 
+  // *Socket 
   const getNotificationCount = () => {
     let userData = JSON.parse(localStorage.getItem('userData'));
     let userId = userData[0]._id;
@@ -176,31 +117,11 @@ function Header() {
   useEffect(() => {
     getDailyQuote();
     disabledInspect();
-    // setTimeout(() => {
-    //   getNotificationCount();
-    // }, 5000);
     window.scrollTo({ top: 0 });
   }, [])
 
   return (
-    <Grid id="Header" container spacing={0} justifyContent="space-between" alignItems="center">
-
-      {/* ========== Alert Toaster ========== */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        limit={1}
-      />
-
-      {/* ========== Add Daily Quote Dialog ========== */}
-      {/* <DailyQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} /> */}
+    <Grid className="header" container spacing={0} justifyContent="space-between" alignItems="center">
 
       <Grid item md={8}>
         <Typography component="h2">
@@ -210,7 +131,7 @@ function Header() {
           <Typography component="p">{dailyQuote[0]?.quote} - {dailyQuote[0]?.author}</Typography>
           <div className="sponsored">
             <Typography component="span">Sponsored by</Typography>
-            <Typography className="link" component="span" onClick={() => history.push(`/${dailyQuote[0]?.sponsor}`)}>{dailyQuote[0]?.sponsor}</Typography>
+            <Typography className="link" component="span" onClick={() => window.open(`/${dailyQuote[0]?.sponsor}`, '_blank')}>{dailyQuote[0]?.sponsor}</Typography>
           </div>
         </div>
       </Grid>
@@ -219,11 +140,6 @@ function Header() {
         <Typography component="h4">
           <CurrentDate />
         </Typography>
-        {/* <QuoteToolTip className="tooltip" title="Write quote of the day">
-          <IconButton className="add-quote" size="medium" onClick={() => { dialogHandler(true) }}>
-            <EditQuote />
-          </IconButton>
-        </QuoteToolTip> */}
         <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { getUserNotification() }}>
           <NotificationBadge badgeContent={notificationCount} color="secondary">
             <Notification />

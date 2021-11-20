@@ -24,7 +24,7 @@ function Navigation() {
   }, [])
 
   return (
-    <Grid className="navigation" container spacing={0} justifyContent="space-between" alignItems="flex-start">
+    <Grid id="Navigation" container spacing={0} item md={2} justifyContent="space-between" alignItems="flex-start">
 
       <Grid container spacing={0} item md={12} justifyContent="center" alignItems="center">
 

@@ -128,13 +128,11 @@ function MyThoughts() {
       {/* ========== Delete Thought Dialog ========== */}
       <Deleted open={openDeleteThought} id={deleteThoughtId} onClose={() => { deleteThoughtDialog(false) }} deleted={deleteThought} />
 
-      {/* ========== Left Side ========== */}
-      <Grid className="left-side" item md={2}>
-        <Navigation />
-      </Grid>
+      {/* ========== Navigation ========== */}
+      <Navigation />
 
-      {/* ========== Right Side ========== */}
-      <Grid className="right-side" container spacing={0} item md={10}  >
+      {/* ========== Main Content ========== */}
+      <Grid id="MainContent" container spacing={0} item md={10}  >
 
         {/* ========== Header ========== */}
         <Grid item md={12}>

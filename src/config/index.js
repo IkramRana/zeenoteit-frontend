@@ -14,7 +14,6 @@ export const Apis = {
     getUserNotifications: 'notification/user-notifications',
 
     // *Daily Quotes
-    addDailyQuote: 'quote/add-quote',
     getDailyQuote: 'quote/get-quote',
 
     // *Task
