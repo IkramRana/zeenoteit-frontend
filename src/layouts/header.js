@@ -128,7 +128,7 @@ function Header() {
       />
 
       {/* ========== Add Daily Quote Dialog ========== */}
-      <DailyQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} />
+      {/* <DailyQuote open={openDialog} onClose={() => { dialogHandler(false) }} addDailyQuote={addDailyQuote} /> */}
 
       <Grid item md={8}>
         <Typography component="h2">
@@ -147,11 +147,11 @@ function Header() {
         <Typography component="h4">
           <CurrentDate />
         </Typography>
-        <QuoteToolTip className="tooltip" title="Write quote of the day">
+        {/* <QuoteToolTip className="tooltip" title="Write quote of the day">
           <IconButton className="add-quote" size="medium" onClick={() => { dialogHandler(true) }}>
             <EditQuote />
           </IconButton>
-        </QuoteToolTip>
+        </QuoteToolTip> */}
         <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { notificationHandler(true) }}>
           <NotificationBadge badgeContent={5} color="secondary">
             <Notification />
