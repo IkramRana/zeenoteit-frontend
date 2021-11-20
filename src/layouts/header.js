@@ -4,10 +4,12 @@ import { useHistory } from "react-router-dom";
 import { EditQuote, EditTask, Notification, Reminder } from "assets/images/icons";
 import { disabledInspect, CurrentDate } from 'utils/index';
 import { Service } from "config/service";
+import { socketConfig } from "../config/socket";
 
 import { ClickAwayListener, Grid, Grow, IconButton, MenuList, Paper, Popper, Tooltip, Typography, withStyles, Badge, MenuItem } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 // *Import Dialog Component
 import DailyQuote from "components/daily-quote";
@@ -34,9 +36,16 @@ const NotificationBadge = withStyles({
   }
 })(Badge);
 
+var timer;
+let socket = null;
+
 function Header() {
 
   const history = useHistory();
+
+  // *notification
+  const [notificationCount, setNotificationCount] = useState(0)
+  const [notifications, setNotifications] = useState('')
 
   // *For Daily Quote
   const [openDialog, setOpenDialog] = useState(false)
@@ -95,6 +104,23 @@ function Header() {
     }
   };
 
+  // *Get User Notifications
+  const getUserNotification = async () => {
+    try {
+      if (notifications.length < notificationCount || notifications === '') {
+        let token = localStorage.getItem('jwt')
+        const { data } = await Service.getUserNotification(token);
+        console.log('file: header.js => line 112 => getUserNotification => data', data);
+        setNotifications(data)
+        setNotificationCount(0)
+      }
+    } catch (error) {
+      console.log('file: header.js => line 82 => getDailyQuote => error', error)
+    } finally {
+      notificationHandler(true)
+    }
+  };
+
   // *For Open and Close Notification
   const notificationHandler = (type) => {
     if (type === true) {
@@ -104,9 +130,55 @@ function Header() {
     }
   }
 
+  // *socket 
+  const getNotificationCount = () => {
+    let userData = JSON.parse(localStorage.getItem('userData'));
+    let userId = userData[0]._id;
+
+    if (socket?.disconnect) {
+      socket.off('show_notification', (e) => null);
+      clearTimeout(timer);
+    }
+
+    socket = socketConfig();
+    let isSocketConnected;
+
+    socket.on("connect", () => {
+      socket.emit("new_notification", userId);
+      isSocketConnected = true;
+    });
+
+    socket.on("disconnect", () => {
+      //console.log('on disconnect =>', socket.disconnect)
+      isSocketConnected = false;
+    });
+
+    socket.on("connect_error", (err) => {
+      setTimeout(() => {
+        socket.connect();
+      }, 1000);
+    });
+
+    socket.on('show_notification', obj => {
+      console.log('file: header.js => line 137 => getNotificationCount => obj', obj);
+      setNotificationCount(obj.notificationCount)
+      timer = setTimeout(() => {
+        socket.emit("new_notification", userId);
+      }, 20000);
+    })
+
+    if (isSocketConnected === false) {
+      //console.log(socket.disconnected);
+      socket.connect();
+    }
+  }
+
   useEffect(() => {
     getDailyQuote();
     disabledInspect();
+    // setTimeout(() => {
+    //   getNotificationCount();
+    // }, 5000);
     window.scrollTo({ top: 0 });
   }, [])
 
@@ -152,8 +224,8 @@ function Header() {
             <EditQuote />
           </IconButton>
         </QuoteToolTip> */}
-        <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { notificationHandler(true) }}>
-          <NotificationBadge badgeContent={5} color="secondary">
+        <IconButton className="notification" size="medium" ref={notifyDropdown} onClick={() => { getUserNotification() }}>
+          <NotificationBadge badgeContent={notificationCount} color="secondary">
             <Notification />
           </NotificationBadge>
         </IconButton>
@@ -180,38 +252,25 @@ function Header() {
                   >
                     <Typography component="h1" >Notifications</Typography>
                     <div className="notify-wrapper">
-                      <MenuItem onClick={() => { notificationHandler(false) }}>
-                        <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
-                          <Grid item md={1}>
-                            <div className="icon">
-                              <EditTask />
-                            </div>
+                      {notifications.map((notification, i) => (
+                        <MenuItem key={i} onClick={() => { notificationHandler(false) }}>
+                          <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
+                            <Grid item md={1}>
+                              <div className="icon">
+                                <div className={notification.isRead === false ? "unread" : ""}></div>
+                                <Reminder />
+                              </div>
+                            </Grid>
+                            <Grid item md={11}>
+                              <div className="head">
+                                <Typography className="text-color" component="span">{notification.notificationTitle}</Typography>
+                                <Typography component="span">{notification.notificationTime}</Typography>
+                              </div>
+                              <Typography component="p">{notification.notificationDescription}</Typography>
+                            </Grid>
                           </Grid>
-                          <Grid item md={11}>
-                            <div className="head">
-                              <Typography className="text-color" component="span">Daily Quote</Typography>
-                              <Typography component="span">09:00 AM</Typography>
-                            </div>
-                            <Typography component="p">Let's complete your daily quote challenge</Typography>
-                          </Grid>
-                        </Grid>
-                      </MenuItem>
-                      <MenuItem onClick={() => { notificationHandler(false) }}>
-                        <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
-                          <Grid item md={1}>
-                            <div className="icon">
-                              <Reminder />
-                            </div>
-                          </Grid>
-                          <Grid item md={11}>
-                            <div className="head">
-                              <Typography className="text-color" component="span">Daily Reminder</Typography>
-                              <Typography component="span">09:00 AM</Typography>
-                            </div>
-                            <Typography component="p">Its time to add a task in daily routine work</Typography>
-                          </Grid>
-                        </Grid>
-                      </MenuItem>
+                        </MenuItem>
+                      ))}
                     </div>
                   </MenuList>
                 </ClickAwayListener>

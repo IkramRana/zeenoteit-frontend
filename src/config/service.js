@@ -34,6 +34,13 @@ export const Service = {
         else throw result;
     },
 
+    // *User Notifications
+    getUserNotification: async (token) => {
+        let result = await get(Apis.getUserNotifications, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+
     // *Daily Quotes
     addDailyQuote: async (obj, token) => {
         let result = await post(Apis.addDailyQuote, obj, token);

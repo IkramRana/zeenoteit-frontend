@@ -10,6 +10,9 @@ export const Apis = {
     getPasswordResetLink: 'password-reset/getPasswordResetLink',
     checkUserEmailAndPhone: 'user/checkUserEmailAndPhone',
 
+    // *User Notification
+    getUserNotifications: 'notification/user-notifications',
+
     // *Daily Quotes
     addDailyQuote: 'quote/add-quote',
     getDailyQuote: 'quote/get-quote',
