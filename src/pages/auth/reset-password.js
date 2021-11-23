@@ -7,8 +7,11 @@ import { Service } from "config/service";
 
 import { Grid, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// *Import Components
+import Toaster from 'components/toaster';
 
 function ResetPassword() {
 
@@ -71,28 +74,17 @@ function ResetPassword() {
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
-          {/* ========== Alert Toaster ========== */}
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable={false}
-            pauseOnHover={false}
-            limit={1}
-          />
+          {/* ========== Toaster ========== */}
+          <Toaster />
 
-          <Grid item md={12} >
+          <Grid item xs={12} sm={12} md={12}>
             <Logo />
           </Grid>
 
-          <Grid item md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <form onSubmit={handleSubmit(reset)}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item md={9}>
+                <Grid item sm={12} md={9}>
                   <Typography variant="h2">Reset Password</Typography>
                   <div className="input-field">
                     <div className="icon">

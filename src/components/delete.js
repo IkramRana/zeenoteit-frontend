@@ -27,12 +27,12 @@ export default function Deleted(props) {
       </DialogContent>
       <DialogActions>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
-          <Grid item md={4}>
+          <Grid item xs={12} sm={5} md={4}>
             <button type="button" className="button-stroke" onClick={onClose}>
               Cancel
             </button>
           </Grid>
-          <Grid item md={4}>
+          <Grid item xs={12} sm={5} md={4}>
             <button type="button" className="button-raised" onClick={() => { deleted(id) }}>
               Yes
             </button>

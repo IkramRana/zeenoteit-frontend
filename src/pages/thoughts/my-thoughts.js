@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
 import Deleted from "components/delete";
+import Toaster from "components/toaster";
 
 var deleteThoughtId = '';
 
@@ -111,19 +112,8 @@ function MyThoughts() {
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-      {/* ========== Alert Toaster ========== */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        limit={1}
-      />
+      {/* ========== Toaster ========== */}
+      <Toaster />
 
       {/* ========== Delete Thought Dialog ========== */}
       <Deleted open={openDeleteThought} id={deleteThoughtId} onClose={() => { deleteThoughtDialog(false) }} deleted={deleteThought} />
@@ -135,12 +125,10 @@ function MyThoughts() {
       <Grid id="MainContent" container spacing={0} item md={10}  >
 
         {/* ========== Header ========== */}
-        <Grid item md={12}>
-          <Header />
-        </Grid>
+        <Header />
 
         {/* ========== My Thoughts ========== */}
-        <Grid item md={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
 
           {/* ========== Breadcrumbs ========== */}
           <Breadcrumbs aria-label="breadcrumb">
@@ -150,10 +138,10 @@ function MyThoughts() {
           {/* ========== Thoughts ========== */}
           <Grid className="thought" container spacing={0} justifyContent="flex-start" alignItems="flex-start" alignContent="flex-start">
             {thoughts.map((thought, index) => (
-              <Grid key={index} className="thought-box" item md={3}>
+              <Grid key={index} className="thought-box" item>
                 <div className="header">
                   <Grid container spacing={0} justifyContent="space-between" alignItems="center">
-                    <Grid item md={10}>
+                    <Grid item xs={10} sm={10} md={10} lg={10}>
                       <Typography component="h5">{thought.title}</Typography>
                       <Typography component="h6">{DateFormat(thought.creationAt)}</Typography>
                     </Grid>
@@ -190,7 +178,7 @@ function MyThoughts() {
               </Grid>
             ))}
 
-            <Grid className="add-thought" item md={3} onClick={() => history.push('/write-thought')}>
+            <Grid className="add-thought" item onClick={() => history.push('/write-thought')}>
               <EditTask />
               <Typography component="span">Write New Journal</Typography>
             </Grid>

@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import { Logo, MissionActive, MissionInactive, ThoughtInactive, SettingActive, LogoutInactive } from "assets/images/icons";
-import { disabledInspect } from 'utils/index';
+import { disabledInspect, Responsive } from 'utils/index';
 import useAuth from "hooks/useAuth";
 
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Hidden, Drawer, IconButton, useMediaQuery } from '@material-ui/core';
+import { Close } from "@material-ui/icons";
 
-function Navigation() {
+function Navigation(props) {
+
+  const isMobile = useMediaQuery(Responsive.isMobile);
+  const isTablet = useMediaQuery(Responsive.isTablet);
+
+  const { open, onClose } = props
 
   const { signout } = useAuth();
   const { pathname } = useLocation();
@@ -18,19 +24,24 @@ function Navigation() {
     setIsActive(route)
   }
 
-  useEffect(() => {
-    disabledInspect();
-    window.scrollTo({ top: 0 });
-  }, [])
+  const sideMenu = (
+    <Grid className="navigation" container spacing={0} justifyContent={isTablet ? 'center' : 'space-between'} alignItems="flex-start">
 
-  return (
-    <Grid id="Navigation" container spacing={0} item md={2} justifyContent="space-between" alignItems="flex-start">
+      <Hidden only={['md', 'lg', 'xl']}>
+        <Grid item md={12}>
+          <IconButton className="menu-btn" size="medium" onClick={() => { onClose() }}>
+            <Close />
+          </IconButton>
+        </Grid>
+      </Hidden>
 
       <Grid container spacing={0} item md={12} justifyContent="center" alignItems="center">
 
-        <Grid item md={12}>
-          <Logo />
-        </Grid>
+        <Hidden only={['xs', 'sm']}>
+          <Grid item md={12}>
+            <Logo />
+          </Grid>
+        </Hidden>
 
         <Grid item md={12}>
           <Typography component="ul">
@@ -86,6 +97,31 @@ function Navigation() {
         </Typography>
       </Grid>
 
+    </Grid>
+  )
+
+  useEffect(() => {
+    disabledInspect();
+    window.scrollTo({ top: 0 });
+  }, [])
+
+  return (
+    <Grid id="SideNavigation" item md={2}>
+      <Hidden only={['md', 'lg', 'xl']}>
+        <Drawer
+          variant="temporary"
+          open={open}
+          onClose={onClose}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          {sideMenu}
+        </Drawer>
+      </Hidden>
+      <Hidden only={['xs', 'sm']}>
+        {sideMenu}
+      </Hidden>
     </Grid>
   );
 }

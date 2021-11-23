@@ -130,7 +130,7 @@ export const More = () => {
 
 export const VerticalMenu = () => {
   return (
-    <svg style={{ transform: 'rotate(90deg)' }} xmlns="http://www.w3.org/2000/svg" width="18" height="5.001" viewBox="0 0 23 5.001">
+    <svg className="vertical-menu-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="5.001" viewBox="0 0 23 5.001">
       <path id="menu_dots" d="M-12103-5230.5a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12103-5230.5Zm-9,0a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12112-5230.5Zm-9,0a2.5,2.5,0,0,1,2.5-2.5,2.5,2.5,0,0,1,2.5,2.5,2.5,2.5,0,0,1-2.5,2.5A2.5,2.5,0,0,1-12121-5230.5Z" transform="translate(12121.001 5233.001)" fill="#003361" />
     </svg>
   )
@@ -180,7 +180,7 @@ export const ChangePassword = () => {
 
 export const Phone = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="23.532" height="36.451" viewBox="0 0 23.532 36.451">
+    <svg className="phone-icon" xmlns="http://www.w3.org/2000/svg" width="23.532" height="36.451" viewBox="0 0 23.532 36.451">
       <path id="Phone" d="M18.3,0H3.23A3.231,3.231,0,0,0,0,3.23V31.221a3.231,3.231,0,0,0,3.23,3.23H18.3a3.231,3.231,0,0,0,3.23-3.23V3.23A3.231,3.231,0,0,0,18.3,0ZM10.766,30.32a2.153,2.153,0,1,1,2.153-2.153A2.151,2.151,0,0,1,10.766,30.32Z" transform="translate(1 1)" fill="none" stroke="#414141" strokeWidth="2" />
     </svg>
   )
