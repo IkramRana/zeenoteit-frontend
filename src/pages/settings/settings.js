@@ -24,6 +24,7 @@ function Settings() {
 
   const { signout } = useAuth();
 
+  const [id, setId] = useState()
   const [phone, setPhone] = useState()
   const [countryCode, setCountryCode] = useState()
   const [openTime, setOpenTime] = useState()
@@ -54,6 +55,7 @@ function Settings() {
   const getUserData = () => {
     try {
       userData = JSON.parse(localStorage.getItem('userData'));
+      setId(userData[0]._id)
       setPhone(userData[0].phone_number);
       setCountryCode(userData[0].countryCode);
       setOpenTime(userData[0].appSettings[0].dailyOpenTime);
@@ -112,6 +114,7 @@ function Settings() {
           dailyTimeInterval: obj.dailyTimeInterval,
           isNotifyEnable: obj.isNotifyEnable,
         }],
+        _id: id, 
         email: obj.email,
         countryCode: obj.countryCode,
         phone_number: obj.phoneNumber,

@@ -133,6 +133,7 @@ function Header() {
   // *socket 
   const getNotificationCount = () => {
     let userData = JSON.parse(localStorage.getItem('userData'));
+    console.log('file: header.js => line 136 => getNotificationCount => userData', userData);
     let userId = userData[0]._id;
 
     if (socket?.disconnect) {
@@ -176,9 +177,7 @@ function Header() {
   useEffect(() => {
     getDailyQuote();
     disabledInspect();
-    // setTimeout(() => {
-    //   getNotificationCount();
-    // }, 5000);
+    //getNotificationCount();
     window.scrollTo({ top: 0 });
   }, [])
 
