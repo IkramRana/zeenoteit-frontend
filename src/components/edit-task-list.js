@@ -4,8 +4,11 @@ import { disabledInspect } from 'utils/index';
 
 import { Dialog, DialogContent, DialogTitle, DialogActions, Grid } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// *Import Components
+import Toaster from './toaster';
 
 export default function EditTaskList(props) {
 
@@ -57,19 +60,8 @@ export default function EditTaskList(props) {
       aria-describedby="dialog-description"
     >
 
-      {/* ========== Alert Toaster ========== */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        limit={1}
-      />
+      {/* ========== Toaster ========== */}
+      <Toaster />
 
       <DialogTitle>Edit Title</DialogTitle>
       <form onSubmit={handleSubmit(addList)}>
@@ -87,12 +79,12 @@ export default function EditTaskList(props) {
         </DialogContent>
         <DialogActions>
           <Grid container spacing={0} justifyContent="center" alignItems="center">
-            <Grid item md={4}>
+            <Grid item xs={12} sm={5} md={4}>
               <button type="button" className="button-stroke" onClick={onClose}>
                 Cancel
               </button>
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={12} sm={5} md={4}>
               <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >
                 Update
               </button>

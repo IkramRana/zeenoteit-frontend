@@ -5,8 +5,7 @@ import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
 import { Breadcrumbs, Grid, IconButton, Menu, Typography } from '@material-ui/core';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
@@ -16,6 +15,7 @@ import AddTask from "components/add-task";
 import AddSubTask from "components/add-subtask";
 import EditTaskList from "components/edit-task-list";
 import Deleted from "components/delete";
+import Toaster from "components/toaster";
 
 var columnNo = '';
 var taskId = '';
@@ -277,19 +277,8 @@ function MyMissions() {
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-      {/* ========== Alert Toaster ========== */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        limit={1}
-      />
+      {/* ========== Toaster ========== */}
+      <Toaster />
 
       {/* ========== Add Task List Dialog ========== */}
       <AddTask open={openAddTask} columnNo={columnNo} onClose={() => { taskDialog(false) }} taskColor={colors} addTaskList={addTaskList} />
@@ -303,48 +292,43 @@ function MyMissions() {
       {/* ========== Delete Task Dialog ========== */}
       <Deleted open={openDeleteTask} id={deleteTaskId} onClose={() => { deleteTaskDialog(false) }} deleted={deleteTask} />
 
-      {/* ========== Left Side ========== */}
-      <Grid className="left-side" item md={2}>
-        <Navigation />
-      </Grid>
+      {/* ========== Navigation ========== */}
+      <Navigation />
 
-      {/* ========== Right Side ========== */}
-      <Grid className="right-side" container spacing={0} item md={10}  >
+      {/* ========== Main Content ========== */}
+      <Grid id="MainContent" container spacing={0} item sm={12} md={10}  >
 
         {/* ========== Header ========== */}
-        <Grid item md={12}>
-          <Header />
-        </Grid>
+        <Header />
 
         {/* ========== My Missions ========== */}
-        <Grid item md={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
 
           {/* ========== Breadcrumbs ========== */}
-          <Breadcrumbs aria-label="breadcrumb">
-            <Typography >My Missions</Typography>
+          <Breadcrumbs Breadcrumbs aria-label="breadcrumb">
+            <Typography>My Missions</Typography>
           </Breadcrumbs>
 
           {/* ========== Missions ========== */}
           <Grid className="mission" container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
             {[...Array(5)].map((x, i) => (
-              <Grid key={i} className="wrapper" container spacing={0} item md={2}>
-
+              <Grid key={i} className="wrapper" container spacing={0} item>
                 {task.map((task, index) => {
                   if ((i + 1) === task.column_no) {
                     return (
-                      <Grid key={index} className="task-box" item md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
+                      <Grid key={task._id} className="task-box" item xs={12} sm={12} md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
                         <div className="header" style={{ backgroundColor: task.color[0].code + '1a' }} >
                           <Grid container spacing={0} justifyContent="space-between" alignItems="center">
-                            <Grid item md={8}>
+                            <Grid item xs={7} sm={7} md={7} lg={7}>
                               <Typography component="h5">{task.title}</Typography>
                             </Grid>
-                            <Grid item md={2}>
+                            <Grid item xs={2} sm={2} md={2} lg={2}>
                               <IconButton aria-label="menu" size="small" onClick={() => { subTaskDialog(true, task._id) }}>
                                 <Plus />
                               </IconButton>
                             </Grid>
-                            <Grid item md={2}>
+                            <Grid item xs={2} sm={2} md={2} lg={2}>
                               <IconButton aria-label="menu" size="small" onClick={(e) => { menuHandler(index, e) }}>
                                 {anchorEl && Boolean(anchorEl[index]) === true ? <VerticalMenu /> : <More />}
                               </IconButton>
@@ -396,7 +380,7 @@ function MyMissions() {
                   }
                 })}
 
-                <Grid className="add-task" item md={12} onClick={() => { taskDialog(true, (i + 1)) }}>
+                <Grid className="add-task" item xs={12} sm={12} md={12} onClick={() => { taskDialog(true, (i + 1)) }}>
                   <Plus />
                   <Typography component="span">Add To Do List</Typography>
                 </Grid>
@@ -410,8 +394,8 @@ function MyMissions() {
 
       </Grid>
 
-    </Grid>
+    </Grid >
   );
-}
+};
 
 export default MyMissions;

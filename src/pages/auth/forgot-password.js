@@ -8,8 +8,11 @@ import { Service } from "config/service";
 import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// *Import Components
+import Toaster from 'components/toaster';
 
 var resendMail = '';
 
@@ -102,41 +105,17 @@ function ForgotPassword() {
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
-          {/* ========== Alert Toaster ========== */}
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable={false}
-            pauseOnHover={false}
-            limit={1}
-          />
+          {/* ========== Toaster ========== */}
+          <Toaster />
 
-          <Grid item md={12} >
+          <Grid item xs={12} sm={12} md={12} >
             <Logo />
           </Grid>
 
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable={false}
-            pauseOnHover={false}
-            limit={1}
-          />
-
-          <Grid item md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <form onSubmit={handleSubmit(sendEmail)}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item md={9}>
+                <Grid item sm={12} md={9}>
                   <Typography variant="h2">Forgot Password</Typography>
                   <div className="input-field">
                     <div className="icon">
@@ -166,16 +145,16 @@ function ForgotPassword() {
             </form>
           </Grid>
 
-          <Grid item md={6}>
-            <Typography className="text-left" component="p">
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography className="text-left text-xs-center" component="p">
               <span className={`cursor-pointer ${disabled === true ? 'disabled ' : ''}`} onClick={() => { resendEmail() }}>
                 <Refresh className={iconAnimation === true ? '' : 'resend'} /> Resend Email
               </span>
             </Typography>
           </Grid>
 
-          <Grid item md={6}>
-            <Typography className="text-right" component="p" onClick={() => history.push('/login')}>
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography className="text-right text-xs-center" component="p" onClick={() => history.push('/login')}>
               <span className="cursor-pointer">Have an account? Login</span>
             </Typography>
           </Grid>

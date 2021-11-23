@@ -9,8 +9,11 @@ import { Grid, Typography } from '@material-ui/core';
 import { useForm, Controller } from "react-hook-form";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// *Import Components
+import Toaster from 'components/toaster';
 
 function Register() {
 
@@ -19,7 +22,7 @@ function Register() {
   // *For Loader
   const [loader, setLoader] = useState(false)
 
-  const [countryCode, setCountryCode] = useState('UK')
+  const [countryCode, setCountryCode] = useState('PK')
 
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
@@ -72,28 +75,17 @@ function Register() {
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
-          {/* ========== Alert Toaster ========== */}
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable={false}
-            pauseOnHover={false}
-            limit={1}
-          />
+          {/* ========== Toaster ========== */}
+          <Toaster />
 
-          <Grid item md={12} >
+          <Grid item xs={12} sm={12} md={12} >
             <Logo />
           </Grid>
 
-          <Grid item md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <form onSubmit={handleSubmit(signUp)}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item md={9}>
+                <Grid item sm={12} md={9}>
                   <Typography variant="h2">Register</Typography>
                   <div className="input-field">
                     <div className="icon">
@@ -178,8 +170,8 @@ function Register() {
             </form>
           </Grid>
 
-          <Grid item md={12}>
-            <Typography component="p" onClick={() => history.push('/login')}>
+          <Grid item xs={12} sm={12} md={12}>
+            <Typography className="text-xs-center" component="p" onClick={() => history.push('/login')}>
               <span className="cursor-pointer">Already have an account? Login</span>
             </Typography>
           </Grid>

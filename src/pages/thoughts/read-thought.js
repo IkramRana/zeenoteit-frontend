@@ -5,12 +5,11 @@ import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
 import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
+import Toaster from "components/toaster";
 
 function ReadThought() {
 
@@ -40,34 +39,20 @@ function ReadThought() {
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-      {/* ========== Alert Toaster ========== */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        limit={1}
-      />
+      {/* ========== Toaster ========== */}
+      <Toaster />
 
-      {/* ========== Left Side ========== */}
-      <Grid className="left-side" item md={2}>
-        <Navigation />
-      </Grid>
+      {/* ========== Navigation ========== */}
+      <Navigation />
 
-      {/* ========== Right Side ========== */}
-      <Grid className="right-side" container spacing={0} item md={10}  >
+      {/* ========== Main Content ========== */}
+      <Grid id="MainContent" container spacing={0} item md={10}  >
 
         {/* ========== Header ========== */}
-        <Grid item md={12}>
-          <Header />
-        </Grid>
+        <Header />
 
-        <Grid item md={12}>
+        {/* ========== Thought ========== */}
+        <Grid item xs={12} sm={12} md={12} lg={12}>
 
           {/* ========== Breadcrumbs ========== */}
           <Breadcrumbs aria-label="breadcrumb">
@@ -77,10 +62,10 @@ function ReadThought() {
 
           {/* ========== Read Thought ========== */}
           <Grid className="read-thought" container spacing={0} justifyContent="center">
-            <Grid item md={12}>
+            <Grid item xs={12} sm={12} md={12}>
               <Typography className="title">{thought.title}</Typography>
             </Grid>
-            <Grid item md={12}>
+            <Grid item xs={12} sm={12} md={12}>
               <Typography className="description">
                 {thought.description}
               </Typography>

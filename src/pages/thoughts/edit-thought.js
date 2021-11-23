@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // *Import Components
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
+import Toaster from "components/toaster";
 
 function EditThought() {
 
@@ -89,34 +90,20 @@ function EditThought() {
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-      {/* ========== Alert Toaster ========== */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        limit={1}
-      />
+      {/* ========== Toaster ========== */}
+      <Toaster />
 
-      {/* ========== Left Side ========== */}
-      <Grid className="left-side" item md={2}>
-        <Navigation />
-      </Grid>
+      {/* ========== Navigation ========== */}
+      <Navigation />
 
-      {/* ========== Right Side ========== */}
-      <Grid className="right-side" container spacing={0} item md={10}  >
+      {/* ========== Main Content ========== */}
+      <Grid id="MainContent" container spacing={0} item md={10}  >
 
         {/* ========== Header ========== */}
-        <Grid item md={12}>
-          <Header />
-        </Grid>
+        <Header />
 
-        <Grid item md={12}>
+        {/* ========== Thought ========== */}
+        <Grid item xs={12} sm={12} md={12} lg={12}>
 
           {/* ========== Breadcrumbs ========== */}
           <Breadcrumbs aria-label="breadcrumb">
@@ -127,7 +114,7 @@ function EditThought() {
           {/* ========== Write Thought ========== */}
           <form className="write-thought" onSubmit={handleSubmit(update)}>
             <Grid container spacing={0} justifyContent="center">
-              <Grid item md={12}>
+              <Grid item xs={12} sm={12} md={12}>
                 <input
                   name="title"
                   className="title"
@@ -141,7 +128,7 @@ function EditThought() {
                   <p className="error" >{errors?.title?.message}</p>
                 )}
               </Grid>
-              <Grid item md={12}>
+              <Grid item xs={12} sm={12} md={12}>
                 <textarea
                   name="description"
                   className="description"
@@ -155,7 +142,7 @@ function EditThought() {
                   <p className="error" >{errors?.description?.message}</p>
                 )}
               </Grid>
-              <Grid item md={3}>
+              <Grid item xs={12} sm={12} md={3}>
                 <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false}>Save</button>
               </Grid>
             </Grid>
