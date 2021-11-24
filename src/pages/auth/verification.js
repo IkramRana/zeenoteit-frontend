@@ -227,7 +227,7 @@ function Verification() {
   }, 10000);
 
   useEffect(() => {
-    // getRegistrationValue();
+    getRegistrationValue();
     disabledInspect();
     window.scrollTo({ top: 0 });
   }, [loader])
