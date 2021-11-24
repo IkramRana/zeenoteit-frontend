@@ -6,7 +6,6 @@ import { Service } from "config/service";
 
 import { Breadcrumbs, CardHeader, Grid, IconButton, Menu, Typography } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { GridContextProvider, GridDropZone, GridItem, swap, move } from "react-grid-dnd";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -501,7 +500,7 @@ function MyMissions() {
               ))}
             </DragDropContext> */}
 
-            {/* <DragDropContext onDragEnd={onDragEnd}>
+            <DragDropContext onDragEnd={onDragEnd}>
               {lists.map((listKey) => (
                 < DraggableElement
                   elements={elements[listKey]}
@@ -509,7 +508,7 @@ function MyMissions() {
                   prefix={listKey}
                 />
               ))}
-            </DragDropContext> */}
+            </DragDropContext>
 
 
             {/* <DragDropContext onDragEnd={onDragEnd}>
