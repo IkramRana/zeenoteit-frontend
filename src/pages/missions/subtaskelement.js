@@ -13,8 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 var list;
 
 function SubTaskElement({ taskId, subTask }) {
-  console.log('file: subtaskelement.js => line 13 => SubTaskElement => subTask', subTask);
-  console.log('file: subtaskelement.js => line 14 => SubTaskElement => taskId', taskId);
+  // console.log('file: subtaskelement.js => line 13 => SubTaskElement => subTask', subTask);
+  // console.log('file: subtaskelement.js => line 14 => SubTaskElement => taskId', taskId);
   //console.log('file: subtaskelement.js => line 12 => SubTaskElement => subTask', subTask.subTask)
   //console.log('file: subtaskelement.js => line 13 => SubTaskElement => subTask.length', subTask.subTask.length)
 
@@ -68,21 +68,7 @@ function SubTaskElement({ taskId, subTask }) {
   //const [elements, setElements] = React.useState(generateLists());
   const [subTasks, setSubTasks] = React.useState([]);
 
-  useEffect(() => {
-    //setElements(generateLists());
-    setSubTasks(subTask)
-    // if (subTask.length > 0) {
-    //   //console.log('file: subtaskelement.js => line 58 => SubTaskElement => subTask.length', subTask.length)
-    //   list = subTask.map((listKey) =>
-    //     <SubTask
-    //       subTask={subTask}
-    //       elements={elements[listKey.task_id]}
-    //       key={listKey.task_id}
-    //       prefix={listKey.task_id}
-    //     />
-    //   );
-    // }
-  }, []);
+  
 
   const onDragEnd = async (result) => {
     
@@ -90,10 +76,10 @@ function SubTaskElement({ taskId, subTask }) {
       return;
     }
     let splitTaskId = result.destination.droppableId.split('-');
-    console.log('file: subtaskelement.js => line 82 => onDragEnd => result', result);
-    console.log('file: subtaskelement.js => line 82 => onDragEnd => taskId', splitTaskId[1]);
-    console.log('file: subtaskelement.js => line 82 => onDragEnd => subtaskId', result.draggableId);
-    console.log('file: subtaskelement.js => line 82 => onDragEnd => sequence', result.destination.index);
+    // console.log('file: subtaskelement.js => line 82 => onDragEnd => result', result);
+    // console.log('file: subtaskelement.js => line 82 => onDragEnd => taskId', splitTaskId[1]);
+    // console.log('file: subtaskelement.js => line 82 => onDragEnd => subtaskId', result.draggableId);
+    // console.log('file: subtaskelement.js => line 82 => onDragEnd => sequence', result.destination.index);
 
     const taskId = splitTaskId[1];
     const subTaskId = result.draggableId;
@@ -104,7 +90,7 @@ function SubTaskElement({ taskId, subTask }) {
       subtaskId: subTaskId,
       newOrderSequence: newOrderSequence
     }
-    console.log('file: my-missions.js => line 333 => onDragEnd => obj', obj)
+    //console.log('file: my-missions.js => line 333 => onDragEnd => obj', obj)
     let token = localStorage.getItem('jwt')
     const { status } = await Service.swapSubTask(obj, token);
 
@@ -212,6 +198,21 @@ function SubTaskElement({ taskId, subTask }) {
     }
   }
 
+  useEffect(() => {
+    //setElements(generateLists());
+    setSubTasks(subTask)
+    // if (subTask.length > 0) {
+    //   //console.log('file: subtaskelement.js => line 58 => SubTaskElement => subTask.length', subTask.length)
+    //   list = subTask.map((listKey) =>
+    //     <SubTask
+    //       subTask={subTask}
+    //       elements={elements[listKey.task_id]}
+    //       key={listKey.task_id}
+    //       prefix={listKey.task_id}
+    //     />
+    //   );
+    // }
+  }, []);
 
   return (
     

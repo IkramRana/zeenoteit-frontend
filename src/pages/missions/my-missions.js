@@ -4,14 +4,9 @@ import { Plus, EditTask, More, Trash, VerticalMenu } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
-<<<<<<< HEAD
 import { Breadcrumbs, CardHeader, Grid, IconButton, Menu, Typography } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { ToastContainer, toast } from "react-toastify";
-=======
-import { Breadcrumbs, Grid, IconButton, Menu, Typography } from '@material-ui/core';
-import { toast } from "react-toastify";
->>>>>>> 23d5c35a59a8628f1283cb12bb76ccdc2fcdcd8d
 import 'react-toastify/dist/ReactToastify.css';
 
 // *Import Components
@@ -21,11 +16,8 @@ import AddTask from "components/add-task";
 import AddSubTask from "components/add-subtask";
 import EditTaskList from "components/edit-task-list";
 import Deleted from "components/delete";
-<<<<<<< HEAD
 import DraggableElement from "./draggableElement";
-=======
 import Toaster from "components/toaster";
->>>>>>> 23d5c35a59a8628f1283cb12bb76ccdc2fcdcd8d
 
 var columnNo = '';
 var taskId = '';
@@ -279,7 +271,6 @@ function MyMissions() {
     }
   }
 
-<<<<<<< HEAD
   const getItems = (count, prefix, obj) =>
   //Array.from({ length: count }, (v, k) => k).map((k) => {
   {
@@ -328,7 +319,7 @@ function MyMissions() {
   // }, []);
 
   const onDragEnd = async (result) => {
-    console.log('file: my-missions.js => line 318 => onDragEnd => result', result)
+    //console.log('file: my-missions.js => line 318 => onDragEnd => result', result)
     //console.log('file: my-missions.js => line 318 => onDragEnd => result', result.draggableId)
     //console.log('file: my-missions.js => line 318 => onDragEnd => result.destination.droppableId.substr', result.destination.droppableId.substr(6))
 
@@ -345,7 +336,7 @@ function MyMissions() {
       columnNo: columnNo,
       newOrderSequence: newOrderSequence
     }
-    console.log('file: my-missions.js => line 333 => onDragEnd => obj', obj)
+    //console.log('file: my-missions.js => line 333 => onDragEnd => obj', obj)
     let token = localStorage.getItem('jwt')
     const { data } = await Service.swapTask(obj, token);
     getTask()
@@ -376,8 +367,6 @@ function MyMissions() {
 
 
 
-=======
->>>>>>> 23d5c35a59a8628f1283cb12bb76ccdc2fcdcd8d
   useEffect(() => {
     getTask();
     getColors();
@@ -423,7 +412,6 @@ function MyMissions() {
           {/* ========== Missions ========== */}
           <Grid className="mission" container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-<<<<<<< HEAD
 
             {/* <DragDropContext onDragEnd={onDragEnd}>
               {lists.map((listKey) => (
@@ -466,83 +454,6 @@ function MyMissions() {
               })}
             </DragDropContext>
 
-=======
-            {[...Array(5)].map((x, i) => (
-              <Grid key={i} className="wrapper" container spacing={0} item>
-                {task.map((task, index) => {
-                  if ((i + 1) === task.column_no) {
-                    return (
-                      <Grid key={task._id} className="task-box" item xs={12} sm={12} md={12} style={{ borderColor: task.color[0].code + 'a6' }}>
-                        <div className="header" style={{ backgroundColor: task.color[0].code + '1a' }} >
-                          <Grid container spacing={0} justifyContent="space-between" alignItems="center">
-                            <Grid item xs={7} sm={7} md={7} lg={7}>
-                              <Typography component="h5">{task.title}</Typography>
-                            </Grid>
-                            <Grid item xs={2} sm={2} md={2} lg={2}>
-                              <IconButton aria-label="menu" size="small" onClick={() => { subTaskDialog(true, task._id) }}>
-                                <Plus />
-                              </IconButton>
-                            </Grid>
-                            <Grid item xs={2} sm={2} md={2} lg={2}>
-                              <IconButton aria-label="menu" size="small" onClick={(e) => { menuHandler(index, e) }}>
-                                {anchorEl && Boolean(anchorEl[index]) === true ? <VerticalMenu /> : <More />}
-                              </IconButton>
-
-                              {/* ========== Menu Options ========== */}
-                              <Menu
-                                className="menu-option"
-                                anchorEl={anchorEl && anchorEl[index]}
-                                keepMounted
-                                open={anchorEl && Boolean(anchorEl[index])}
-                                onClose={handleClose}
-                                getContentAnchorEl={null}
-                                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                                transformOrigin={{ vertical: "top", horizontal: "center" }}
-                              >
-                                <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, task._id, task.title) }}>
-                                  <EditTask />
-                                </IconButton>
-                                <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteTaskDialog(true, task._id) }}>
-                                  <Trash />
-                                </IconButton>
-                              </Menu>
-                            </Grid>
-                          </Grid>
-                        </div>
-                        <div className="content">
-                          {task.subtasks.map((subTask, i) => (
-                            <div key={i} className="task">
-                              <div className="checkbox">
-                                {subTask.isCompleted &&
-                                  <input type="checkbox" checked={true} id={subTask._id} />
-                                }
-                                {subTask.isCompleted === false &&
-                                  <input type="checkbox" id={subTask._id} onClick={(e) => taskComplete(subTask._id)} />
-                                }
-                                <label for={subTask._id}></label>
-                              </div>
-                              <Typography className={subTask.isCompleted == true ? 'text-strike' : ''} component="p">{subTask.title}</Typography>
-                            </div>
-                          ))}
-
-                          <div className="add-subtask cursor-pointer" onClick={() => { subTaskDialog(true, task._id) }}>
-                            <Plus />
-                            <Typography component="p">Add New Task</Typography>
-                          </div>
-                        </div>
-                      </Grid>
-                    )
-                  }
-                })}
-
-                <Grid className="add-task" item xs={12} sm={12} md={12} onClick={() => { taskDialog(true, (i + 1)) }}>
-                  <Plus />
-                  <Typography component="span">Add To Do List</Typography>
-                </Grid>
-
-              </Grid>
-            ))}
->>>>>>> 23d5c35a59a8628f1283cb12bb76ccdc2fcdcd8d
 
           </Grid>
 

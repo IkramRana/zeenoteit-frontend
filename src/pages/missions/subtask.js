@@ -1,5 +1,5 @@
 import { Droppable,Draggable } from "react-beautiful-dnd";
-import SubTaskList from "./subtasklist";
+//import SubTaskList from "./subtasklist";
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { Plus } from "assets/images/icons";
