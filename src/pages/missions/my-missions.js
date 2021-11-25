@@ -17,7 +17,6 @@ import AddSubTask from "components/add-subtask";
 import EditTaskList from "components/edit-task-list";
 import Deleted from "components/delete";
 import DraggableElement from "./draggableElement";
-import SubTaskElement from "./subtaskelement";
 
 var columnNo = '';
 var taskId = '';
@@ -69,6 +68,8 @@ function MyMissions() {
 
   // *For Sub Task Open and Close Dialog
   const subTaskDialog = (type, ID) => {
+  console.log('file: my-missions.js => line 71 => subTaskDialog => ID', ID);
+  console.log('file: my-missions.js => line 72 => subTaskDialog => type', type);
     if (type === true) {
       taskId = ID
       setOpenAddSubTask(true);
@@ -321,6 +322,10 @@ function MyMissions() {
     //console.log('file: my-missions.js => line 318 => onDragEnd => result', result.draggableId)
     //console.log('file: my-missions.js => line 318 => onDragEnd => result.destination.droppableId.substr', result.destination.droppableId.substr(6))
 
+    if (!result.destination) {
+      return;
+    }
+    
     const taskId = result.draggableId;
     const columnNo = result.destination.droppableId.substr(6);
     const newOrderSequence = +result.destination.index === 0 ? +result.destination.index + 1 : +result.destination.index;
@@ -450,6 +455,9 @@ function MyMissions() {
                 return (
                   <DraggableElement
                     //elements={elements['column' + listKey.column_no]}
+                    taskDialog={taskDialog}
+                    editTaskDialog={editTaskDialog}
+                    deleteTaskDialog={deleteTaskDialog}
                     elements={task}
                     //elements={generateLists()}
                     pos={i}

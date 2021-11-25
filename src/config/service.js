@@ -62,6 +62,11 @@ export const Service = {
         if (result.status === 200) return result.data;
         else throw result;
     },
+    getUserSubTaskByTaskId: async (taskId,token) => {
+        let result = await get(`${Apis.getUserSubTaskByTaskId}?id=${taskId}`, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
     editTask: async (obj, token) => {
         let result = await patch(Apis.editTask, obj, token);
         if (result.status === 200) return result.data;
@@ -77,10 +82,13 @@ export const Service = {
         if (result.status === 200) return result.data;
         else throw result;
     },
-
-    // *Swap Task
     swapTask: async (obj, token) => {
         let result = await patch(Apis.swapTask, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    swapSubTask: async (obj, token) => {
+        let result = await patch(Apis.swapSubTask, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },

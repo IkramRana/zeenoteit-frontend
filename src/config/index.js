@@ -18,11 +18,12 @@ export const Apis = {
     addTask: 'task/add-task',
     addSubTask: 'subtask/add-subtask',
     getUserTask: 'task/user-tasks',
+    getUserSubTaskByTaskId: 'subtask/subtask-by-task-id',
     editTask: 'task/update-title',
     completeSubTask: 'subtask/complete-subtask',
     deleteTask: 'task/delete-task',
-    // *Swap
     swapTask: 'task/swap-task',
+    swapSubTask: 'subtask/swap-subtask',
 
     // *Thought
     addThought: 'thought/add-thought',
