@@ -6,7 +6,9 @@ import { Plus } from "assets/images/icons";
 
 
 
-function SubTask({ prefix, elements }) {
+function SubTask({ prefix, elements, subTask }) {
+  //console.log('file: subtask.js => line 10 => SubTask => elements', elements)
+  //console.log('file: subtask.js => line 11 => SubTask => subTask', subTask)
 
   return (
     <div className="content">
@@ -16,10 +18,10 @@ function SubTask({ prefix, elements }) {
             {elements.map((item, index) => (
               <SubTaskList key={item.id} item={item} index={index} />
             ))}
-            <div className="add-subtask cursor-pointer">
+            {/* <div disabled className="add-subtask cursor-pointer">
               <Plus />
               <Typography component="p">Add New Task</Typography>
-            </div>
+            </div> */}
           </div>
         )}
       </Droppable>

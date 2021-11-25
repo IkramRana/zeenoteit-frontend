@@ -78,6 +78,13 @@ export const Service = {
         else throw result;
     },
 
+    // *Swap Task
+    swapTask: async (obj, token) => {
+        let result = await patch(Apis.swapTask, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+
     // *Thoughts
     addThought: async (obj, token) => {
         let result = await post(Apis.addThought, obj, token);
