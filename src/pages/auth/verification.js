@@ -9,8 +9,11 @@ import { firebase, auth } from 'config/firebase';
 import { Grid, Typography } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// *Import Components
+import Toaster from 'components/toaster';
 
 var inputField = 1;
 var value;
@@ -234,28 +237,17 @@ function Verification() {
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
-          {/* ========== Alert Toaster ========== */}
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable={false}
-            pauseOnHover={false}
-            limit={1}
-          />
+          {/* ========== Toaster ========== */}
+          <Toaster />
 
-          <Grid item md={12} >
+          <Grid item xs={12} sm={12} md={12} >
             <Logo />
           </Grid>
 
-          <Grid item md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <form onSubmit={handleSubmit(ValidateOtp)}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item md={9}>
+                <Grid item sm={12} md={9}>
                   <Typography variant="h2">Phone Number Verification</Typography>
                   <div>
                     <input type="number" className="verification-input" name="input1" value={form.input1} onChange={formHandler('input1')} required />
@@ -274,8 +266,8 @@ function Verification() {
             </form>
           </Grid>
 
-          <Grid item md={12}>
-            <Typography component="p">
+          <Grid item xs={12} sm={12} md={12}>
+            <Typography className="text-xs-center" component="p">
               <span className={`cursor-pointer ${disabled === true ? 'disabled ' : ''}`} onClick={() => { resendOTP() }}>
                 <Refresh className={iconAnimation === true ? '' : 'resend'} /> Resend Code
               </span>

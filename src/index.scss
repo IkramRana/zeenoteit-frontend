@@ -1,9 +1,6 @@
 @font-face {
   font-family: "Rockness";
   src: local("Rockness"), url(assets/fonts/Rockness.otf) format("truetype");
-}
-
-@font-face {
   font-family: "Avenir";
   src: local("Avenir"), url(assets/fonts/Avenir.otf) format("truetype");
 }
@@ -49,13 +46,13 @@ code {
 }
 
 @media (min-width: 960px) {
-  .left-side {
+  #SideNavigation {
     flex-grow: 0 !important;
     max-width: 10.666667% !important;
     flex-basis: 10.666667% !important;
   }
 
-  .right-side {
+  #MainContent {
     flex-grow: 0 !important;
     max-width: 89.333333% !important;
     flex-basis: 89.333333% !important;
@@ -82,22 +79,21 @@ input::-webkit-inner-spin-button {
   text-align: right !important;
 }
 
-.cursor-pointer {
-  cursor: pointer !important;
-}
-
 .text-color {
   color: #7ac8c3 !important;
 }
 
-.left-side {
-  background-color: #fff;
-  padding: 20px;
+.phone-icon {
+  width: 28px !important;
+  height: 30px !important;
 }
 
-.right-side {
-  background-color: #ecf4f8;
-  padding: 10px 20px;
+.vertical-menu-icon {
+  transform: rotate(90deg);
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
 }
 
 .error {
@@ -162,6 +158,14 @@ input::-webkit-inner-spin-button {
   cursor: inherit;
 }
 
+@media (max-width: 600px) {
+  .button-stroke,
+  .button-raised {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
 .disabled {
   opacity: 0.3;
   cursor: context-menu !important;
@@ -170,6 +174,25 @@ input::-webkit-inner-spin-button {
 .text-strike {
   text-decoration: line-through !important;
   opacity: 0.4 !important;
+}
+
+.menu-btn {
+  margin: 0px 20px !important;
+  width: 55px;
+  height: 55px;
+  background-color: rgba($color: #003361, $alpha: 0.1) !important;
+
+  svg {
+    fill: #003361;
+  }
+}
+
+@media (max-width: 600px) {
+  .menu-btn {
+    margin: 0px 15px !important;
+    width: 45px;
+    height: 45px;
+  }
 }
 
 // *Loader
@@ -199,192 +222,32 @@ input::-webkit-inner-spin-button {
   }
 }
 
-// *Header
-#Header {
-  padding: 20px 0px;
-  border-bottom: 1px solid rgba(42, 42, 42, 0.1);
-
-  h2 {
-    font-size: 32px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: #003361;
-    text-transform: capitalize;
+@media (max-width: 959px) {
+  .text-sm-center {
+    text-align: center !important;
   }
 
-  h4 {
-    font-size: 18px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: #003361;
-    text-transform: capitalize;
-    display: inline-block;
+  .order-sm-1 {
+    order: 1;
   }
 
-  .quote {
-    position: relative;
-
-    &:hover {
-      p {
-        opacity: 0;
-        transition: 0.3s ease-in-out;
-      }
-      .sponsored {
-        opacity: 1;
-        transition: 0.3s ease-in-out;
-      }
-    }
-
-    p {
-      font-size: 14px;
-      font-family: "Avenir";
-      color: #58595b;
-      padding: 0px;
-      cursor: inherit;
-      transition: 0.3s ease-in-out;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
-
-    .sponsored {
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      padding: 2px 12px;
-      background-color: rgba($color: #7ac8c3, $alpha: 0.4);
-      border-radius: 20px;
-      width: 100%;
-      opacity: 0;
-      transition: 0.3s ease-in-out;
-
-      span {
-        font-size: 12px;
-        font-family: "Avenir";
-        color: #7ac8c3;
-        margin-right: 70px;
-      }
-
-      .link {
-        font-size: 12px;
-        font-family: "Avenir";
-        color: #58595b;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .add-quote,
-  .notification {
-    margin: 0px 6px;
-    width: 55px;
-    height: 55px;
-  }
-
-  .add-quote {
-    background-color: rgba($color: #7ac8c3, $alpha: 0.1);
-
-    svg {
-      fill: #7ac8c3;
-    }
-
-    &:hover {
-      background-color: #7ac8c3;
-
-      svg {
-        fill: #fff;
-      }
-    }
-  }
-
-  .notification {
-    background-color: rgba($color: #003361, $alpha: 0.1);
-
-    svg {
-      fill: #003361;
-    }
-  }
-
-  .dropdown {
-    width: 310px;
-    margin-top: 10px !important;
-    margin-right: 18px !important;
-
-    .MuiPaper-root {
-      box-shadow: 0px 3px 99px #0000001a;
-      border-radius: 20px;
-
-      .MuiListItem-button:hover {
-        background-color: transparent !important;
-      }
-    }
-
-    h1 {
-      font-size: 34px;
-      font-family: "Rockness";
-      color: #6ba570;
-      text-align: center;
-      margin: 8px 0px;
-    }
-
-    .notify-wrapper {
-      height: auto;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    .MuiMenuItem-root {
-      padding-top: 18px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(42, 42, 42, 0.1);
-
-      &:nth-last-child(1) {
-        border-bottom: none;
-      }
-
-      .icon {
-        background-color: rgba($color: #7ac8c3, $alpha: 0.2);
-        text-align: center;
-        border-radius: 50%;
-        width: 25px;
-        height: 25px;
-
-        svg {
-          fill: #7ac8c3 !important;
-          width: 14px;
-        }
-      }
-
-      .head {
-        display: flex;
-        justify-content: space-between;
-        margin-left: 15px;
-        margin-bottom: 8px;
-
-        span {
-          font-size: 12px;
-          font-family: "Avenir";
-          color: rgba($color: #58595b, $alpha: 0.5);
-        }
-      }
-
-      p {
-        font-size: 12px;
-        font-family: "Avenir";
-        color: #58595b;
-        margin-left: 15px;
-      }
-    }
+  .order-sm-2 {
+    order: 2;
   }
 }
 
-// *Navigation
+@media (max-width: 600px) {
+  .text-xs-center {
+    text-align: center !important;
+  }
+}
+
+// *Side Navigation
 .navigation {
   background-color: #fff;
+  padding: 20px;
   width: 100%;
-  height: calc(100vh - 40px);
+  height: 100vh;
   text-align: center;
 
   .logo {
@@ -432,6 +295,13 @@ input::-webkit-inner-spin-button {
       }
     }
 
+    @media (max-width: 959px) {
+      li,
+      a {
+        width: 120px;
+      }
+    }
+
     .active {
       box-shadow: 0px 3px 28px #00000014;
       transition: 0.3s ease-in-out;
@@ -439,153 +309,541 @@ input::-webkit-inner-spin-button {
   }
 }
 
-// *Breadcrumbs
-.MuiBreadcrumbs-root {
-  padding: 15px 0px;
+@media (max-width: 959px) {
+  .navigation {
+    height: 100%;
+  }
 
-  .MuiBreadcrumbs-li {
-    p {
-      font-size: 16px;
-      font-family: "Avenir";
-      font-weight: 900;
-      color: #58595b;
-      opacity: 0.7;
-
-      &:hover {
-        text-decoration: none !important;
-      }
-    }
+  .MuiDrawer-paper {
+    width: 200px;
   }
 }
 
-// *My Mission
-.mission {
-  height: calc(100vh - 184px);
-  overflow-y: auto;
+// *Main Content
+#MainContent {
+  background-color: #ecf4f8;
+  padding: 10px 20px;
 
-  .wrapper {
-    margin-right: 10px !important;
-    flex-grow: 0 !important;
-    max-width: 18.8% !important;
-    flex-basis: 18.8% !important;
-  }
+  // *Header
+  .header {
+    padding: 20px 0px;
+    border-bottom: 1px solid rgba(42, 42, 42, 0.1);
 
-  .task-box {
-    width: 100%;
-    height: auto;
-    background-color: #fff;
-    border: 1px solid;
-    border-radius: 12px;
-    margin-bottom: 12px !important;
-    opacity: color 0.5;
-    transition: 0.3s ease-in-out;
-
-    &:hover {
-      box-shadow: 0px 3px 23px #0000000f;
-      transition: 0.3s ease-in-out;
+    h2 {
+      font-size: 32px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #003361;
+      text-transform: capitalize;
     }
 
-    .header {
-      border-radius: 11px;
-      padding: 8px 8px;
-      opacity: background-color 0.1;
+    h4 {
+      font-size: 18px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #003361;
+      text-transform: capitalize;
+      display: inline-block;
+    }
 
-      .MuiIconButton-root {
-        background-color: rgba($color: #003361, $alpha: 0.1);
-        width: 30px;
-        height: 30px;
+    .logo {
+      width: 120px;
+      height: 100px;
+    }
+
+    .quote {
+      position: relative;
+
+      &:hover {
+        p {
+          opacity: 0;
+          transition: 0.3s ease-in-out;
+        }
+        .sponsored {
+          opacity: 1;
+          transition: 0.3s ease-in-out;
+        }
       }
 
-      h5 {
+      p {
         font-size: 14px;
+        font-family: "Avenir";
+        color: #58595b;
+        padding: 0px;
+        cursor: inherit;
+        transition: 0.3s ease-in-out;
+      }
+
+      .sponsored {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        padding: 2px 12px;
+        background-color: rgba($color: #7ac8c3, $alpha: 0.4);
+        border-radius: 20px;
+        width: 100%;
+        opacity: 0;
+        transition: 0.3s ease-in-out;
+
+        span {
+          font-size: 12px;
+          font-family: "Avenir";
+          color: #7ac8c3;
+          margin-right: 70px;
+        }
+
+        @media (max-width: 600px) {
+          span {
+            margin-right: 30px;
+          }
+        }
+
+        .link {
+          font-size: 12px;
+          font-family: "Avenir";
+          color: #58595b;
+          cursor: pointer;
+        }
+      }
+
+      @media (max-width: 600px) {
+        p {
+          font-size: 12px;
+        }
+        .sponsored {
+          padding-top: 4px;
+          padding-bottom: 5px;
+        }
+      }
+
+      @media (max-width: 959px) {
+        .sponsored {
+          text-align: left;
+          padding-right: 0px;
+          padding-top: 6px;
+          padding-bottom: 7px;
+        }
+      }
+    }
+
+    .notification {
+      margin: 0px 20px;
+      width: 55px;
+      height: 55px;
+    }
+
+    .notification {
+      background-color: rgba($color: #003361, $alpha: 0.1);
+
+      svg {
+        fill: #003361;
+      }
+    }
+
+    .dropdown {
+      width: 310px;
+      margin-top: 10px !important;
+      left: -2% !important;
+      z-index: 100;
+
+      .MuiPaper-root {
+        box-shadow: 0px 3px 99px #0000001a;
+        border-radius: 20px;
+
+        .MuiListItem-button:hover {
+          background-color: transparent !important;
+        }
+      }
+
+      h1 {
+        font-size: 34px;
+        font-family: "Rockness";
+        color: #6ba570;
+        text-align: center;
+        margin: 8px 0px;
+      }
+
+      .notify-wrapper {
+        height: auto;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .MuiMenuItem-root {
+        padding-top: 18px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid rgba(42, 42, 42, 0.1);
+
+        &:nth-last-child(1) {
+          border-bottom: none;
+        }
+
+        .icon {
+          background-color: rgba($color: #7ac8c3, $alpha: 0.2);
+          text-align: center;
+          border-radius: 50%;
+          width: 25px;
+          height: 25px;
+          position: relative;
+
+          svg {
+            fill: #7ac8c3 !important;
+            width: 14px;
+          }
+
+          .unread {
+            position: absolute;
+            left: 2px;
+            top: 2px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #e94444;
+          }
+        }
+
+        .head {
+          display: flex;
+          justify-content: space-between;
+          margin-left: 15px;
+          margin-bottom: 8px;
+
+          span {
+            font-size: 12px;
+            font-family: "Avenir";
+            color: rgba($color: #58595b, $alpha: 0.5);
+          }
+        }
+
+        p {
+          font-size: 12px;
+          font-family: "Avenir";
+          color: #58595b;
+          margin-left: 15px;
+        }
+      }
+
+      @media (max-width: 959px) {
+        h1 {
+          font-size: 30px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 28px;
+        }
+      }
+    }
+
+    @media (max-width: 959px) {
+      .dropdown {
+        width: 270px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 22px;
+      }
+
+      h4 {
+        font-size: 13px;
+      }
+
+      .logo {
+        width: 100px;
+        height: 80px;
+      }
+
+      .notification {
+        margin: 0px 15px;
+        width: 45px;
+        height: 45px;
+      }
+
+      .dropdown {
+        width: 250px;
+      }
+    }
+  }
+
+  @media (max-width: 959px) {
+    .header {
+      padding-top: 0px;
+    }
+  }
+
+  // *Breadcrumbs
+  .MuiBreadcrumbs-root {
+    padding: 15px 0px;
+
+    .MuiBreadcrumbs-li {
+      p {
+        font-size: 16px;
         font-family: "Avenir";
         font-weight: 900;
         color: #58595b;
-        padding-right: 5px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
+        opacity: 0.7;
+
+        &:hover {
+          text-decoration: none !important;
+        }
       }
 
-      h6 {
-        font-size: 14px;
-        font-family: "Avenir";
-        font-weight: 900;
-        color: #7ac8c3;
+      @media (max-width: 600px) {
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  // *My Mission
+  .mission {
+    height: calc(100vh - 184px);
+    overflow-y: auto;
+
+    .wrapper {
+      margin-right: 10px !important;
+      flex-grow: 0 !important;
+      max-width: 18.8% !important;
+      flex-basis: 18.8% !important;
+    }
+
+    .task-box {
+      width: 100%;
+      height: auto;
+      background-color: #fff;
+      border: 1px solid;
+      border-radius: 12px;
+      margin-bottom: 12px !important;
+      opacity: color 0.5;
+      transition: 0.3s ease-in-out;
+
+      &:hover {
+        box-shadow: 0px 3px 23px #0000000f;
+        transition: 0.3s ease-in-out;
+      }
+
+      .header {
+        border-radius: 11px;
+        padding: 8px 8px;
+        opacity: background-color 0.1;
+
+        .MuiIconButton-root {
+          background-color: rgba($color: #003361, $alpha: 0.1);
+          width: 30px;
+          height: 30px;
+        }
+
+        h5 {
+          font-size: 14px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #58595b;
+          padding-right: 5px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
+
+        h6 {
+          font-size: 14px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #7ac8c3;
+        }
+      }
+
+      .content {
+        padding: 4px;
+        padding-top: 6px;
+
+        .task {
+          display: flex;
+          padding: 2px 0px;
+          background-color: #fff;
+
+          .checkbox {
+            position: relative;
+
+            input[type="checkbox"] {
+              visibility: hidden;
+            }
+
+            input[type="checkbox"]:checked + label {
+              background-color: #7ac8c3;
+              border-color: #7ac8c3;
+            }
+
+            input[type="checkbox"]:checked + label:after {
+              opacity: 1;
+            }
+
+            input {
+              width: 16px;
+              height: 16px;
+              border-radius: 50%;
+              border: 1px solid #7ac8c3;
+              background-color: white;
+              margin-right: 5px;
+              vertical-align: middle;
+              appearance: none;
+              -webkit-appearance: none;
+              outline: none;
+              cursor: pointer;
+
+              &:checked {
+                background-color: #7ac8c3;
+              }
+            }
+
+            label {
+              border: 1px solid #7ac8c3;
+              background-color: white;
+              border-radius: 50%;
+              cursor: pointer;
+              width: 16px;
+              height: 16px;
+              position: absolute;
+              left: 2px;
+              top: 1px;
+
+              &::after {
+                content: "";
+                width: 9px;
+                height: 5px;
+                position: absolute;
+                left: 2px;
+                top: 3px;
+                border: 2px solid #fff;
+                border-top: none;
+                border-right: none;
+                opacity: 0;
+                transform: rotate(-45deg);
+              }
+            }
+          }
+
+          p {
+            font-size: 14px;
+            font-family: "Avenir";
+            color: #58595b;
+            opacity: 0.8;
+            margin-bottom: 7px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+        }
+
+        .add-subtask {
+          display: flex;
+          padding: 5px;
+
+          svg {
+            fill: #58595b !important;
+            margin-right: 10px;
+            opacity: 0.6;
+
+            path {
+              fill: #58595b !important;
+              opacity: 0.6;
+            }
+          }
+
+          p {
+            font-size: 14px;
+            font-family: "Avenir";
+            color: #58595b;
+            opacity: 0.6;
+          }
+        }
       }
     }
 
-    .content {
-      padding: 4px;
-      padding-top: 6px;
+    .add-task {
+      svg {
+        vertical-align: text-top;
+      }
+    }
 
-      .task {
-        display: flex;
-        padding: 2px 0px;
-        background-color: #fff;
+    @media (max-width: 959px) {
+      .wrapper {
+        flex-grow: 0 !important;
+        max-width: 31% !important;
+        flex-basis: 31% !important;
+      }
+    }
 
-        .checkbox {
-          position: relative;
+    @media (max-width: 600px) {
+      .wrapper {
+        flex-grow: 0 !important;
+        max-width: 100% !important;
+        flex-basis: 100% !important;
+        margin: 0px !important;
+      }
+    }
+  }
 
-          input[type="checkbox"] {
-            visibility: hidden;
-          }
+  // *My Thought
+  .thought {
+    height: calc(100vh - 184px);
+    overflow-y: auto;
 
-          input[type="checkbox"]:checked + label {
-            background-color: #7ac8c3;
-            border-color: #7ac8c3;
-          }
+    .thought-box {
+      width: 100%;
+      height: auto;
+      background-color: #fff;
+      border: 1px solid #7ac8c3;
+      border-radius: 12px;
+      margin-right: 10px !important;
+      margin-bottom: 15px !important;
+      transition: 0.3s ease-in-out;
 
-          input[type="checkbox"]:checked + label:after {
-            opacity: 1;
-          }
+      &:hover {
+        box-shadow: 0px 3px 23px #0000000f;
+        transition: 0.3s ease-in-out;
+      }
 
-          input {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 1px solid #7ac8c3;
-            background-color: white;
-            margin-right: 5px;
-            vertical-align: middle;
-            appearance: none;
-            -webkit-appearance: none;
-            outline: none;
-            cursor: pointer;
+      .header {
+        background-color: rgba($color: #7ac8c3, $alpha: 0.1);
+        border-radius: 11px;
+        padding: 10px 8px;
 
-            &:checked {
-              background-color: #7ac8c3;
-            }
-          }
-
-          label {
-            border: 1px solid #7ac8c3;
-            background-color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            left: 2px;
-            top: 1px;
-
-            &::after {
-              content: "";
-              width: 9px;
-              height: 5px;
-              position: absolute;
-              left: 2px;
-              top: 3px;
-              border: 2px solid #fff;
-              border-top: none;
-              border-right: none;
-              opacity: 0;
-              transform: rotate(-45deg);
-            }
-          }
+        .MuiIconButton-root {
+          background-color: rgba($color: #003361, $alpha: 0.1);
+          width: 33px;
+          height: 33px;
         }
+
+        h5 {
+          font-size: 15px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #58595b;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
+
+        h6 {
+          font-size: 14px;
+          font-family: "Avenir";
+          font-weight: 900;
+          color: #7ac8c3;
+        }
+      }
+
+      .content {
+        padding: 10px 8px;
 
         p {
           font-size: 14px;
@@ -593,333 +851,373 @@ input::-webkit-inner-spin-button {
           color: #58595b;
           opacity: 0.8;
           margin-bottom: 7px;
+          white-space: pre-line;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 1;
+          -webkit-line-clamp: 9;
           -webkit-box-orient: vertical;
         }
-      }
 
-      .add-subtask {
-        display: flex;
-        padding: 5px;
-
-        svg {
-          fill: #58595b !important;
-          margin-right: 10px;
-          opacity: 0.6;
-
-          path {
-            fill: #58595b !important;
-            opacity: 0.6;
-          }
-        }
-
-        p {
+        span {
           font-size: 14px;
           font-family: "Avenir";
-          color: #58595b;
-          opacity: 0.6;
+          font-weight: 700;
+          color: rgba($color: #7ac8c3, $alpha: 0.7);
+          cursor: pointer;
         }
       }
     }
-  }
 
-  .add-task {
-    svg {
-      vertical-align: text-top;
+    @media (min-width: 960px) {
+      .thought-box {
+        flex-grow: 0;
+        max-width: 24%;
+        flex-basis: 24%;
+      }
+    }
+
+    @media (max-width: 959px) {
+      .thought-box {
+        flex-grow: 0;
+        max-width: 48%;
+        flex-basis: 48%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .thought-box {
+        flex-grow: 0;
+        max-width: 100%;
+        flex-basis: 100%;
+        margin-right: 0px !important;
+      }
     }
   }
-}
 
-// *My Thought
-.thought {
-  height: calc(100vh - 184px);
-  overflow-y: auto;
+  // *Write Thought
+  .write-thought {
+    .title {
+      font-size: 26px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: rgba($color: #003361, $alpha: 0.4);
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      margin: 10px 0px;
 
-  .thought-box {
-    width: 100%;
-    height: auto;
-    background-color: #fff;
-    border: 1px solid #7ac8c3;
-    border-radius: 12px;
-    margin-right: 10px !important;
-    margin-bottom: 15px !important;
-    flex-grow: 0 !important;
-    max-width: 24% !important;
-    flex-basis: 24% !important;
-    transition: 0.3s ease-in-out;
+      &::placeholder {
+        color: rgba($color: #003361, $alpha: 0.2);
+      }
+    }
+
+    .description {
+      font-size: 16px;
+      font-family: "Avenir";
+      color: rgba($color: #003361, $alpha: 0.4);
+      width: 100%;
+      border: none;
+      background: transparent;
+      outline: none;
+      height: calc(100vh - 320px);
+      margin: 10px 0px;
+      resize: none;
+      white-space: pre-line;
+
+      &::placeholder {
+        color: rgba($color: #003361, $alpha: 0.2);
+      }
+    }
+
+    .error {
+      padding-left: 0px !important;
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 24px;
+        margin: 5px 0px;
+      }
+
+      .description {
+        font-size: 14px;
+        margin: 5px 0px;
+        min-height: 120px;
+      }
+    }
+  }
+
+  // *Read Thought
+  .read-thought {
+    .title {
+      font-size: 30px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: #003361;
+      width: 100%;
+      margin: 10px 0px;
+    }
+
+    .description {
+      font-size: 16px;
+      font-family: "Avenir";
+      color: #003361;
+      line-height: 1.8;
+      width: 100%;
+      height: calc(100vh - 270px);
+      overflow-y: auto;
+      margin: 10px 0px;
+      white-space: pre-line;
+    }
+
+    @media (max-width: 959px) {
+      .title {
+        font-size: 26px;
+      }
+
+      .description {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 24px;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+    }
+  }
+
+  // *Add Task & Thought Dotted Box
+  .add-task,
+  .add-thought {
+    padding: 10px 15px;
+    border: 2px dashed rgba($color: #003361, $alpha: 0.4);
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
 
     &:hover {
-      box-shadow: 0px 3px 23px #0000000f;
-      transition: 0.3s ease-in-out;
-    }
+      border: 2px dashed rgba($color: #003361, $alpha: 1);
+      transition: 0.3s;
 
-    .header {
-      background-color: rgba($color: #7ac8c3, $alpha: 0.1);
-      border-radius: 11px;
-      padding: 10px 8px;
+      svg {
+        fill: #003361 !important;
 
-      .MuiIconButton-root {
-        background-color: rgba($color: #003361, $alpha: 0.1);
-        width: 33px;
-        height: 33px;
-      }
-
-      h5 {
-        font-size: 15px;
-        font-family: "Avenir";
-        font-weight: 900;
-        color: #58595b;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
-
-      h6 {
-        font-size: 14px;
-        font-family: "Avenir";
-        font-weight: 900;
-        color: #7ac8c3;
-      }
-    }
-
-    .content {
-      padding: 10px 8px;
-
-      p {
-        font-size: 14px;
-        font-family: "Avenir";
-        color: #58595b;
-        opacity: 0.8;
-        margin-bottom: 7px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 9;
-        -webkit-box-orient: vertical;
+        path {
+          fill: #003361 !important;
+        }
       }
 
       span {
-        font-size: 14px;
-        font-family: "Avenir";
-        font-weight: 700;
-        color: rgba($color: #7ac8c3, $alpha: 0.7);
-        cursor: pointer;
+        color: rgba($color: #003361, $alpha: 1);
       }
     }
-  }
-}
-
-// *Write Thought
-.write-thought {
-  .title {
-    font-size: 26px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: rgba($color: #003361, $alpha: 0.4);
-    border: none;
-    outline: none;
-    background: transparent;
-    width: 100%;
-    margin: 10px 0px;
-
-    &::placeholder {
-      color: rgba($color: #003361, $alpha: 0.2);
-    }
-  }
-
-  .description {
-    font-size: 16px;
-    font-family: "Avenir";
-    color: rgba($color: #003361, $alpha: 0.4);
-    width: 100%;
-    border: none;
-    background: transparent;
-    outline: none;
-    height: calc(100vh - 320px);
-    margin: 10px 0px;
-    resize: none;
-
-    &::placeholder {
-      color: rgba($color: #003361, $alpha: 0.2);
-    }
-  }
-
-  .error {
-    padding-left: 0px !important;
-  }
-}
-
-// *Read Thought
-.read-thought {
-  .title {
-    font-size: 30px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: #003361;
-    width: 100%;
-    margin: 10px 0px;
-  }
-
-  .description {
-    font-size: 16px;
-    font-family: "Avenir";
-    color: #003361;
-    line-height: 1.8;
-    width: 100%;
-    height: calc(100vh - 270px);
-    overflow-y: auto;
-    margin: 10px 0px;
-  }
-}
-
-// *Add Task & Thought Dotted Box
-.add-task,
-.add-thought {
-  padding: 10px 15px;
-  border: 2px dashed rgba($color: #003361, $alpha: 0.4);
-  border-radius: 20px;
-  text-align: center;
-  cursor: pointer;
-
-  &:hover {
-    border: 2px dashed rgba($color: #003361, $alpha: 1);
-    transition: 0.3s;
 
     svg {
-      fill: #003361 !important;
+      vertical-align: bottom;
+      margin-right: 5px;
+      fill: rgba($color: #003361, $alpha: 0.2) !important;
 
       path {
-        fill: #003361 !important;
+        fill: rgba($color: #003361, $alpha: 0.2) !important;
       }
     }
 
     span {
-      color: rgba($color: #003361, $alpha: 1);
+      font-size: 15px;
+      font-family: "Avenir";
+      color: rgba($color: #003361, $alpha: 0.3);
+    }
+
+    @media (max-width: 600px) {
+      span {
+        font-size: 13px;
+      }
     }
   }
 
-  svg {
-    vertical-align: bottom;
-    margin-right: 5px;
-    fill: rgba($color: #003361, $alpha: 0.2) !important;
-
-    path {
-      fill: rgba($color: #003361, $alpha: 0.2) !important;
+  @media (min-width: 960px) {
+    // .add-task,
+    .add-thought {
+      flex-grow: 0;
+      max-width: 24%;
+      flex-basis: 24%;
     }
   }
 
-  span {
-    font-size: 15px;
-    font-family: "Avenir";
-    color: rgba($color: #003361, $alpha: 0.3);
-  }
-}
+  @media (max-width: 959px) {
+    .mission,
+    .thought {
+      height: 100%;
+    }
 
-// *Settings
-.setting {
-  .heading {
-    font-size: 26px;
-    font-family: "Avenir";
-    font-weight: 900;
-    color: rgba(0, 51, 97, 0.4);
-    margin-bottom: 10px;
+    // .add-task,
+    .add-thought {
+      flex-grow: 0;
+      max-width: 48%;
+      flex-basis: 48%;
+    }
   }
 
-  .account,
-  .app-setting,
-  .user-decision {
-    margin-bottom: 40px;
+  @media (max-width: 600px) {
+    // .add-task,
+    .add-thought {
+      flex-grow: 0;
+      max-width: 100%;
+      flex-basis: 100%;
+      margin-right: 0px !important;
+    }
+  }
 
-    .input-field {
-      margin: 20px 10px;
-      padding: 5px;
-      width: 70%;
-      border-bottom: 1px solid rgba($color: #2a2a2a, $alpha: 0.1);
+  // *Settings
+  .setting {
+    .heading {
+      font-size: 26px;
+      font-family: "Avenir";
+      font-weight: 900;
+      color: rgba(0, 51, 97, 0.4);
+      margin-bottom: 10px;
+    }
 
-      .MuiSwitch-colorSecondary.Mui-checked {
-        color: #fff !important;
-      }
+    .account,
+    .app-setting,
+    .user-decision {
+      margin-bottom: 40px;
 
-      .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
-        background-color: #003361 !important;
-        opacity: 1 !important;
-      }
+      .input-field {
+        margin: 20px 10px;
+        padding: 5px;
+        width: 70%;
+        border-bottom: 1px solid rgba($color: #2a2a2a, $alpha: 0.1);
 
-      .MuiSwitch-colorSecondary.Mui-checked:hover {
-        background-color: rgba($color: #003361, $alpha: 0.04);
-      }
-
-      .icon {
-        display: inline-block;
-
-        svg {
-          width: 25px;
-          height: 25px;
-          margin-right: 5px;
-          vertical-align: super;
-        }
-      }
-
-      .align-icon {
-        vertical-align: middle;
-        margin-top: 8px;
-      }
-
-      .input-text {
-        display: inline-block;
-        padding: 0px 5px;
-        width: 80%;
-
-        .MuiFormControl-root {
-          width: 100%;
+        .MuiSwitch-colorSecondary.Mui-checked {
+          color: #fff !important;
         }
 
-        .MuiSelect-select {
-          font-size: 16px;
-          font-family: "Avenir";
-          color: rgba(42, 42, 42, 0.4);
-          background-color: transparent;
-          padding-top: 7px;
-          padding-bottom: 0px;
+        .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+          background-color: #003361 !important;
+          opacity: 1 !important;
         }
 
-        .MuiInput-underline:before,
-        .MuiInput-underline:after {
-          border: none !important;
+        .MuiSwitch-colorSecondary.Mui-checked:hover {
+          background-color: rgba($color: #003361, $alpha: 0.04);
         }
 
-        label {
-          font-size: 14px;
-          font-family: "Avenir";
-          font-weight: 900;
-          color: rgba($color: #003361, $alpha: 0.4);
-          display: block;
-        }
+        .icon {
+          display: inline-block;
 
-        input {
-          border: none;
-          margin: 0px !important;
-          background: transparent;
-          color: rgba($color: #2a2a2a, $alpha: 0.4);
-          font-size: 16px;
-          outline: none;
-          line-height: 1.5;
-        }
-
-        P {
-          font-size: 18px;
-          font-family: "Avenir";
-          color: rgba(42, 42, 42, 0.4);
-
-          .MuiSwitch-root {
-            margin-left: 15px;
+          svg {
+            width: 25px;
+            height: 25px;
+            margin-right: 5px;
+            vertical-align: super;
           }
         }
+
+        .align-icon {
+          vertical-align: middle;
+          margin-top: 8px;
+        }
+
+        .input-text {
+          display: inline-block;
+          padding: 0px 5px;
+          width: 80%;
+
+          .time-interval {
+            width: 150px !important;
+          }
+
+          .MuiFormControl-root {
+            width: 100%;
+          }
+
+          .MuiSelect-select {
+            font-size: 16px;
+            font-family: "Avenir";
+            color: rgba(42, 42, 42, 0.4);
+            background-color: transparent;
+            padding-top: 7px;
+            padding-bottom: 0px;
+          }
+
+          .MuiInput-underline:before,
+          .MuiInput-underline:after {
+            border: none !important;
+          }
+
+          label {
+            font-size: 14px;
+            font-family: "Avenir";
+            font-weight: 900;
+            color: rgba($color: #003361, $alpha: 0.4);
+            display: block;
+          }
+
+          input {
+            border: none;
+            margin: 0px !important;
+            background: transparent;
+            color: rgba($color: #2a2a2a, $alpha: 0.4);
+            font-size: 16px;
+            outline: none;
+            line-height: 1.5;
+          }
+
+          P {
+            font-size: 18px;
+            font-family: "Avenir";
+            color: rgba(42, 42, 42, 0.4);
+
+            .MuiSwitch-root {
+              margin-left: 15px;
+            }
+          }
+
+          @media (max-width: 600px) {
+            label {
+              font-size: 12px;
+            }
+
+            input {
+              font-size: 14px;
+            }
+
+            P {
+              font-size: 16px;
+
+              .MuiSwitch-root {
+                margin-left: 35px;
+              }
+            }
+          }
+        }
+      }
+
+      @media (max-width: 959px) {
+        .input-field {
+          width: 100%;
+          margin: 15px 10px;
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      .heading {
+        font-size: 24px;
+        margin-bottom: 0px;
+      }
+
+      .account,
+      .app-setting,
+      .user-decision {
+        margin-bottom: 20px;
       }
     }
   }
@@ -1031,7 +1329,7 @@ input::-webkit-inner-spin-button {
         outline: none;
         border: none;
         border-bottom: 1px solid rgba($color: #fff, $alpha: 0.6);
-        display: inline-block;
+        // display: inline-block;
         margin: 0px 8px 20px 8px;
         width: 30px;
       }
@@ -1041,6 +1339,28 @@ input::-webkit-inner-spin-button {
         font-family: "Avenir";
         color: rgba($color: #fff, $alpha: 0.8);
         margin-bottom: 10px;
+      }
+
+      @media (max-width: 600px) {
+        h2 {
+          font-size: 30px;
+        }
+
+        .input-field {
+          input {
+            font-size: 14px;
+          }
+        }
+
+        .verification-input {
+          font-size: 22px;
+          margin: 0px 3px 15px 3px;
+          width: 25px;
+        }
+
+        p {
+          font-size: 12px;
+        }
       }
     }
 
@@ -1056,6 +1376,57 @@ input::-webkit-inner-spin-button {
         height: 18px;
       }
     }
+
+    @media (max-width: 959px) {
+      .logo {
+        width: 170px;
+        height: 120px;
+      }
+
+      form {
+        margin-top: 0px;
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        width: 140px;
+        height: 120px;
+      }
+
+      form {
+        margin-top: 0px;
+        padding: 10px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media (max-width: 959px) {
+    .form-wrapper {
+      width: 70%;
+      margin: auto;
+      position: initial;
+      left: 0px;
+      top: 0px;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .form-wrapper {
+      width: auto;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .form-bg {
+    height: 100%;
   }
 }
 
@@ -1131,11 +1502,19 @@ input::-webkit-inner-spin-button {
     color: #6ba570;
     text-align: center;
   }
+
+  @media (max-width: 600px) {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .MuiDialogTitle-root {
+    width: 300px;
+  }
 }
 
 .MuiDialogContent-root {
-  padding: 8px 10px;
-
   .error {
     margin: 0px !important;
     padding: 0px !important;
@@ -1205,11 +1584,6 @@ input::-webkit-inner-spin-button {
       border-radius: 50%;
     }
 
-    /* On mouse-over, add a grey background color */
-    // .radio-container:hover input ~ .checkmark {
-    //   background-color: #ccc;
-    // }
-
     /* When the radio button is checked, add a blue background */
     .radio-container input:checked ~ .checkmark {
       background-color: #2196f3;
@@ -1243,5 +1617,39 @@ input::-webkit-inner-spin-button {
     color: rgba($color: #003361, $alpha: 0.4);
     width: 500px;
     text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .daily-quote,
+    .author,
+    .sponsor,
+    .task-title {
+      font-size: 16px;
+    }
+
+    .task-color {
+      .radio-container {
+        height: 25px;
+        font-size: 20px;
+      }
+
+      /* Create a custom radio button */
+      .checkmark {
+        height: 25px;
+        width: 25px;
+      }
+
+      /* Style the indicator (dot/circle) */
+      .radio-container .checkmark:after {
+        transform: translate(40%, 40%);
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    h5 {
+      font-size: 16px;
+      width: 250px;
+    }
   }
 }

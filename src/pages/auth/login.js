@@ -8,9 +8,11 @@ import useAuth from 'hooks/useAuth';
 
 import { Grid, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// *Import Components
+import Toaster from 'components/toaster';
 
 function Login() {
 
@@ -61,28 +63,17 @@ function Login() {
       <div className="form-wrapper">
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
-          {/* ========== Alert Toaster ========== */}
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable={false}
-            pauseOnHover={false}
-            limit={1}
-          />
+          {/* ========== Toaster ========== */}
+          <Toaster />
 
-          <Grid item md={12} >
+          <Grid item xs={12} sm={12} md={12} >
             <Logo />
           </Grid>
 
-          <Grid item md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <form onSubmit={handleSubmit(login)}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item md={9}>
+                <Grid item sm={12} md={9}>
                   <Typography variant="h2">Login</Typography>
                   <div className="input-field">
                     <div className="icon">
@@ -123,14 +114,14 @@ function Login() {
             </form>
           </Grid>
 
-          <Grid item md={6}>
-            <Typography className="text-left" component="p" onClick={() => history.push('/forgot-password')}>
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography className="text-left text-xs-center" component="p" onClick={() => history.push('/forgot-password')}>
               <span className="cursor-pointer">Forgot Password</span>
             </Typography>
           </Grid>
 
-          <Grid item md={6}>
-            <Typography className="text-right" component="p" onClick={() => history.push('/register')}>
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography className="text-right text-xs-center" component="p" onClick={() => history.push('/register')}>
               <span className="cursor-pointer">Don't have an account? Signup</span>
             </Typography>
           </Grid>

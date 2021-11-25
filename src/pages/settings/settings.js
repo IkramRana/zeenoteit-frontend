@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { ChangePassword, DeleteAccount, Email, LogoutSetting, NotifySetting, Reminder } from "assets/images/icons";
+import { ChangePassword, DeleteAccount, Email, LogoutSetting, NotifySetting, Phone, Reminder } from "assets/images/icons";
 import { disabledInspect, emailRegex } from 'utils/index';
 import { Service } from "config/service";
 import useAuth from "hooks/useAuth";
@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
 import Deleted from "components/delete";
+import Toaster from "components/toaster";
 
 let userData;
 var notify = Boolean;
@@ -24,6 +25,7 @@ function Settings() {
 
   const { signout } = useAuth();
 
+  const [id, setId] = useState()
   const [phone, setPhone] = useState()
   const [countryCode, setCountryCode] = useState()
   const [openTime, setOpenTime] = useState()
@@ -54,6 +56,7 @@ function Settings() {
   const getUserData = () => {
     try {
       userData = JSON.parse(localStorage.getItem('userData'));
+      setId(userData[0]._id)
       setPhone(userData[0].phone_number);
       setCountryCode(userData[0].countryCode);
       setOpenTime(userData[0].appSettings[0].dailyOpenTime);
@@ -112,6 +115,7 @@ function Settings() {
           dailyTimeInterval: obj.dailyTimeInterval,
           isNotifyEnable: obj.isNotifyEnable,
         }],
+        _id: id, 
         email: obj.email,
         countryCode: obj.countryCode,
         phone_number: obj.phoneNumber,
@@ -190,53 +194,38 @@ function Settings() {
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-      {/* ========== Alert Toaster ========== */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        limit={1}
-      />
+      {/* ========== Toaster ========== */}
+      <Toaster />
 
       {/* ========== Delete Account Dialog ========== */}
       <Deleted open={openDeleteAccount} onClose={() => { deleteAccountDialog(false) }} deleted={deleteAccount} />
 
-      {/* ========== Left Side ========== */}
-      <Grid className="left-side" item md={2}>
-        <Navigation />
-      </Grid>
+      {/* ========== Navigation ========== */}
+      <Navigation />
 
-      {/* ========== Right Side ========== */}
-      <Grid className="right-side" container spacing={0} item md={10}  >
+      {/* ========== Main Content ========== */}
+      <Grid id="MainContent" container spacing={0} item md={10}  >
 
         {/* ========== Header ========== */}
-        <Grid item md={12}>
-          <Header />
-        </Grid>
+        <Header />
 
-        <Grid item md={12}>
+        {/* ========== Settings ========== */}
+        <Grid item xs={12} sm={12} md={12} lg={12}>
 
           {/* ========== Breadcrumbs ========== */}
           <Breadcrumbs aria-label="breadcrumb">
             <Typography >Settings</Typography>
           </Breadcrumbs>
 
-          {/* ========== Settings ========== */}
           <form onSubmit={handleSubmit(updateSetting)}>
             <Grid className="setting" container spacing={0} justifyContent="center" alignItems="stretch">
 
               {/* ========== Account ========== */}
-              <Grid className="account" container spacing={0} item md={12} alignItems="flex-start">
+              <Grid className="account" container spacing={0} item sm={12} md={12} alignItems="flex-start">
                 <Grid item md={12}>
                   <Typography className="heading">Account</Typography>
                 </Grid>
-                <Grid container spacing={1} item md={4} alignItems="flex-end">
+                <Grid container spacing={1} item sm={12} md={4} alignItems="flex-end">
                   <div className="input-field">
                     <div className="icon">
                       <Email />
@@ -260,7 +249,7 @@ function Settings() {
                     <p className="error">{errors?.email?.message}</p>
                   )}
                 </Grid>
-                <Grid container spacing={1} item md={4} alignItems="flex-end">
+                <Grid container spacing={1} item sm={12} md={4} alignItems="flex-end">
                   <div className="input-field">
                     <div className="icon">
                       <ChangePassword />
@@ -275,9 +264,13 @@ function Settings() {
                     </div>
                   </div>
                 </Grid>
-                <Grid container spacing={1} item md={4} alignItems="flex-end">
+                <Grid container spacing={1} item sm={12} md={4} alignItems="flex-end">
                   <div className="input-field">
-                    <div className="input-text" style={{ marginTop: '17px', }}>
+                    <div className="icon">
+                      <Phone />
+                    </div>
+                    <div className="input-text" style={{ marginTop: "-5px" }}>
+                      <label style={{ marginBottom: "5px" }}>Phone</label>
                       <Controller
                         name="phoneInput"
                         control={control}
@@ -306,7 +299,7 @@ function Settings() {
               </Grid>
 
               {/* ========== App Settings ========== */}
-              <Grid className="app-setting" container spacing={0} item md={12} alignItems="flex-start">
+              <Grid className="app-setting" container spacing={0} item sm={12} md={12} alignItems="flex-start">
                 <Grid item md={12}>
                   <Typography className="heading">App Settings</Typography>
                 </Grid>
@@ -333,7 +326,7 @@ function Settings() {
                     </div>
                     <div className="input-text">
                       <label>Daily Time Interval</label>
-                      <FormControl >
+                      <FormControl className="time-interval">
                         <Select
                           value={timeInterval}
                           {...register("timeInterval")}
@@ -371,7 +364,7 @@ function Settings() {
               </Grid>
 
               {/* ========== User Decision ========== */}
-              <Grid className="user-decision" container spacing={0} item md={12} alignItems="flex-start">
+              <Grid className="user-decision" container spacing={0} item sm={12} md={12} alignItems="flex-start">
                 <Grid item md={12}>
                   <Typography className="heading">User Decision</Typography>
                 </Grid>
@@ -398,7 +391,7 @@ function Settings() {
               </Grid>
 
               {/* ========== Save ========== */}
-              <Grid item md={3}>
+              <Grid item xs={12} sm={12} md={3}>
                 {button &&
                   <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >Save</button>
                 }
