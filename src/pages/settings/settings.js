@@ -89,13 +89,26 @@ function Settings() {
     setLoader(true)
     try {
       let token = localStorage.getItem('jwt')
-      let obj = {
-        email: data.email,
-        countryCode: countryCode,
-        phoneNumber: control._formValues.phoneInput,
-        dailyOpenTime: data.openTime,
-        dailyTimeInterval: data.timeInterval,
-        isNotifyEnable: data.notification
+      let obj = {};
+      if(data.password){
+        obj = {
+          email: data.email,
+          password: data.password,
+          countryCode: countryCode,
+          phoneNumber: control._formValues.phoneInput,
+          dailyOpenTime: data.openTime,
+          dailyTimeInterval: data.timeInterval,
+          isNotifyEnable: data.notification
+        }
+      } else {
+        obj = {
+          email: data.email,
+          countryCode: countryCode,
+          phoneNumber: control._formValues.phoneInput,
+          dailyOpenTime: data.openTime,
+          dailyTimeInterval: data.timeInterval,
+          isNotifyEnable: data.notification
+        }
       }
       notify = obj.isNotifyEnable
       setValue("notification", obj.isNotifyEnable)
@@ -256,10 +269,21 @@ function Settings() {
                     </div>
                     <div className="input-text">
                       <label>Password</label>
-                      <input
+                      {/* <input
                         type="password"
                         value='123456789'
                         disabled
+                      /> */}
+                      <input
+                        type="password"
+                        placeholder="*********"
+                        {...register("password", {
+                          minLength: {
+                            value: 8,
+                            message: "Password must have at least 8 characters"
+                          }
+                        })}
+                        onChange={(e) => { saveButton() }}
                       />
                     </div>
                   </div>

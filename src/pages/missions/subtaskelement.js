@@ -168,13 +168,15 @@ function SubTaskElement({ taskId, subTask }) {
   }
 
   // *For Task Complete
-  const taskComplete = async (subTaskId) => {
+  const taskComplete = async (subTaskId,isComplete) => {
     try {
       let token = localStorage.getItem('jwt')
+      let status = isComplete === true ? false : true;
       let obj = {
-        id: subTaskId
+        id: subTaskId,
+        status: status
       }
-      const { message } = await Service.completeSubTask(obj, token);
+      const { message } = await Service.checkUncheckSubtask(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,

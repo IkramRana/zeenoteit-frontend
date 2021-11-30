@@ -74,8 +74,8 @@ export const Service = {
         if (result.status === 200) return result.data;
         else throw result;
     },
-    completeSubTask: async (obj, token) => {
-        let result = await patch(Apis.completeSubTask, obj, token);
+    checkUncheckSubtask: async (obj, token) => {
+        let result = await patch(Apis.checkUncheckSubtask, obj, token);
         if (result.status === 200) return result.data;
         else throw result;
     },

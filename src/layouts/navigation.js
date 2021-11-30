@@ -83,7 +83,7 @@ function Navigation(props) {
             </NavLink>
             <NavLink to="/settings" activeClassName="active" >
               <div>
-                {pathname === '/settings' ? <SettingActive /> : <SettingActive />}
+                {/* {pathname === '/settings' ? <SettingActive /> : <SettingActive />} */}
                 <span>Settings</span>
               </div>
             </NavLink>

@@ -33,10 +33,10 @@ function SubTask({ taskComplete, prefix, elements, index }) {
                       <Typography component="p" {...provided.dragHandleProps}>{elements.title}</Typography> */}
                       <div className="checkbox">
                         {elements.isCompleted &&
-                          <input type="checkbox" checked={true} id={elements._id} />
+                          <input type="checkbox" checked={true} id={elements._id} onClick={(e) => taskComplete(elements._id,elements.isCompleted)}/>
                         }
                         {elements.isCompleted === false &&
-                          <input type="checkbox" id={elements._id} onClick={(e) => taskComplete(elements._id)} />
+                          <input type="checkbox" id={elements._id} onClick={(e) => taskComplete(elements._id,elements.isCompleted)} />
                         }
                         <label for={elements._id}></label>
                       </div>

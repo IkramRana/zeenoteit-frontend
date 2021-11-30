@@ -247,7 +247,7 @@ function MyMissions() {
       let obj = {
         id: subTaskId
       }
-      const { message } = await Service.completeSubTask(obj, token);
+      const { message } = await Service.checkUncheckSubtask(obj, token);
       toast.success(message, {
         position: "top-center",
         autoClose: 2000,

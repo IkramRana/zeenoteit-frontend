@@ -22,7 +22,7 @@ export const Apis = {
     getUserTask: 'task/user-tasks',
     getUserSubTaskByTaskId: 'subtask/subtask-by-task-id',
     editTask: 'task/update-title',
-    completeSubTask: 'subtask/complete-subtask',
+    checkUncheckSubtask: 'subtask/check-uncheck-subtask',
     deleteTask: 'task/delete-task',
     swapTask: 'task/swap-task',
     swapSubTask: 'subtask/swap-subtask',
