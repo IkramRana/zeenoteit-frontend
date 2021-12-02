@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
-import { Logo, MissionActive, MissionInactive, ThoughtInactive, SettingActive, LogoutInactive } from "assets/images/icons";
+import { Logo, MissionActive, MissionInactive, ThoughtActive, ThoughtInactive, SettingActive, SettingInactive, LogoutActive, LogoutInactive } from "assets/images/icons";
 import { disabledInspect, Responsive } from 'utils/index';
 import useAuth from "hooks/useAuth";
 
@@ -10,7 +10,6 @@ import { Close } from "@material-ui/icons";
 
 function Navigation(props) {
 
-  const isMobile = useMediaQuery(Responsive.isMobile);
   const isTablet = useMediaQuery(Responsive.isTablet);
 
   const { open, onClose } = props
@@ -51,39 +50,42 @@ function Navigation(props) {
 
         <Grid item md={12}>
           <Typography component="ul">
-            <NavLink to="/my-missions" activeClassName="active" onMouseOver={() => hoverActive('/my-missions')} onMouseOut={() => hoverActive('')}>
+            <NavLink to="/my-missions" activeClassName="active" onMouseOver={() => hoverActive('my-missions')} onMouseOut={() => hoverActive('')}>
               <div>
-                {/* {isActive === '/my-missions' &&
+                {pathname === '/my-missions' &&
                   <MissionActive />
                 }
-                {isActive === '' &&
-                  <MissionInactive />
-                } */}
-                {/* {pathname === '/my-missions' ? <MissionActive /> : <span>
-                  {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
-                </span>} */}
-                {pathname === '/my-thoughts' ? <MissionInactive /> : <MissionActive />}
+                {pathname !== '/my-missions' &&
+                  <span>
+                    {isActive === 'my-missions' ? <MissionActive /> : <MissionInactive />}
+                  </span>
+                }
                 <span>My Missions</span>
               </div>
             </NavLink>
-            <NavLink to="/my-thoughts" activeClassName="active" onMouseOver={() => hoverActive('/my-thoughts')} onMouseOut={() => hoverActive('')}>
+            <NavLink to="/my-thoughts" activeClassName="active" onMouseOver={() => hoverActive('my-thoughts')} onMouseOut={() => hoverActive('')}>
               <div>
-                {/* {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />} */}
-                {/* {isActive === '/my-thoughts' &&
-                  < MissionActive />
+                {pathname === '/my-thoughts' &&
+                  <ThoughtActive />
                 }
-                {isActive === '' &&
+                {pathname !== '/my-thoughts' &&
                   <span>
-                    {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
+                    {isActive === 'my-thoughts' ? <ThoughtActive /> : <ThoughtInactive />}
                   </span>
-                } */}
-                {pathname === '/my-thoughts' ? <ThoughtInactive /> : <ThoughtInactive />}
+                }
                 <span>My Thoughts</span>
               </div>
             </NavLink>
-            <NavLink to="/settings" activeClassName="active" >
+            <NavLink to="/settings" activeClassName="active" onMouseOver={() => hoverActive('settings')} onMouseOut={() => hoverActive('')}>
               <div>
-                {/* {pathname === '/settings' ? <SettingActive /> : <SettingActive />} */}
+                {pathname === '/settings' &&
+                  <SettingActive />
+                }
+                {pathname !== '/settings' &&
+                  <span>
+                    {isActive === 'settings' ? <SettingActive /> : <SettingInactive />}
+                  </span>
+                }
                 <span>Settings</span>
               </div>
             </NavLink>
@@ -94,9 +96,9 @@ function Navigation(props) {
 
       <Grid item md={12}>
         <Typography component="ul">
-          <Typography component="li" onClick={() => logout()}>
+          <Typography activeClassName="active" component="li" onMouseOver={() => hoverActive('logout')} onMouseOut={() => hoverActive('')} onClick={() => logout()}>
             <div>
-              <LogoutInactive />
+              {isActive === 'logout' ? <LogoutActive /> : <LogoutInactive />}
               <span>Logout</span>
             </div>
           </Typography>

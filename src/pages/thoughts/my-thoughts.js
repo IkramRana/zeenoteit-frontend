@@ -142,7 +142,7 @@ function MyThoughts() {
                 <div className="header">
                   <Grid container spacing={0} justifyContent="space-between" alignItems="center">
                     <Grid item xs={10} sm={10} md={10} lg={10}>
-                      <Typography component="h5">{thought.title}</Typography>
+                      <Typography className="text-truncate" component="h5">{thought.title}</Typography>
                       <Typography component="h6">{DateFormat(thought.creationAt)}</Typography>
                     </Grid>
                     <Grid item>

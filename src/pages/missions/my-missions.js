@@ -69,8 +69,8 @@ function MyMissions() {
 
   // *For Sub Task Open and Close Dialog
   const subTaskDialog = (type, ID) => {
-  console.log('file: my-missions.js => line 71 => subTaskDialog => ID', ID);
-  console.log('file: my-missions.js => line 72 => subTaskDialog => type', type);
+    console.log('file: my-missions.js => line 71 => subTaskDialog => ID', ID);
+    console.log('file: my-missions.js => line 72 => subTaskDialog => type', type);
     if (type === true) {
       taskId = ID
       setOpenAddSubTask(true);
@@ -310,8 +310,6 @@ function MyMissions() {
     // );
   }
 
-
-
   const [elements, setElements] = React.useState(generateLists());
 
   // useEffect(() => {
@@ -326,7 +324,7 @@ function MyMissions() {
     if (!result.destination) {
       return;
     }
-    
+
     const taskId = result.draggableId;
     const columnNo = result.destination.droppableId.substr(6);
     const newOrderSequence = +result.destination.index === 0 ? +result.destination.index + 1 : +result.destination.index;
@@ -362,9 +360,6 @@ function MyMissions() {
 
     // setElements(listCopy);
   };
-
-
-
 
 
   useEffect(() => {
@@ -412,30 +407,6 @@ function MyMissions() {
           {/* ========== Missions ========== */}
           <Grid className="mission" container spacing={0} justifyContent="flex-start" alignItems="flex-start">
 
-
-            {/* <DragDropContext onDragEnd={onDragEnd}>
-              {lists.map((listKey) => (
-                `${//console.log(listKey)}`,
-                < DraggableElement
-                  elements={elements[listKey]}
-                  key={listKey}
-                  prefix={listKey}
-                />
-              ))}
-            </DragDropContext> */}
-            {/* <DragDropContext onDragEnd={onDragEnd}>
-              {task.map((listKey, index) => (
-                `${//console.log('column' + listKey.column_no)}`,
-                < DraggableElement
-                  //elements={elements['column' + listKey.column_no]}
-                  elements={getItems(1, 'column' + listKey.column_no, listKey)}
-                  //elements={generateLists()}
-                  subTask={listKey.subtasks}
-                  key={index}
-                  prefix={'column' + listKey.column_no}
-                />
-              ))}
-            </DragDropContext> */}
             <DragDropContext onDragEnd={onDragEnd}>
               {[...Array(5)].map((x, i) => {
                 return (
@@ -453,7 +424,6 @@ function MyMissions() {
                 )
               })}
             </DragDropContext>
-
 
           </Grid>
 
