@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { Plus, EditTask, More, Trash, VerticalMenu } from "assets/images/icons";
 import { disabledInspect } from 'utils/index';
 import { Service } from "config/service";
 
-import { Breadcrumbs, CardHeader, Grid, IconButton, Menu, Typography } from '@material-ui/core';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { Breadcrumbs, Grid, Typography } from '@material-ui/core';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { toast } from "react-toastify";
 
 // *Import Components
 import Navigation from 'layouts/navigation'
@@ -177,11 +175,6 @@ function MyMissions() {
     }
   };
 
-  // *For Menu Open and Close 
-  const menuHandler = (index, event) => {
-    setAnchorEl({ [index]: event.currentTarget });
-  };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -240,86 +233,7 @@ function MyMissions() {
     }
   }
 
-  // *For Task Complete
-  const taskComplete = async (subTaskId) => {
-    try {
-      let token = localStorage.getItem('jwt')
-      let obj = {
-        id: subTaskId
-      }
-      const { message } = await Service.checkUncheckSubtask(obj, token);
-      toast.success(message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-      getTask()
-    } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-    }
-  }
-
-  const getItems = (count, prefix, obj) =>
-  //Array.from({ length: count }, (v, k) => k).map((k) => {
-  {
-    const randomId = Math.floor(Math.random() * 1000);
-    //console.log('file: my-missions.js => line 275 => Array.from => randomId', randomId)
-    //console.log('file: my-missions.js => line 276 => Array.from => prefix', prefix)
-    return {
-      id: `item-${randomId}`,
-      prefix,
-      content: obj.title
-    };
-  }
-  //});
-
-  const removeFromList = (list, index) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(index, 1);
-    return [removed, result];
-  };
-
-  const addToList = (list, index, element) => {
-    const result = Array.from(list);
-    result.splice(index, 0, element);
-    return result;
-  };
-
-  const lists = ["column1", "column2", "column3", "column4", "column5"];
-
-  const generateLists = () => {
-    // lists.reduce(
-    //   (acc, listKey) => ({ ...acc, [listKey]: getItems(2, listKey) }),
-    //   {}
-    // );
-    // task.reduce(
-    //   (acc, listKey) => ({ ...acc, ['column' + listKey.column_no]: getItems(1, 'column' + listKey.column_no, listKey) }),
-    //   {}
-    // );
-  }
-
-  const [elements, setElements] = React.useState(generateLists());
-
-  // useEffect(() => {
-  //   setElements(generateLists());
-  // }, []);
-
   const onDragEnd = async (result) => {
-    //console.log('file: my-missions.js => line 318 => onDragEnd => result', result)
-    //console.log('file: my-missions.js => line 318 => onDragEnd => result', result.draggableId)
-    //console.log('file: my-missions.js => line 318 => onDragEnd => result.destination.droppableId.substr', result.destination.droppableId.substr(6))
 
     if (!result.destination) {
       return;
@@ -329,38 +243,42 @@ function MyMissions() {
     const columnNo = result.destination.droppableId.substr(6);
     const newOrderSequence = +result.destination.index === 0 ? +result.destination.index + 1 : +result.destination.index;
 
+    const taskCopy = [ ...task ];
+
+    taskCopy.map((item, i) => {
+      if(item._id === taskId){
+        const [removed] = taskCopy.splice(i, 1);
+        const replaceElement = {
+          _id: removed._id,
+          title: removed.title,
+          color: removed.color,
+          column_no: +columnNo,
+          orderSequence: newOrderSequence,
+          subtasks: removed.subtasks,
+        }
+        taskCopy.splice(i, 0, replaceElement);
+      }
+    })
+
+    taskCopy.sort(function(a, b) {
+      var keyA = a.orderSequence,
+          keyB = b.orderSequence;
+      // *Compare
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
+    setTask(taskCopy)
+
     let obj = {
       taskId: taskId,
       columnNo: columnNo,
       newOrderSequence: newOrderSequence
     }
-    //console.log('file: my-missions.js => line 333 => onDragEnd => obj', obj)
     let token = localStorage.getItem('jwt')
     const { data } = await Service.swapTask(obj, token);
     getTask()
-
-
-    // if (!result.destination) {
-    //   return;
-    // }
-    // const listCopy = { ...elements };
-
-    // const sourceList = listCopy[result.source.droppableId];
-    // const [removedElement, newSourceList] = removeFromList(
-    //   sourceList,
-    //   result.source.index
-    // );
-    // listCopy[result.source.droppableId] = newSourceList;
-    // const destinationList = listCopy[result.destination.droppableId];
-    // listCopy[result.destination.droppableId] = addToList(
-    //   destinationList,
-    //   result.destination.index,
-    //   removedElement
-    // );
-
-    // setElements(listCopy);
   };
-
 
   useEffect(() => {
     getTask();
@@ -368,6 +286,10 @@ function MyMissions() {
     disabledInspect();
     window.scrollTo({ top: 0 });
   }, [])
+  
+  useEffect(() => {
+
+  }, [task])
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
@@ -411,12 +333,10 @@ function MyMissions() {
               {[...Array(5)].map((x, i) => {
                 return (
                   <DraggableElement
-                    //elements={elements['column' + listKey.column_no]}
                     taskDialog={taskDialog}
                     editTaskDialog={editTaskDialog}
                     deleteTaskDialog={deleteTaskDialog}
                     elements={task}
-                    //elements={generateLists()}
                     pos={i}
                     key={i}
                     prefix={'column' + (i + 1)}

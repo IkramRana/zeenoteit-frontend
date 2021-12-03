@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { EditTask, More, Plus, Trash, VerticalMenu } from "assets/images/icons";
 import { Grid, IconButton, Menu, Typography } from "@material-ui/core";
@@ -8,7 +8,7 @@ import { Service } from "config/service";
 import { toast } from "react-toastify";
 
 
-var taskId = ''
+var taskId = '';
 
 function ListItem({ item, index, subTask, editTaskDialog, deleteTaskDialog }) {
 

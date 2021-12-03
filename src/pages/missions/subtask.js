@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { Grid, Typography } from "@material-ui/core";
-import { Plus, images } from "assets/images/icons";
+import { Typography } from "@material-ui/core";
+import { images } from "assets/images/icons";
 
 
 function SubTask({ taskComplete, prefix, elements, index }) {
