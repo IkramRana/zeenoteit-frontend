@@ -22,7 +22,7 @@ function Register() {
   // *For Loader
   const [loader, setLoader] = useState(false)
 
-  const [countryCode, setCountryCode] = useState('PK')
+  const [countryCode, setCountryCode] = useState('AU')
 
   // *For Form Validation
   const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
