@@ -55,13 +55,54 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
 
     const taskId = splitTaskId[1];
     const subTaskId = result.draggableId;
+    const currentOrderSequence = +result.source.index;
     const newOrderSequence = +result.destination.index === 0 ? +result.destination.index + 1 : +result.destination.index;
+
+    const subTaskCopy = [ ...subTasks ]
+    var replaceElement = {}
+    subTaskCopy.map((item, i) => {
+      if(item._id === subTaskId){
+        const [removed] = subTaskCopy.splice(i, 1);
+        replaceElement = {
+          _id: removed._id,
+          updatedAt: removed.updatedAt,
+          title: removed.title,
+          task_id: removed.task_id,
+          orderSequence: newOrderSequence,
+          isCompleted: removed.isCompleted,
+        }
+      }
+    })
+    if(newOrderSequence < currentOrderSequence){
+      for (let index = 0; index < subTaskCopy.length; index++) {
+        if(subTaskCopy[index].orderSequence >= newOrderSequence && subTaskCopy[index].orderSequence < currentOrderSequence){
+          subTaskCopy[index].orderSequence = +subTaskCopy[index].orderSequence + 1;
+        }
+      }
+    } else {
+      for (let index = 0; index < subTaskCopy.length; index++) {
+        if(subTaskCopy[index].orderSequence > currentOrderSequence && subTaskCopy[index].orderSequence <= newOrderSequence){
+          subTaskCopy[index].orderSequence = +subTaskCopy[index].orderSequence - 1;
+        }
+      }
+    }
+    subTaskCopy.splice(0, 0, replaceElement);
+    subTaskCopy.sort(function(a, b) {
+      var keyA = a.orderSequence,
+          keyB = b.orderSequence;
+      // *Compare
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
+    setSubTasks(subTaskCopy)
 
     let obj = {
       taskId: taskId,
       subtaskId: subTaskId,
       newOrderSequence: newOrderSequence
     }
+    
     let token = localStorage.getItem('jwt')
     const { status } = await Service.swapSubTask(obj, token);
 
@@ -198,12 +239,16 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
                       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                       transformOrigin={{ vertical: "top", horizontal: "center" }}
                     >
-                      <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, item._id, item.title) }}>
-                        <EditTask />
-                      </IconButton>
-                      <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteTaskDialog(true, item._id) }}>
-                        <Trash />
-                      </IconButton>
+                      <div className="option-wrapper">
+                        <IconButton className="edit" aria-label="edit" onClick={() => { editTaskDialog(true, item._id, item.title) }}>
+                          <EditTask />
+                        </IconButton>
+                      </div>
+                      <div className="option-wrapper">
+                        <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteTaskDialog(true, item._id) }}>
+                          <Trash />
+                        </IconButton>
+                      </div>
                     </Menu>
                   </Grid>
                 </Grid>
