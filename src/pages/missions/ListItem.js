@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 var taskId = '';
 
 function ListItem({ item, index, subTask, editTaskDialog, deleteTaskDialog }) {
+//console.log('file: ListItem.js => line 14 => ListItem => subTask', subTask);
 
   // *For Text Truncate
   const [textTruncate, setTextTruncate] = useState('')
@@ -72,7 +73,9 @@ function ListItem({ item, index, subTask, editTaskDialog, deleteTaskDialog }) {
   const getUserSubTaskByTaskId = async (taskId) => {
     let token = localStorage.getItem('jwt')
     const { data } = await Service.getUserSubTaskByTaskId(taskId, token);
-    setSubTasks(data)
+    //console.log('file: ListItem.js => line 76 => getUserSubTaskByTaskId => data', data);
+    // setSubTasks(data)
+    setSubTasks([...data])
   }
 
   const subTaskDialog = (type, ID) => {
@@ -147,8 +150,13 @@ function ListItem({ item, index, subTask, editTaskDialog, deleteTaskDialog }) {
   }
 
   useEffect(() => {
-    setSubTasks(subTask)
+    setSubTasks([...subTask])
+    //console.log(parseInt(item.column_no+''+item.orderSequence));
   }, []);
+
+  useEffect(() => {
+    //console.log('file: ListItem.js => line 158 => ListItem => subTasks', subTasks);
+  }, [subTasks]);
 
   return (
     <Draggable draggableId={item._id} index={index}>

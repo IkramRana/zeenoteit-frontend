@@ -234,7 +234,7 @@ function MyMissions() {
   }
 
   const onDragEnd = async (result) => {
-
+    
     if (!result.destination) {
       return;
     }

@@ -5,6 +5,7 @@ import { images } from "assets/images/icons";
 
 
 function SubTask({ taskComplete, prefix, elements, index }) {
+//console.log('file: subtask.js => line 8 => SubTask => elements', elements);
 
   // *For Text Truncate
   const [textTruncate, setTextTruncate] = useState('')
@@ -36,14 +37,16 @@ function SubTask({ taskComplete, prefix, elements, index }) {
                   <div className="task">
                     <div className="checkbox">
                       {elements.isCompleted &&
-                        <input type="checkbox" checked={true} id={elements._id} onClick={(e) => taskComplete(elements._id, elements.isCompleted)} />
+                        <input type="checkbox" checked={true} id={elements._id} onChange={(e) => taskComplete(elements._id, elements.isCompleted)} />
                       }
                       {elements.isCompleted === false &&
-                        <input type="checkbox" id={elements._id} onClick={(e) => taskComplete(elements._id, elements.isCompleted)} />
+                        <input type="checkbox" id={elements._id} onChange={(e) => taskComplete(elements._id, elements.isCompleted)} />
                       }
                       <label for={elements._id}></label>
                     </div>
-                    <Typography className={`cursor-pointer ${elements.isCompleted === true ? 'text-strike ' : ''}${textTruncate === elements._id ? '' : 'text-truncate'}`} onClick={() => { truncateHandler(elements._id) }} component="p" >{elements.title}</Typography>
+                    <Typography className={`cursor-pointer ${elements.isCompleted === true ? 'text-strike ' : ''}${textTruncate === elements._id ? '' : 'text-truncate'}`} onClick={() => { truncateHandler(elements._id) }} component="p" >
+                      {elements.title}
+                    </Typography>
                     <div style={{
                       width: '12px',
                       height: '12px'

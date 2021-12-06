@@ -15,7 +15,7 @@ function DraggableElement({ pos, prefix, elements, taskDialog, editTaskDialog, d
             {elements.map((task, i) => {
               if ((pos + 1) === task.column_no) {
                 return (
-                  <ListItem key={i} item={task} index={task.orderSequence} subTask={task.subtasks} editTaskDialog={editTaskDialog}
+                  <ListItem key={task._id} item={task} index={task.orderSequence} subTask={task.subtasks} editTaskDialog={editTaskDialog}
                     deleteTaskDialog={deleteTaskDialog} />
                 )
               }
