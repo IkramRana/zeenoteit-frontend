@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 var taskId = '';
 
-function ListItem({ item, index, subTask, editTaskDialog, deleteTaskDialog }) {
+function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDialog }) {
 //console.log('file: ListItem.js => line 14 => ListItem => subTask', subTask);
 
   // *For Text Truncate
@@ -102,6 +102,7 @@ function ListItem({ item, index, subTask, editTaskDialog, deleteTaskDialog }) {
         progress: undefined,
       });
       getUserSubTaskByTaskId(item._id)
+      getTask()
       subTaskDialog(false)
     } catch (error) {
       toast.error(error, {
@@ -136,6 +137,7 @@ function ListItem({ item, index, subTask, editTaskDialog, deleteTaskDialog }) {
         progress: undefined,
       });
       getUserSubTaskByTaskId(item._id)
+      getTask()
     } catch (error) {
       toast.error(error, {
         position: "top-center",

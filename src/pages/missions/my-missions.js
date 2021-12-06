@@ -248,6 +248,7 @@ function MyMissions() {
     taskCopy.map((item, i) => {
       if(item._id === taskId){
         const [removed] = taskCopy.splice(i, 1);
+        //console.log('file: my-missions.js => line 251 => taskCopy.map => removed', removed);
         const replaceElement = {
           _id: removed._id,
           title: removed.title,
@@ -333,6 +334,7 @@ function MyMissions() {
               {[...Array(5)].map((x, i) => {
                 return (
                   <DraggableElement
+                    getTask={getTask}
                     taskDialog={taskDialog}
                     editTaskDialog={editTaskDialog}
                     deleteTaskDialog={deleteTaskDialog}

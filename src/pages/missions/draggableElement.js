@@ -5,7 +5,7 @@ import { Grid, Typography } from "@material-ui/core";
 import { Plus } from "assets/images/icons";
 
 
-function DraggableElement({ pos, prefix, elements, taskDialog, editTaskDialog, deleteTaskDialog }) {
+function DraggableElement({ pos, prefix, getTask, elements, taskDialog, editTaskDialog, deleteTaskDialog }) {
 
   return (
     <Grid key={pos} className="wrapper" container spacing={0} item md={2}>
@@ -15,7 +15,7 @@ function DraggableElement({ pos, prefix, elements, taskDialog, editTaskDialog, d
             {elements.map((task, i) => {
               if ((pos + 1) === task.column_no) {
                 return (
-                  <ListItem key={task._id} item={task} index={task.orderSequence} subTask={task.subtasks} editTaskDialog={editTaskDialog}
+                  <ListItem key={task._id} getTask={getTask} item={task} index={task.orderSequence} subTask={task.subtasks} editTaskDialog={editTaskDialog}
                     deleteTaskDialog={deleteTaskDialog} />
                 )
               }
