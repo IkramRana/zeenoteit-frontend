@@ -161,12 +161,16 @@ function MyThoughts() {
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         transformOrigin={{ vertical: "top", horizontal: "center" }}
                       >
-                        <IconButton className="edit" aria-label="edit" onClick={() => { editThought(thought._id) }}>
-                          <EditTask />
-                        </IconButton>
-                        <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteThoughtDialog(true, thought._id) }}>
-                          <Trash />
-                        </IconButton>
+                        <div className="option-wrapper">
+                          <IconButton className="edit" aria-label="edit" onClick={() => { editThought(thought._id) }}>
+                            <EditTask />
+                          </IconButton>
+                        </div>
+                        <div className="option-wrapper">
+                          <IconButton className="deleted" aria-label="deleted" onClick={() => { deleteThoughtDialog(true, thought._id) }}>
+                            <Trash />
+                          </IconButton>
+                        </div>
                       </Menu>
                     </Grid>
                   </Grid>
