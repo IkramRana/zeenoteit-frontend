@@ -241,9 +241,9 @@ function MyMissions() {
 
     const taskId = result.draggableId;
     const columnNo = result.destination.droppableId.substr(6);
-    // *Shairyar
+    // *update here
     const currentOrderSequence = +result.source.index;
-    // *Shairyar
+    // *update here
     const newOrderSequence = +result.destination.index === 0 ? +result.destination.index + 1 : +result.destination.index;
 
     const taskCopy = [...task];
@@ -264,7 +264,7 @@ function MyMissions() {
       }
     })
 
-    // *Shairyar
+    // *update here
     if (newOrderSequence < currentOrderSequence) {
       for (let index = 0; index < taskCopy.length; index++) {
         if (taskCopy[index].orderSequence >= newOrderSequence && taskCopy[index].orderSequence < currentOrderSequence) {
@@ -280,7 +280,7 @@ function MyMissions() {
     }
 
     taskCopy.splice(0, 0, replaceElement);
-    // *Shairyar
+    // *update here
     taskCopy.sort(function (a, b) {
       var keyA = a.orderSequence,
         keyB = b.orderSequence;
