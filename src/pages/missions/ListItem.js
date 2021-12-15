@@ -7,11 +7,9 @@ import AddSubTask from "components/add-subtask";
 import { Service } from "config/service";
 import { toast } from "react-toastify";
 
-
 var taskId = '';
 
 function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDialog }) {
-//console.log('file: ListItem.js => line 14 => ListItem => subTask', subTask);
 
   // *For Text Truncate
   const [textTruncate, setTextTruncate] = useState('')
@@ -58,10 +56,11 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
     const currentOrderSequence = +result.source.index;
     const newOrderSequence = +result.destination.index === 0 ? +result.destination.index + 1 : +result.destination.index;
 
-    const subTaskCopy = [ ...subTasks ]
+    const subTaskCopy = [...subTasks]
     var replaceElement = {}
+
     subTaskCopy.map((item, i) => {
-      if(item._id === subTaskId){
+      if (item._id === subTaskId) {
         const [removed] = subTaskCopy.splice(i, 1);
         replaceElement = {
           _id: removed._id,
@@ -73,23 +72,25 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
         }
       }
     })
-    if(newOrderSequence < currentOrderSequence){
+
+    if (newOrderSequence < currentOrderSequence) {
       for (let index = 0; index < subTaskCopy.length; index++) {
-        if(subTaskCopy[index].orderSequence >= newOrderSequence && subTaskCopy[index].orderSequence < currentOrderSequence){
+        if (subTaskCopy[index].orderSequence >= newOrderSequence && subTaskCopy[index].orderSequence < currentOrderSequence) {
           subTaskCopy[index].orderSequence = +subTaskCopy[index].orderSequence + 1;
         }
       }
     } else {
       for (let index = 0; index < subTaskCopy.length; index++) {
-        if(subTaskCopy[index].orderSequence > currentOrderSequence && subTaskCopy[index].orderSequence <= newOrderSequence){
+        if (subTaskCopy[index].orderSequence > currentOrderSequence && subTaskCopy[index].orderSequence <= newOrderSequence) {
           subTaskCopy[index].orderSequence = +subTaskCopy[index].orderSequence - 1;
         }
       }
     }
+
     subTaskCopy.splice(0, 0, replaceElement);
-    subTaskCopy.sort(function(a, b) {
+    subTaskCopy.sort(function (a, b) {
       var keyA = a.orderSequence,
-          keyB = b.orderSequence;
+        keyB = b.orderSequence;
       // *Compare
       if (keyA < keyB) return -1;
       if (keyA > keyB) return 1;
@@ -102,7 +103,7 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
       subtaskId: subTaskId,
       newOrderSequence: newOrderSequence
     }
-    
+
     let token = localStorage.getItem('jwt')
     const { status } = await Service.swapSubTask(obj, token);
 
@@ -114,8 +115,6 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
   const getUserSubTaskByTaskId = async (taskId) => {
     let token = localStorage.getItem('jwt')
     const { data } = await Service.getUserSubTaskByTaskId(taskId, token);
-    //console.log('file: ListItem.js => line 76 => getUserSubTaskByTaskId => data', data);
-    // setSubTasks(data)
     setSubTasks([...data])
   }
 
@@ -194,12 +193,9 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
 
   useEffect(() => {
     setSubTasks([...subTask])
-    //console.log(parseInt(item.column_no+''+item.orderSequence));
   }, []);
 
-  useEffect(() => {
-    //console.log('file: ListItem.js => line 158 => ListItem => subTasks', subTasks);
-  }, [subTasks]);
+  useEffect(() => { }, [subTasks]);
 
   return (
     <Draggable draggableId={item._id} index={index}>

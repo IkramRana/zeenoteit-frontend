@@ -234,22 +234,25 @@ function MyMissions() {
   }
 
   const onDragEnd = async (result) => {
-    
+
     if (!result.destination) {
       return;
     }
 
     const taskId = result.draggableId;
     const columnNo = result.destination.droppableId.substr(6);
+    // *Shairyar
+    const currentOrderSequence = +result.source.index;
+    // *Shairyar
     const newOrderSequence = +result.destination.index === 0 ? +result.destination.index + 1 : +result.destination.index;
 
-    const taskCopy = [ ...task ];
+    const taskCopy = [...task];
+    var replaceElement = {}
 
     taskCopy.map((item, i) => {
-      if(item._id === taskId){
+      if (item._id === taskId) {
         const [removed] = taskCopy.splice(i, 1);
-        //console.log('file: my-missions.js => line 251 => taskCopy.map => removed', removed);
-        const replaceElement = {
+        replaceElement = {
           _id: removed._id,
           title: removed.title,
           color: removed.color,
@@ -257,13 +260,30 @@ function MyMissions() {
           orderSequence: newOrderSequence,
           subtasks: removed.subtasks,
         }
-        taskCopy.splice(i, 0, replaceElement);
+        // taskCopy.splice(i, 0, replaceElement);
       }
     })
 
-    taskCopy.sort(function(a, b) {
+    // *Shairyar
+    if (newOrderSequence < currentOrderSequence) {
+      for (let index = 0; index < taskCopy.length; index++) {
+        if (taskCopy[index].orderSequence >= newOrderSequence && taskCopy[index].orderSequence < currentOrderSequence) {
+          taskCopy[index].orderSequence = +taskCopy[index].orderSequence + 1;
+        }
+      }
+    } else {
+      for (let index = 0; index < taskCopy.length; index++) {
+        if (taskCopy[index].orderSequence > currentOrderSequence && taskCopy[index].orderSequence <= newOrderSequence) {
+          taskCopy[index].orderSequence = +taskCopy[index].orderSequence - 1;
+        }
+      }
+    }
+
+    taskCopy.splice(0, 0, replaceElement);
+    // *Shairyar
+    taskCopy.sort(function (a, b) {
       var keyA = a.orderSequence,
-          keyB = b.orderSequence;
+        keyB = b.orderSequence;
       // *Compare
       if (keyA < keyB) return -1;
       if (keyA > keyB) return 1;
@@ -287,10 +307,8 @@ function MyMissions() {
     disabledInspect();
     window.scrollTo({ top: 0 });
   }, [])
-  
-  useEffect(() => {
 
-  }, [task])
+  useEffect(() => { }, [task])
 
   return (
     <Grid container spacing={0} justifyContent="flex-start" alignItems="flex-start">
