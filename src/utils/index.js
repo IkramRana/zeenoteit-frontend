@@ -52,3 +52,9 @@ export const DateFormat = (string) => {
   const date = todayDate.getDate() + ' ' + todayDate.toLocaleString('en-us', { month: 'short' }) + ' ' + todayDate.getFullYear();
   return date;
 }
+
+// *String Lower Case
+export const lowerCase = (string) => {
+  const lowerCase = string.toLowerCase();
+  return lowerCase;
+}

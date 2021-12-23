@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Logo, User, Lock } from "assets/images/icons";
-import { disabledInspect, emailRegex } from 'utils/index';
+import { disabledInspect, emailRegex, lowerCase } from 'utils/index';
 import { Service } from "config/service";
 
 import { Grid, Typography } from '@material-ui/core';
@@ -35,7 +35,7 @@ function Register() {
     setLoader(true)
     try {
       let obj = {
-        email: data.email,
+        email: lowerCase(data.email),
         password: data.password,
         cPassword: data.cPassword,
         countryCode: countryCode,
@@ -43,7 +43,7 @@ function Register() {
       };
 
       let userObj = {
-        email: data.email,
+        email: lowerCase(data.email),
         phone: control._formValues.phoneInput
       }
 

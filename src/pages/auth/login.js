@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Logo, User, Lock } from 'assets/images/icons';
-import { disabledInspect, emailRegex } from 'utils/index';
+import { disabledInspect, emailRegex, lowerCase } from 'utils/index';
 import { Service } from "config/service";
 import useAuth from 'hooks/useAuth';
 
@@ -30,7 +30,7 @@ function Login() {
     setLoader(true)
     try {
       let obj = {
-        email: data.email,
+        email: lowerCase(data.email),
         password: data.password,
       }
       const { token, user } = await Service.login(obj);

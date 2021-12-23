@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Logo, User } from "assets/images/icons";
-import { disabledInspect, emailRegex } from 'utils/index';
+import { disabledInspect, emailRegex, lowerCase } from 'utils/index';
 import { Service } from "config/service";
 
 import { Grid, Typography } from '@material-ui/core';
@@ -46,7 +46,7 @@ function ForgotPassword() {
     try {
       resendMail = data
       let obj = {
-        email: data.email,
+        email: lowerCase(data.email),
       }
       const { message } = await Service.getPasswordResetLink(obj);
 

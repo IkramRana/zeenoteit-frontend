@@ -363,7 +363,6 @@ function Settings() {
                           <MenuItem value={120}>2 Hrs</MenuItem>
                           <MenuItem value={180}>3 Hrs</MenuItem>
                           <MenuItem value={240}>4 Hrs</MenuItem>
-                          <MenuItem value={300}>5 Hrs</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
