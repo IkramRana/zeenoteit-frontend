@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { ChangePassword, DeleteAccount, Email, LogoutSetting, NotifySetting, Phone, Reminder } from "assets/images/icons";
-import { disabledInspect, emailRegex } from 'utils/index';
+import { disabledInspect, emailRegex, getTimezoneOffset } from 'utils/index';
 import { Service } from "config/service";
 import useAuth from "hooks/useAuth";
 
@@ -98,7 +98,8 @@ function Settings() {
           phoneNumber: control._formValues.phoneInput,
           dailyOpenTime: data.openTime,
           dailyTimeInterval: data.timeInterval,
-          isNotifyEnable: data.notification
+          isNotifyEnable: data.notification,
+          timezoneOffset: getTimezoneOffset()
         }
       } else {
         obj = {
@@ -107,7 +108,8 @@ function Settings() {
           phoneNumber: control._formValues.phoneInput,
           dailyOpenTime: data.openTime,
           dailyTimeInterval: data.timeInterval,
-          isNotifyEnable: data.notification
+          isNotifyEnable: data.notification,
+          timezoneOffset: getTimezoneOffset()
         }
       }
       notify = obj.isNotifyEnable

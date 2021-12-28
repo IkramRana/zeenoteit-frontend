@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Logo } from "assets/images/icons";
-import { disabledInspect, lowerCase } from 'utils/index';
+import { disabledInspect, lowerCase, getTimezoneOffset } from 'utils/index';
 import { Service } from "config/service";
 import { firebase, auth } from 'config/firebase';
 
@@ -193,6 +193,7 @@ function Verification() {
         country_code: countryCode,
         phone_number: number,
         isNumberVerified: true,
+        timezoneOffset: getTimezoneOffset()
       }
       const { message } = await Service.register(obj);
 

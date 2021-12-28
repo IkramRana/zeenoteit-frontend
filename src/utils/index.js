@@ -58,3 +58,10 @@ export const lowerCase = (string) => {
   const lowerCase = string.toLowerCase();
   return lowerCase;
 }
+
+// *getTimezoneOffset
+export const getTimezoneOffset = () => {
+  const date = new Date();
+  const timezoneOffset = date.getTimezoneOffset();
+  return timezoneOffset;
+}
