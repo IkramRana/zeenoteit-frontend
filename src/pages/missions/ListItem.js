@@ -219,14 +219,10 @@ function ListItem(props) {
     }
   }
 
-  function handleClick() {
-    textInput.current.focus();
-  }
-
   const textBoxFocus = () => {
     setAddSubTaskHandle(true)
     setTimeout(() => {
-      handleClick()
+      textInput.current.focus();
     }, 100);
   }
 
