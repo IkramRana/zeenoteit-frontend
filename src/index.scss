@@ -99,6 +99,10 @@ input::-webkit-inner-spin-button {
   cursor: pointer !important;
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
 .error {
   font-size: 12px !important;
   font-family: "Avenir" !important;
@@ -743,6 +747,35 @@ input::-webkit-inner-spin-button {
             margin-bottom: 7px;
             width: 80%;
             word-break: break-word;
+          }
+
+          .deleted-task {
+            background-color: rgba($color: #e94444, $alpha: 0.2);
+            width: 26px;
+            height: 26px;
+            padding: 8px;
+
+            &:hover {
+              background-color: rgba($color: #e94444, $alpha: 0.2) !important;
+            }
+
+            svg {
+              fill: #e94444 !important;
+
+              path {
+                fill: #e94444 !important;
+              }
+            }
+          }
+
+          .add-sub-task {
+            width: 78%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-family: "Avenir";
+            color: #58595b;
+            opacity: 0.8;
           }
         }
 

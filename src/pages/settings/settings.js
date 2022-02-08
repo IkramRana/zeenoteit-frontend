@@ -90,7 +90,7 @@ function Settings() {
     try {
       let token = localStorage.getItem('jwt')
       let obj = {};
-      if(data.password){
+      if (data.password) {
         obj = {
           email: data.email,
           password: data.password,
@@ -130,7 +130,7 @@ function Settings() {
           dailyTimeInterval: obj.dailyTimeInterval,
           isNotifyEnable: obj.isNotifyEnable,
         }],
-        _id: id, 
+        _id: id,
         email: obj.email,
         countryCode: obj.countryCode,
         phone_number: obj.phoneNumber,
@@ -271,11 +271,6 @@ function Settings() {
                     </div>
                     <div className="input-text">
                       <label>Password</label>
-                      {/* <input
-                        type="password"
-                        value='123456789'
-                        disabled
-                      /> */}
                       <input
                         type="password"
                         placeholder="*********"

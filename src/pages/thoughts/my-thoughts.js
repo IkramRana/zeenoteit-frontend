@@ -25,7 +25,7 @@ function MyThoughts() {
   const [thoughts, setThoughts] = useState([])
 
   // *For Menu
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   // *For Delete Thought
   const [openDeleteThought, setOpenDeleteThought] = useState(false)

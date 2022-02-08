@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { Typography } from "@material-ui/core";
-import { images } from "assets/images/icons";
+import { IconButton, Typography } from "@material-ui/core";
+import { images, Trash } from "assets/images/icons";
 
+function SubTask(props) {
 
-function SubTask({ taskComplete, prefix, elements, index }) {
-//console.log('file: subtask.js => line 8 => SubTask => elements', elements);
+  const { taskComplete, prefix, elements, index, deleteSubTask } = props
 
   // *For Text Truncate
   const [textTruncate, setTextTruncate] = useState('')
@@ -42,19 +42,21 @@ function SubTask({ taskComplete, prefix, elements, index }) {
                       {elements.isCompleted === false &&
                         <input type="checkbox" id={elements._id} onChange={(e) => taskComplete(elements._id, elements.isCompleted)} />
                       }
-                      <label for={elements._id}></label>
+                      <label htmlFor={elements._id}></label>
                     </div>
                     <Typography className={`cursor-pointer ${elements.isCompleted === true ? 'text-strike ' : ''}${textTruncate === elements._id ? '' : 'text-truncate'}`} onClick={() => { truncateHandler(elements._id) }} component="p" >
                       {elements.title}
                     </Typography>
-                    <div style={{
-                      width: '12px',
-                      height: '12px'
-                    }}
-                      {...provided.dragHandleProps}
-                    >
-                      <img src={images.dragDot} alt="drag dot" width="12px" height="12px" />
-                    </div>
+                    {elements.isCompleted === false &&
+                      <div style={{ width: '12px', height: '12px' }} {...provided.dragHandleProps} >
+                        <img src={images.dragDot} alt="drag dot" width="12px" height="12px" />
+                      </div>
+                    }
+                    {elements.isCompleted &&
+                      <IconButton className="deleted-task" aria-label="deleted" onClick={() => deleteSubTask(elements._id)}>
+                        <Trash />
+                      </IconButton>
+                    }
                   </div>
                 </div>
               );

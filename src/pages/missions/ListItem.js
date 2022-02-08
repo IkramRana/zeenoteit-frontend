@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
-import { EditTask, More, Plus, Trash, VerticalMenu } from "assets/images/icons";
-import { Grid, IconButton, Menu, Typography } from "@material-ui/core";
+import { EditTask, images, More, Plus, Trash, VerticalMenu } from "assets/images/icons";
+import { ClickAwayListener, Grid, IconButton, Menu, Typography } from "@material-ui/core";
 import SubTask from "./subtask";
 import AddSubTask from "components/add-subtask";
 import { Service } from "config/service";
@@ -9,7 +9,11 @@ import { toast } from "react-toastify";
 
 var taskId = '';
 
-function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDialog }) {
+function ListItem(props) {
+
+  const { item, getTask, index, subTask, editTaskDialog, deleteTaskDialog } = props
+
+  const textInput = useRef(null);
 
   // *For Text Truncate
   const [textTruncate, setTextTruncate] = useState('')
@@ -17,10 +21,11 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
   // *For Menu
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const [subTasks, setSubTasks] = React.useState([]);
+  const [subTasks, setSubTasks] = useState([]);
 
   // *For Sub Task
-  const [openAddSubTask, setOpenAddSubTask] = useState(false)
+  const [openAddSubTask, setOpenAddSubTask] = useState(false);
+  const [addSubTaskHandle, setAddSubTaskHandle] = useState(false);
 
   // *For Menu Open and Close 
   const menuHandler = (index, event) => {
@@ -116,34 +121,33 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
     let token = localStorage.getItem('jwt')
     const { data } = await Service.getUserSubTaskByTaskId(taskId, token);
     setSubTasks([...data])
-  }
-
-  const subTaskDialog = (type, ID) => {
-    if (type === true) {
-      taskId = ID
-      setOpenAddSubTask(true);
-    } else {
-      setOpenAddSubTask(false);
-    }
+    setAddSubTaskHandle(false)
   }
 
   // *For Add Sub Task 
-  const addSubTask = async (obj) => {
+  const addSubTask = async (e, id) => {
     try {
-      let token = localStorage.getItem('jwt')
-      const { message } = await Service.addSubTask(obj, token);
-      toast.success(message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
-      getUserSubTaskByTaskId(item._id)
-      getTask()
-      subTaskDialog(false)
+      if (e.target.value) {
+        let token = localStorage.getItem('jwt')
+        let obj = {
+          task_id: id,
+          title: e.target.value
+        }
+        const { message } = await Service.addSubTask(obj, token);
+        toast.success(message, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+        getUserSubTaskByTaskId(item._id)
+        getTask()
+      } else {
+        setAddSubTaskHandle(false)
+      }
     } catch (error) {
       toast.error(error, {
         position: "top-center",
@@ -191,6 +195,41 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
     }
   }
 
+  // *For Delete Sub Task
+  const deleteSubTask = async (ID) => {
+    try {
+      let token = localStorage.getItem('jwt')
+      let obj = {
+        id: ID
+      }
+      const { message } = await Service.deleteSubTask(obj, token);
+      getUserSubTaskByTaskId(item._id)
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      getTask()
+    } catch (error) {
+      console.log('file: subtask.js => line 31 => deleteSubTask => error', error)
+    }
+  }
+
+  function handleClick() {
+    textInput.current.focus();
+  }
+
+  const textBoxFocus = () => {
+    setAddSubTaskHandle(true)
+    setTimeout(() => {
+      handleClick()
+    }, 100);
+  }
+
   useEffect(() => {
     setSubTasks([...subTask])
   }, []);
@@ -206,7 +245,7 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
             {...provided.draggableProps}
           >
             {/* ========== Add Task Dialog ========== */}
-            <AddSubTask open={openAddSubTask} id={item._id} onClose={() => { subTaskDialog(false) }} addSubTask={addSubTask} />
+            {/* <AddSubTask open={openAddSubTask} id={item._id} onClose={() => { subTaskDialog(false) }} addSubTask={addSubTask} /> */}
 
             <Grid className="task-box" item md={12} style={{ borderColor: item.color[0].code + 'a6' }}>
               <div className="header"  {...provided.dragHandleProps} style={{ backgroundColor: item.color[0].code + '1a' }}>
@@ -215,7 +254,7 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
                     <Typography className={`cursor-pointer ${textTruncate === item._id ? '' : 'text-truncate'}`} component="h5">{item.title}</Typography>
                   </Grid>
                   <Grid item md={2}>
-                    <IconButton aria-label="menu" size="small" onClick={() => { subTaskDialog(true, item._id) }}>
+                    <IconButton aria-label="menu" size="small" onClick={() => { textBoxFocus() }}>
                       <Plus />
                     </IconButton>
                   </Grid>
@@ -254,16 +293,36 @@ function ListItem({ item, getTask, index, subTask, editTaskDialog, deleteTaskDia
                   {subTasks.map((subTask, index) => (
                     <SubTask
                       taskComplete={taskComplete}
+                      deleteSubTask={deleteSubTask}
                       elements={subTask}
                       index={subTask.orderSequence}
                       key={subTask._id}
                       prefix={subTask._id + '-' + subTask.task_id}
                     />
                   ))}
-                  <div disabled className="add-subtask cursor-pointer" onClick={() => { subTaskDialog(true, item._id) }}>
-                    <Plus />
-                    <Typography component="p">Add New Task</Typography>
-                  </div>
+
+                  {addSubTaskHandle &&
+                    <div className="task">
+                      <div className="checkbox">
+                        <input type="checkbox" disabled />
+                        <label className="cursor-not-allowed"></label>
+                      </div>
+                      <input type="text" ref={textInput} placeholder="Write Task" className="add-sub-task"
+                        onBlur={(e) => { addSubTask(e, item._id) }}
+                      />
+                      <div style={{ width: '12px', height: '12px' }} className="cursor-not-allowed" >
+                        <img src={images.dragDot} alt="drag dot" width="12px" height="12px" />
+                      </div>
+                    </div>
+                  }
+
+                  {!addSubTaskHandle &&
+                    <div disabled className="add-subtask cursor-pointer" onClick={() => { textBoxFocus(); }}>
+                      <Plus />
+                      <Typography component="p">Add New Task</Typography>
+                    </div>
+                  }
+
                 </div>
               </DragDropContext>
             </Grid>

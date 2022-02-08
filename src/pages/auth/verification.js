@@ -22,11 +22,11 @@ function Verification() {
 
   const history = useHistory();
 
-  const [email, setEmail] = React.useState("");
-  const [number, setNumber] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [countryCode, setCountryCode] = useState('')
-  const [password, setPassword] = React.useState("");
-  const [final, setFinal] = React.useState('');
+  const [password, setPassword] = useState("");
+  const [final, setFinal] = useState('');
 
   // *For Phone Verification
   const [form, setForm] = useState({

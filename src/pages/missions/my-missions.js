@@ -67,8 +67,6 @@ function MyMissions() {
 
   // *For Sub Task Open and Close Dialog
   const subTaskDialog = (type, ID) => {
-    console.log('file: my-missions.js => line 71 => subTaskDialog => ID', ID);
-    console.log('file: my-missions.js => line 72 => subTaskDialog => type', type);
     if (type === true) {
       taskId = ID
       setOpenAddSubTask(true);
@@ -171,7 +169,7 @@ function MyMissions() {
       const { data } = await Service.getUserTask(token);
       setTask(data)
     } catch (error) {
-      //console.log('file: my-missions.js => line 152 => getTask => error', error)
+      console.log('file: my-missions.js => line 172 => getTask => error', error)
     }
   };
 
@@ -186,7 +184,7 @@ function MyMissions() {
       const { data } = await Service.getColors(token);
       setColors(data)
     } catch (error) {
-      //console.log('file: my-missions.js => line 180 => getColors => error', error)
+      console.log('file: my-missions.js => line 187 => getColors => error', error)
     }
   };
 
@@ -341,7 +339,7 @@ function MyMissions() {
         <Grid item xs={12} sm={12} md={12} lg={12}>
 
           {/* ========== Breadcrumbs ========== */}
-          <Breadcrumbs Breadcrumbs aria-label="breadcrumb">
+          <Breadcrumbs aria-label="breadcrumb">
             <Typography>My Missions</Typography>
           </Breadcrumbs>
 

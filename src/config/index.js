@@ -26,6 +26,7 @@ export const Apis = {
     deleteTask: 'task/delete-task',
     swapTask: 'task/swap-task',
     swapSubTask: 'subtask/swap-subtask',
+    deleteSubTask: 'subtask/delete-subtask',
 
     // *Thought
     addThought: 'thought/add-thought',

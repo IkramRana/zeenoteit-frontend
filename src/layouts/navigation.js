@@ -50,7 +50,7 @@ function Navigation(props) {
 
         <Grid item md={12}>
           <Typography component="ul">
-            <NavLink to="/my-missions" activeClassName="active" onMouseOver={() => hoverActive('my-missions')} onMouseOut={() => hoverActive('')}>
+            <NavLink to="/my-missions" activeclassname="active" onMouseOver={() => hoverActive('my-missions')} onMouseOut={() => hoverActive('')}>
               <div>
                 {pathname === '/my-missions' &&
                   <MissionActive />
@@ -63,7 +63,7 @@ function Navigation(props) {
                 <span>My Missions</span>
               </div>
             </NavLink>
-            <NavLink to="/my-thoughts" activeClassName="active" onMouseOver={() => hoverActive('my-thoughts')} onMouseOut={() => hoverActive('')}>
+            <NavLink to="/my-thoughts" activeclassname="active" onMouseOver={() => hoverActive('my-thoughts')} onMouseOut={() => hoverActive('')}>
               <div>
                 {pathname === '/my-thoughts' &&
                   <ThoughtActive />
@@ -76,7 +76,7 @@ function Navigation(props) {
                 <span>My Thoughts</span>
               </div>
             </NavLink>
-            <NavLink to="/settings" activeClassName="active" onMouseOver={() => hoverActive('settings')} onMouseOut={() => hoverActive('')}>
+            <NavLink to="/settings" activeclassname="active" onMouseOver={() => hoverActive('settings')} onMouseOut={() => hoverActive('')}>
               <div>
                 {pathname === '/settings' &&
                   <SettingActive />
@@ -96,7 +96,7 @@ function Navigation(props) {
 
       <Grid item md={12}>
         <Typography component="ul">
-          <Typography activeClassName="active" component="li" onMouseOver={() => hoverActive('logout')} onMouseOut={() => hoverActive('')} onClick={() => logout()}>
+          <Typography activeclassname="active" component="li" onMouseOver={() => hoverActive('logout')} onMouseOut={() => hoverActive('')} onClick={() => logout()}>
             <div>
               {isActive === 'logout' ? <LogoutActive /> : <LogoutInactive />}
               <span>Logout</span>

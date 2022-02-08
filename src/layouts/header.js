@@ -27,9 +27,6 @@ let socket = null;
 
 function Header() {
 
-  const isMobile = useMediaQuery(Responsive.isMobile);
-  const isTablet = useMediaQuery(Responsive.isTablet);
-
   // *For Notification
   const [openNotification, setOpenNotification] = useState(false)
   const notifyDropdown = useRef(null)
@@ -65,7 +62,6 @@ function Header() {
       if (notifications.length < notificationCount || notifications === '') {
         let token = localStorage.getItem('jwt')
         const { data } = await Service.getUserNotification(token);
-        console.log('file: header.js => line 112 => getUserNotification => data', data);
         setNotifications(data)
         setNotificationCount(0)
       }

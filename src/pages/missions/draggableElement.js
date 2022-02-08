@@ -5,7 +5,9 @@ import { Grid, Typography } from "@material-ui/core";
 import { Plus } from "assets/images/icons";
 
 
-function DraggableElement({ pos, prefix, getTask, elements, taskDialog, editTaskDialog, deleteTaskDialog }) {
+function DraggableElement(props) {
+
+  const { pos, prefix, getTask, elements, taskDialog, editTaskDialog, deleteTaskDialog } = props
 
   return (
     <Grid key={pos} className="wrapper" container spacing={0} item md={2}>
