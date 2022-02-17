@@ -20,8 +20,8 @@ function ListItem(props) {
 
   // *For Menu
   const [anchorEl, setAnchorEl] = useState(null);
-
   const [subTasks, setSubTasks] = useState([]);
+  const [disabled, setDisabled] = useState(false);
 
   // *For Sub Task
   const [openAddSubTask, setOpenAddSubTask] = useState(false);
@@ -161,8 +161,19 @@ function ListItem(props) {
     }
   }
 
+  const enterHandler = async (e) => {
+    try {
+      if (e.key === 'Enter') {
+        textInput.current.blur();
+      }
+    } catch (error) {
+      console.log('file: ListItem.js => line 170 => enterHandler => error', error)
+    }
+  }
+
   // *For Task Complete
   const taskComplete = async (subTaskId, isComplete) => {
+    setDisabled(true)
     try {
       let token = localStorage.getItem('jwt')
       let status = isComplete === true ? false : true;
@@ -192,6 +203,8 @@ function ListItem(props) {
         draggable: false,
         progress: undefined,
       });
+    } finally {
+      setDisabled(false)
     }
   }
 
@@ -289,6 +302,7 @@ function ListItem(props) {
                   {subTasks.map((subTask, index) => (
                     <SubTask
                       taskComplete={taskComplete}
+                      disabled={disabled}
                       deleteSubTask={deleteSubTask}
                       elements={subTask}
                       index={subTask.orderSequence}
@@ -305,6 +319,7 @@ function ListItem(props) {
                       </div>
                       <input type="text" ref={textInput} placeholder="Write Task" className="add-sub-task"
                         onBlur={(e) => { addSubTask(e, item._id) }}
+                        onKeyPress={(e) => { enterHandler(e) }}
                       />
                       <div style={{ width: '12px', height: '12px' }} className="cursor-not-allowed" >
                         <img src={images.dragDot} alt="drag dot" width="12px" height="12px" />

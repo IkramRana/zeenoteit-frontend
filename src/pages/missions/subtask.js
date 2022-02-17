@@ -5,7 +5,8 @@ import { images, Trash } from "assets/images/icons";
 
 function SubTask(props) {
 
-  const { taskComplete, prefix, elements, index, deleteSubTask } = props
+  const { taskComplete, disabled, prefix, elements, index, deleteSubTask } = props
+  console.log('file: subtask.js => line 9 => SubTask => disabled', disabled)
 
   // *For Text Truncate
   const [textTruncate, setTextTruncate] = useState('')
@@ -37,10 +38,10 @@ function SubTask(props) {
                   <div className="task">
                     <div className="checkbox">
                       {elements.isCompleted &&
-                        <input type="checkbox" checked={true} id={elements._id} onChange={(e) => taskComplete(elements._id, elements.isCompleted)} />
+                        <input type="checkbox" disabled={disabled} checked={true} id={elements._id} onChange={(e) => taskComplete(elements._id, elements.isCompleted)} />
                       }
                       {elements.isCompleted === false &&
-                        <input type="checkbox" id={elements._id} onChange={(e) => taskComplete(elements._id, elements.isCompleted)} />
+                        <input type="checkbox" disabled={disabled} id={elements._id} onChange={(e) => taskComplete(elements._id, elements.isCompleted)} />
                       }
                       <label htmlFor={elements._id}></label>
                     </div>
