@@ -5,7 +5,7 @@ export const herokuServer = 'https://zenoteit.herokuapp.com/api/'; // Heroku Liv
 export const liveServer = 'http://app.zenoteit.com/api/'; // Live URL
 
 const instance = axios.create({
-    baseURL: liveServer,
+    baseURL: localServer,
 });
 
 export default instance;
