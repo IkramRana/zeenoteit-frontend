@@ -9,7 +9,7 @@ export const socketConfig = () => {
     //     reconnection: true
     // });
 
-    var socket = io('https://dev.octagon.com:8443', {path: '/octagon/socket.io'})
+    var socket = io('http://app.zenoteit.com', {path: '/notification-service/socket.io'})
 
     return socket;
 }
