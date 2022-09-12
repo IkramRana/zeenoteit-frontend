@@ -24,7 +24,6 @@ function Payment() {
 
   const userData = JSON.parse(localStorage.getItem('userData'))
   const isTrailUsed = userData[0].trial_used
-  console.log('file: payment.js => line 27 => Payment => isTrailUsed', isTrailUsed)
 
   // *For Loader
   const [loader, setLoader] = useState(false)
@@ -39,14 +38,16 @@ function Payment() {
 
   const selectPaymentType = async () => {
     try {
-      let token = localStorage.getItem('jwt')
+      let oldToken = localStorage.getItem('jwt')
       let obj = {}
       if (selectPay === 'pay') {
         setSelectType(2)
       } else {
         if (isTrailUsed === true) return
-        const { status } = await Service.freeTrial(obj, token);
+        const { status, token, plan_expiry } = await Service.freeTrial(obj, oldToken);
         if (status === true) {
+          localStorage.setItem('jwt', token)
+          localStorage.setItem('planExpiry', JSON.stringify(plan_expiry));
           auth.signin(token, true)
           history.push('/my-missions');
         }

@@ -74,8 +74,11 @@ function StripeForm() {
         return;
       }
       if (paymentIntent.status === 'succeeded') {
-        const { status, token, message } = await Service.subscription(obj, oldToken);
+        const { status, token, plan_expiry, message } = await Service.subscription(obj, oldToken);
         if (status === true) {
+          localStorage.setItem('jwt', token)
+          localStorage.setItem('planExpiry', JSON.stringify(plan_expiry));
+          auth.signin(token, true)
           setThankyouScreen(true)
         } else {
           toast.error(message, {
@@ -107,8 +110,7 @@ function StripeForm() {
   const navigate = async () => {
     setLoader(true)
     try {
-      localStorage.clear()
-      history.push('/login');
+      history.push('/my-missions');
     } catch (error) {
       toast.error(error, {
         position: "top-center",

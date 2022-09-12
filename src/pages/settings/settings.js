@@ -32,18 +32,14 @@ function Settings() {
   const [openTime, setOpenTime] = useState()
   const [timeInterval, setTimeInterval] = useState('')
 
-  let reamainingTime = JSON.parse(localStorage.getItem('userData'));
-  reamainingTime = reamainingTime[0].plan_expiry
+  let reamainingTime = JSON.parse(localStorage.getItem('planExpiry'));
 
   const date = new Date()
   const formatedDate = moment(date).format('YYYY-MM-DD')
   const formatedReamaingDate = moment(reamainingTime).format('YYYY-MM-DD')
-  console.log('file: settings.js => line 42 => Settings => formatedDate', formatedDate)
-  console.log('file: settings.js => line 42 => Settings => formatedReamaingDate', formatedReamaingDate)
 
   const start = moment(formatedReamaingDate);
   const end = moment(formatedDate);
-  console.log('left', moment.duration(start.diff(end)).asDays())
 
   // *For Loader
   const [loader, setLoader] = useState(false)
