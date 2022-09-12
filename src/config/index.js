@@ -41,6 +41,11 @@ export const Apis = {
 
     // *Colors
     getColors: 'color/get-colors',
+
+    // *Stripe 
+    getSecretKey: 'plans/getSubscriptionKey',
+    subscription: 'plans/finalizeSubscription',
+    freeTrial: 'plans/startFreeTrial',
 };
 
 export const headers = {

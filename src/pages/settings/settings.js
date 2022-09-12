@@ -5,7 +5,7 @@ import { disabledInspect, emailRegex, getTimezoneOffset } from 'utils/index';
 import { Service } from "config/service";
 import useAuth from "hooks/useAuth";
 
-import { Breadcrumbs, FormControl, Grid, MenuItem, Select, Switch, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, FormControl, Grid, MenuItem, Select, Switch, Typography } from '@material-ui/core';
 import { useForm, Controller } from "react-hook-form";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
@@ -17,6 +17,7 @@ import Navigation from 'layouts/navigation'
 import Header from 'layouts/header'
 import Deleted from "components/delete";
 import Toaster from "components/toaster";
+import moment from "moment/moment";
 
 let userData;
 var notify = Boolean;
@@ -30,6 +31,19 @@ function Settings() {
   const [countryCode, setCountryCode] = useState()
   const [openTime, setOpenTime] = useState()
   const [timeInterval, setTimeInterval] = useState('')
+
+  let reamainingTime = JSON.parse(localStorage.getItem('userData'));
+  reamainingTime = reamainingTime[0].plan_expiry
+
+  const date = new Date()
+  const formatedDate = moment(date).format('YYYY-MM-DD')
+  const formatedReamaingDate = moment(reamainingTime).format('YYYY-MM-DD')
+  console.log('file: settings.js => line 42 => Settings => formatedDate', formatedDate)
+  console.log('file: settings.js => line 42 => Settings => formatedReamaingDate', formatedReamaingDate)
+
+  const start = moment(formatedReamaingDate);
+  const end = moment(formatedDate);
+  console.log('left', moment.duration(start.diff(end)).asDays())
 
   // *For Loader
   const [loader, setLoader] = useState(false)
@@ -227,10 +241,13 @@ function Settings() {
         {/* ========== Settings ========== */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
 
-          {/* ========== Breadcrumbs ========== */}
-          <Breadcrumbs aria-label="breadcrumb">
-            <Typography >Settings</Typography>
-          </Breadcrumbs>
+          <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            {/* ========== Breadcrumbs ========== */}
+            <Breadcrumbs aria-label="breadcrumb">
+              <Typography >Settings</Typography>
+            </Breadcrumbs>
+            <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Left</Typography>
+          </Box>
 
           <form onSubmit={handleSubmit(updateSetting)}>
             <Grid className="setting" container spacing={0} justifyContent="center" alignItems="stretch">

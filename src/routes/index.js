@@ -17,6 +17,7 @@ import WriteThought from 'pages/thoughts/write-thought';
 import ReadThought from 'pages/thoughts/read-thought';
 import EditThought from 'pages/thoughts/edit-thought';
 import Settings from 'pages/settings/settings';
+import Payment from 'pages/auth/payment';
 
 const AppRoutes = () => {
 
@@ -43,6 +44,7 @@ const AppRoutes = () => {
         <PrivateRoute path="/readmore/:id" exact ><ReadThought /></PrivateRoute>
         <PrivateRoute path="/edit-thought/:id" exact ><EditThought /></PrivateRoute>
         <PrivateRoute path="/settings" exact ><Settings /></PrivateRoute>
+        <PrivateRoute path="/payment" exact ><Payment /></PrivateRoute>
       </Switch>
     </BrowserRouter >
 

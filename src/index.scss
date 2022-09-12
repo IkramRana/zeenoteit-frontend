@@ -1694,3 +1694,63 @@ input::-webkit-inner-spin-button {
     }
   }
 }
+
+// *For Stripe
+.payment-select-box{
+       border: 1px solid hsla(0, 0%, 100%, .6);
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       margin: 10px 0px;
+       padding: 8px 10px;
+       cursor: pointer;
+       border-radius: 23px;
+       -webkit-border-radius: 23px;
+       -moz-border-radius: 23px;
+       -ms-border-radius: 23px;
+       -o-border-radius: 23px;
+
+       &:hover{
+        background-color: rgba($color: #fff, $alpha: 0.5);
+        p{
+          color: #003361 !important;
+        }
+       }
+
+        p {
+            margin: 0px !important;
+          }
+        
+          .price {
+            font-size: 20px !important;
+            font-weight: 700;
+          }
+     .MuiRadio-root {
+       color: rgba($color: #fff, $alpha: 0.5);
+     }
+                 
+}
+
+.selected-payment-box  {
+  background-color: rgba($color: #fff, $alpha: 0.5);
+
+  p {
+    color: #003361 !important;
+  }
+
+         .MuiRadio-root {
+           color: #003361;
+         }
+}
+
+.selected-payment-box-disabled{
+  opacity: 0.5;
+  cursor: inherit;
+  &:hover {
+      background-color: transparent !important;
+  
+      p {
+        color: #fff !important;
+      }
+    }
+}

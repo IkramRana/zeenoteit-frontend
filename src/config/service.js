@@ -145,4 +145,21 @@ export const Service = {
         if (result.status === 200) return result.data;
         else throw result;
     },
+
+    // *Stripe
+    getSecretKey: async (token) => {
+        let result = await get(Apis.getSecretKey, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    subscription: async (obj, token) => {
+        let result = await post(Apis.subscription, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
+    freeTrial: async (obj, token) => {
+        let result = await post(Apis.freeTrial, obj, token);
+        if (result.status === 200) return result.data;
+        else throw result;
+    },
 }

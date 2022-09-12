@@ -5,6 +5,7 @@ import useAuth from 'hooks/useAuth';
 export default function PublicRoute({ children, ...rest }) {
 
     let auth = useAuth();
+    console.log('file: PublicRoute.js => line 8 => PublicRoute => auth', auth?.plan)
 
     return (
         <Route
@@ -15,7 +16,7 @@ export default function PublicRoute({ children, ...rest }) {
                 ) : (
                     <Redirect
                         to={{
-                            pathname: "/my-missions",
+                            pathname: auth?.plan ? "/my-missions" : "/payment",
                             state: { from: location }
                         }}
                     />

@@ -36,8 +36,13 @@ function Login() {
       const { token, user } = await Service.login(obj);
       localStorage.setItem('jwt', token)
       localStorage.setItem('userData', JSON.stringify(user));
-      auth.signin({ token })
-      history.push('/my-missions');
+      auth.signin(token, user[0].plan_active)
+      if (user[0].plan_active === true) {
+        console.log('if');
+        history.push('/my-missions');
+      } else {
+        history.push('/payment');
+      }
     } catch (error) {
       toast.error(error, {
         position: "top-center",
