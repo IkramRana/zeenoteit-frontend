@@ -14,6 +14,7 @@ export default function useProvideAuth() {
     const signout = () => {
         localStorage.removeItem('jwt');
         localStorage.removeItem('regD');
+        localStorage.clear()
         // eslint-disable-next-line no-unused-expressions
         user ? setUser(null) : null;
     };

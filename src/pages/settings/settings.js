@@ -32,6 +32,7 @@ function Settings() {
   const [openTime, setOpenTime] = useState()
   const [timeInterval, setTimeInterval] = useState('')
 
+  let userData = JSON.parse(localStorage.getItem('userData'));
   let reamainingTime = JSON.parse(localStorage.getItem('planExpiry'));
 
   const date = new Date()
@@ -65,7 +66,6 @@ function Settings() {
   // *Get User Data
   const getUserData = () => {
     try {
-      userData = JSON.parse(localStorage.getItem('userData'));
       setId(userData[0]._id)
       setPhone(userData[0].phone_number);
       setCountryCode(userData[0].countryCode);
@@ -242,7 +242,11 @@ function Settings() {
             <Breadcrumbs aria-label="breadcrumb">
               <Typography >Settings</Typography>
             </Breadcrumbs>
-            <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Left</Typography>
+            {userData[0].plan_identifier.includes('paid') ? (
+              <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Left Until Next Payment.</Typography>
+            ) : (
+              <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Trail Left</Typography>
+            )}
           </Box>
 
           <form onSubmit={handleSubmit(updateSetting)}>

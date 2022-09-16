@@ -118,7 +118,7 @@ function Payment() {
                         <Radio
                           color='#003361'
                           checked={selectPay === 'pay'}
-                          onChange={(e) => setSelectPay(e.target.value)}
+                          // onChange={(e) => setSelectPay(e.target.value)}
                           value="pay"
                           name="radio-buttons"
                           inputProps={{ 'aria-label': 'pay' }}
@@ -130,7 +130,7 @@ function Payment() {
                         <Radio
                           color='#003361'
                           checked={selectPay === 'trial'}
-                          onChange={(e) => setSelectPay(e.target.value)}
+                          // onChange={(e) => setSelectPay(e.target.value)}
                           value="trial"
                           name="radio-buttons"
                           inputProps={{ 'aria-label': 'trial' }}
@@ -146,6 +146,12 @@ function Payment() {
                 <StripeForm />
               </Elements>
             )}
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={12}>
+            <Typography className="text-xs-center" component="p" onClick={() => { auth.signout(); history.push('/login') }}>
+              <span className="cursor-pointer">Change account</span>
+            </Typography>
           </Grid>
 
         </Grid>

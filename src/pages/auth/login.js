@@ -36,6 +36,7 @@ function Login() {
       const { token, user } = await Service.login(obj);
       localStorage.setItem('jwt', token)
       localStorage.setItem('userData', JSON.stringify(user));
+      localStorage.setItem('planExpiry', JSON.stringify(user[0].plan_expiry));
       auth.signin(token, user[0].plan_active)
       if (user[0].plan_active === true) {
         console.log('if');

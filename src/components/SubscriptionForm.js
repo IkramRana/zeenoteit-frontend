@@ -49,7 +49,7 @@ function SubscriptionForm({ changeType, freeTrail }) {
         <Grid item sm={12} md={9}>
           <Typography variant="h2"><Typography variant="h2" component="span" style={{ fontSize: '36px', fontFamily: "Rockness", color: '#003361' }}>Pay</Typography> With Peace Of Mind</Typography>
           <Box style={{ margin: '30px 0px' }}>
-            <Box onClick={() => setSelectPay('pay')} className={`payment-select-box ${selectPay === 'pay' ? 'selected-payment-box' : ''}`}>
+            <Box onClick={() => setSelectPay('pay')} className={`payment-select-box ${selectPay === 'pay' && 'selected-payment-box'}`}>
               <Typography variant="body1">Per Month</Typography>
               <Typography variant="body1" className='price'>$9.90</Typography>
               <Radio
@@ -61,7 +61,7 @@ function SubscriptionForm({ changeType, freeTrail }) {
                 inputProps={{ 'aria-label': 'pay' }}
               />
             </Box>
-            <Box onClick={() => setSelectPay('trial')} className={`payment-select-box ${selectPay === 'trial' ? 'selected-payment-box' : ''}`}>
+            <Box onClick={() => setSelectPay('trial')} className={`payment-select-box ${selectPay === 'trial' && 'selected-payment-box'}`}>
               <Typography variant="body1">14 Days</Typography>
               <Typography variant="body1" className='price'>Free Trial</Typography>
               <Radio
