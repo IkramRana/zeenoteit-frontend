@@ -245,7 +245,7 @@ function Settings() {
             {userData[0].plan_identifier.includes('paid') ? (
               <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Left Until Next Payment.</Typography>
             ) : (
-              <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Trail Left</Typography>
+              <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Trial Left</Typography>
             )}
           </Box>
 
