@@ -3,12 +3,10 @@ import { Service } from "config/service";
 
 export default function useProvideAuth() {
     const [user, setUser] = useState(null);
-    const [plan, setPlan] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const signin = (token, plan) => {
+    const signin = (token) => {
         setUser(token);
-        setPlan(plan);
     };
 
     const signout = () => {
@@ -35,7 +33,6 @@ export default function useProvideAuth() {
 
     return {
         user,
-        plan,
         loading,
         signin,
         signout,

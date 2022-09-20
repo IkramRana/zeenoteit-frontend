@@ -84,7 +84,6 @@ function Header() {
   // *Socket 
   const getNotificationCount = () => {
     let userData = JSON.parse(localStorage.getItem('userData'));
-    console.log('file: header.js => line 136 => getNotificationCount => userData', userData);
     let userId = userData[0]._id;
 
     if (socket?.disconnect) {
@@ -112,7 +111,6 @@ function Header() {
     });
 
     socket.on('show_notification', obj => {
-      console.log('file: header.js => line 137 => getNotificationCount => obj', obj);
       setNotificationCount(obj.notificationCount)
       timer = setTimeout(() => {
         socket.emit("new_notification", userId);

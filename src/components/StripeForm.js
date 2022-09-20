@@ -55,7 +55,6 @@ function StripeForm() {
   const paymentSubmission = async () => {
     setLoader(true)
     try {
-      // e.preventDefault()
       let oldToken = localStorage.getItem('jwt')
       let obj = {}
       const { cs_key } = await Service.getSecretKey(oldToken);
@@ -69,16 +68,15 @@ function StripeForm() {
         }
       )
       if (stripeError) {
-        // Show error to your customer (e.g., insufficient funds)
-        console.log(stripeError.message);
         return;
       }
       if (paymentIntent.status === 'succeeded') {
-        const { status, token, plan_expiry, message } = await Service.subscription(obj, oldToken);
+        const { status, token, plan_expiry, plan_identifier, message } = await Service.subscription(obj, oldToken);
         if (status === true) {
           localStorage.setItem('jwt', token)
           localStorage.setItem('planExpiry', JSON.stringify(plan_expiry));
-          auth.signin(token, true)
+          localStorage.setItem('planIdentifier', JSON.stringify(plan_identifier));
+          auth.signin(token)
           setThankyouScreen(true)
         } else {
           toast.error(message, {
@@ -135,7 +133,7 @@ function StripeForm() {
             <Grid item sm={12} md={9}>
               <Typography variant="h2">Registration Successful</Typography>
               <Box style={{ margin: '50px 0px' }}>
-                <Typography variant="h2" style={{ fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif' }}>Thank you</Typography>
+                <Typography variant="h2" style={{ fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', fontWeight: 700 }}>Thank you</Typography>
                 <Typography variant="h2" style={{ fontSize: '22px', fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', fontWeight: 500 }}>for paying</Typography>
               </Box>
               <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >OK</button>

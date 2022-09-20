@@ -37,9 +37,9 @@ function Login() {
       localStorage.setItem('jwt', token)
       localStorage.setItem('userData', JSON.stringify(user));
       localStorage.setItem('planExpiry', JSON.stringify(user[0].plan_expiry));
-      auth.signin(token, user[0].plan_active)
+      localStorage.setItem('planIdentifier', JSON.stringify(user[0].plan_identifier));
+      auth.signin(token)
       if (user[0].plan_active === true) {
-        console.log('if');
         history.push('/my-missions');
       } else {
         history.push('/payment');

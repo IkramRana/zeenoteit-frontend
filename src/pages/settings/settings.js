@@ -32,15 +32,15 @@ function Settings() {
   const [openTime, setOpenTime] = useState()
   const [timeInterval, setTimeInterval] = useState('')
 
-  let userData = JSON.parse(localStorage.getItem('userData'));
-  let reamainingTime = JSON.parse(localStorage.getItem('planExpiry'));
+  let planIdentifier = JSON.parse(localStorage.getItem('planIdentifier'));
+  let planExpiry = JSON.parse(localStorage.getItem('planExpiry'));
 
   const date = new Date()
-  const formatedDate = moment(date).format('YYYY-MM-DD')
-  const formatedReamaingDate = moment(reamainingTime).format('YYYY-MM-DD')
+  const dateFormate = moment(date).format('YYYY-MM-DD')
+  const startDate = moment(planExpiry).format('YYYY-MM-DD')
 
-  const start = moment(formatedReamaingDate);
-  const end = moment(formatedDate);
+  const start = moment(startDate);
+  const end = moment(dateFormate);
 
   // *For Loader
   const [loader, setLoader] = useState(false)
@@ -66,6 +66,7 @@ function Settings() {
   // *Get User Data
   const getUserData = () => {
     try {
+      const userData = JSON.parse(localStorage.getItem('userData'));
       setId(userData[0]._id)
       setPhone(userData[0].phone_number);
       setCountryCode(userData[0].countryCode);
@@ -242,7 +243,7 @@ function Settings() {
             <Breadcrumbs aria-label="breadcrumb">
               <Typography >Settings</Typography>
             </Breadcrumbs>
-            {userData[0].plan_identifier.includes('paid') ? (
+            {planIdentifier.includes('paid') ? (
               <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Left Until Next Payment.</Typography>
             ) : (
               <Typography style={{ color: '#E82D2D', fontSize: '16px', fontWeight: 700, fontFamily: 'Avenir' }} >{moment.duration(start.diff(end)).asDays()} Days Trial Left</Typography>

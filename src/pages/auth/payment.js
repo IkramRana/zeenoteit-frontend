@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Logo, User, Lock } from 'assets/images/icons';
@@ -23,7 +23,7 @@ function Payment() {
   const auth = useAuth();
 
   const userData = JSON.parse(localStorage.getItem('userData'))
-  const isTrailUsed = userData[0].trial_used
+  const isTrialUsed = userData[0].trial_used
 
   // *For Loader
   const [loader, setLoader] = useState(false)
@@ -43,12 +43,13 @@ function Payment() {
       if (selectPay === 'pay') {
         setSelectType(2)
       } else {
-        if (isTrailUsed === true) return
-        const { status, token, plan_expiry } = await Service.freeTrial(obj, oldToken);
+        if (isTrialUsed === true) return
+        const { status, token, plan_expiry, plan_identifier } = await Service.freeTrial(obj, oldToken);
         if (status === true) {
           localStorage.setItem('jwt', token)
           localStorage.setItem('planExpiry', JSON.stringify(plan_expiry));
-          auth.signin(token, true)
+          localStorage.setItem('planIdentifier', JSON.stringify(plan_identifier));
+          auth.signin(token)
           history.push('/my-missions');
         }
       }
@@ -106,10 +107,16 @@ function Payment() {
               <form onSubmit={handleSubmit(selectPaymentType)}>
                 <Grid container spacing={2} justifyContent="center" alignItems="center">
                   <Grid item sm={12} md={9}>
-                    {isTrailUsed ? (
-                      <Typography variant="h2" style={{ color: '#E83737' }}><Typography variant="h2" component="span" style={{ fontSize: '36px', fontFamily: "Rockness", color: '#003361' }}>Trail</Typography> Expired</Typography>
+                    {isTrialUsed ? (
+                      <Fragment>
+                        <Typography variant="h2" style={{ color: '#E83737' }}><Typography variant="h2" component="span" style={{ fontSize: '36px', fontFamily: "Rockness", color: '#003361' }}>Trial</Typography> Expired</Typography>
+                        <Typography variant="body2" style={{ fontSize: '13px', color: '#646464' }}>Your 14 Days Free Trial has been expired, select your plan to enjoy our services</Typography>
+                      </Fragment>
                     ) : (
-                      <Typography variant="h2"><Typography variant="h2" component="span" style={{ fontSize: '36px', fontFamily: "Rockness", color: '#003361' }}>Pay</Typography> With Peace Of Mind</Typography>
+                      <Fragment>
+                        <Typography variant="h2"><Typography variant="h2" component="span" style={{ fontSize: '36px', fontFamily: "Rockness", color: '#003361' }}>Pay</Typography> With Peace Of Mind</Typography>
+                        <Typography variant="body2" style={{ fontSize: '13px', color: '#646464' }}>Start using the app to get most out of your desire.</Typography>
+                      </Fragment>
                     )}
                     <Box style={{ margin: '30px 0px' }}>
                       <Box onClick={() => setSelectPay('pay')} className={`payment-select-box ${selectPay === 'pay' && 'selected-payment-box'}`}>
@@ -118,13 +125,12 @@ function Payment() {
                         <Radio
                           color='#003361'
                           checked={selectPay === 'pay'}
-                          // onChange={(e) => setSelectPay(e.target.value)}
                           value="pay"
                           name="radio-buttons"
                           inputProps={{ 'aria-label': 'pay' }}
                         />
                       </Box>
-                      <Box onClick={() => isTrailUsed === false && setSelectPay('trial')} className={`payment-select-box ${selectPay === 'trial' && 'selected-payment-box'} ${isTrailUsed === true && 'selected-payment-box-disabled'}`}>
+                      <Box onClick={() => isTrialUsed === false && setSelectPay('trial')} className={`payment-select-box ${selectPay === 'trial' && 'selected-payment-box'} ${isTrialUsed === true && 'selected-payment-box-disabled'}`}>
                         <Typography variant="body1">14 Days</Typography>
                         <Typography variant="body1" className='price'>Free Trial</Typography>
                         <Radio
@@ -138,6 +144,7 @@ function Payment() {
                       </Box>
                     </Box>
                     <button type="submit" className={`button-raised`}>Continue</button>
+                    <Typography variant="body2" style={{ fontSize: '13px', marginTop: '8px', color: '#fff' }}>By continuing you are agree to terms & conditions</Typography>
                   </Grid>
                 </Grid>
               </form>

@@ -6,7 +6,6 @@ import { images, Trash } from "assets/images/icons";
 function SubTask(props) {
 
   const { taskComplete, disabled, prefix, elements, index, deleteSubTask } = props
-  console.log('file: subtask.js => line 9 => SubTask => disabled', disabled)
 
   // *For Text Truncate
   const [textTruncate, setTextTruncate] = useState('')
