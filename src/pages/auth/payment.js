@@ -32,6 +32,7 @@ function Payment() {
   const { handleSubmit } = useForm();
 
   const [stripePublicKey, setStripePublicKey] = useState('');
+  console.log('file: payment.js:35 => Payment => stripePublicKey', stripePublicKey)
   const [selectType, setSelectType] = useState(1);
 
   const [selectPay, setSelectPay] = useState('pay');

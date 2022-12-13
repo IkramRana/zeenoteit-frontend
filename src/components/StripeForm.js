@@ -14,13 +14,15 @@ import 'react-toastify/dist/ReactToastify.css';
 // *Import Components
 import Toaster from 'components/toaster';
 import { loadStripe } from '@stripe/stripe-js';
-import { CardCvcElement, CardElement, CardExpiryElement, CardNumberElement, Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { CardCvcElement, CardElement, CardExpiryElement, CardNumberElement, Elements, PaymentElement, PaymentRequestButtonElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { Fragment } from 'react';
 
 function StripeForm() {
 
   const history = useHistory();
   const auth = useAuth();
+  // const stripe = useStripe();
+  const [paymentRequest, setPaymentRequest] = useState(null);
 
   // *For Loader
   const [loader, setLoader] = useState(false)
@@ -28,8 +30,6 @@ function StripeForm() {
   // *For Form Validation
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const [stripePublicKey, setStripePublicKey] = useState('');
-  const [selectType, setSelectType] = useState(1);
   const [thankyouScreen, setThankyouScreen] = useState(false);
 
   const newStripe = useStripe()
@@ -124,6 +124,27 @@ function StripeForm() {
     }
   }
 
+  useEffect(() => {
+    if (newStripe) {
+      const pr = newStripe.paymentRequest({
+        country: 'US',
+        currency: 'usd',
+        total: {
+          label: 'Total Amount',
+          amount: 9.90 * 100,
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+      // Check the availability of the Payment Request API.
+      pr.canMakePayment().then(result => {
+        if (result) {
+          console.log('file: StripeForm.js:142 => pr.shiaryar => result', result)
+          setPaymentRequest(pr);
+        }
+      });
+    }
+  }, [newStripe]);
 
   return (
     <Fragment>
@@ -141,23 +162,30 @@ function StripeForm() {
           </Grid>
         </form>
       ) : (
-        <form onSubmit={handleSubmit(paymentSubmission)}>
-          <Grid container spacing={2} justifyContent="center" alignItems="center">
-            <Grid item sm={12} md={9}>
-              <Typography variant="h2">Pay With <Typography variant="h2" component="span" style={{ fontSize: '36px', fontFamily: "Rockness", color: '#003361' }}>Stripe</Typography></Typography>
-              <div className="input-field" style={{ padding: '10px' }}>
-                <CardNumberElement id="card-element" options={styling} />
-              </div>
-              <div className="input-field" style={{ padding: '10px' }}>
-                <CardExpiryElement id="card-element" options={styling} />
-              </div>
-              <div className="input-field" style={{ padding: '10px' }}>
-                <CardCvcElement id="card-element" options={styling} />
-              </div>
-              <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >PAY NOW</button>
+        <Fragment>
+          <form onSubmit={handleSubmit(paymentSubmission)}>
+            <Grid container spacing={2} justifyContent="center" alignItems="center">
+              <Grid item sm={12} md={9}>
+                <Typography variant="h2">Pay With <Typography variant="h2" component="span" style={{ fontSize: '36px', fontFamily: "Rockness", color: '#003361' }}>Stripe</Typography></Typography>
+                <div className="input-field" style={{ padding: '10px' }}>
+                  <CardNumberElement id="card-element" options={styling} />
+                </div>
+                <div className="input-field" style={{ padding: '10px' }}>
+                  <CardExpiryElement id="card-element" options={styling} />
+                </div>
+                <div className="input-field" style={{ padding: '10px' }}>
+                  <CardCvcElement id="card-element" options={styling} />
+                </div>
+                <button type="submit" className={`button-raised ${loader === true ? 'spinner button-disabled ' : ''}`} disabled={loader === true ? true : false} >PAY NOW</button>
+                {paymentRequest &&
+                  <div style={{ marginTop: '14px' }}>
+                    <PaymentRequestButtonElement options={{ paymentRequest }} />
+                  </div>
+                }
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
+          </form>
+        </Fragment>
       )}
 
     </Fragment>
