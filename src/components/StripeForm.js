@@ -68,6 +68,15 @@ function StripeForm() {
         }
       )
       if (stripeError) {
+        toast.error(stripeError, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
         return;
       }
       if (paymentIntent.status === 'succeeded') {
@@ -125,6 +134,7 @@ function StripeForm() {
   }
 
   useEffect(() => {
+    let oldToken = localStorage.getItem('jwt')
     if (newStripe) {
       const pr = newStripe.paymentRequest({
         country: 'US',
@@ -143,6 +153,46 @@ function StripeForm() {
           setPaymentRequest(pr);
         }
       });
+      pr.on('paymentmethod', async (ev) => {
+        const { cs_key } = await Service.getSecretKey(oldToken);
+
+        const { error: stripeError, paymentIntent } = await newStripe.confirmCardPayment(
+          cs_key,
+          { payment_method: ev.paymentMethod.id },
+        )
+        if (stripeError) {
+          toast.error(stripeError, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+          });
+          return;
+        }
+        if (paymentIntent.status === 'succeeded') {
+          const { status, token, plan_expiry, plan_identifier, message } = await Service.subscription({}, oldToken);
+          if (status === true) {
+            localStorage.setItem('jwt', token)
+            localStorage.setItem('planExpiry', JSON.stringify(plan_expiry));
+            localStorage.setItem('planIdentifier', JSON.stringify(plan_identifier));
+            auth.signin(token)
+            setThankyouScreen(true)
+          } else {
+            toast.error(message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+            });
+          }
+        }
+      })
     }
   }, [newStripe]);
 
